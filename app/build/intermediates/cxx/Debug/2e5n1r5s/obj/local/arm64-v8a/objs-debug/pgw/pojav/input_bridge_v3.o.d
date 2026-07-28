@@ -1,0 +1,35 @@
+/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/arm64-v8a/objs-debug/pgw/pojav/input_bridge_v3.o: \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/pojav/input_bridge_v3.c \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/stdlib.h \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/__config \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/string.h \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/atomic \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/math.h \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/pojav/log.h \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/pojav/utils.h \
+  /root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/stdbool.h \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/environ/environ.h \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/ctxbridges/common.h \
+  /mnt/d/FireflyAndroid-Launcher/app/src/main/jni/jvm_hooks/jvm_hooks.h
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/stdlib.h:
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/__config:
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/string.h:
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/atomic:
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/math.h:
+
+/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/pojav/log.h:
+
+/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/pojav/utils.h:
+
+/root/Android/Sdk/ndk/25.2.9519653/sources/cxx-stl/llvm-libc++/include/stdbool.h:
+
+/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/environ/environ.h:
+
+/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/ctxbridges/common.h:
+
+/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/jvm_hooks/jvm_hooks.h:

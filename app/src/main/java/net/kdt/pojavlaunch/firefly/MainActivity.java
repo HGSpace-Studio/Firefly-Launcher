@@ -489,11 +489,60 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         printLauncherInfo(versionId, Tools.isValidString(minecraftProfile.javaArgs) ? minecraftProfile.javaArgs : LauncherPreferences.PREF_CUSTOM_JAVA_ARGS);
         JREUtils.redirectAndPrintJRELog();
         LauncherProfiles.load(ProfilePathManager.getCurrentProfile());
-        int requiredJavaVersion = 8;
-        if (version.javaVersion != null) requiredJavaVersion = version.javaVersion.majorVersion;
+        int requiredJavaVersion = getRecommendedJavaVersion(versionId, version);
         Tools.launchMinecraft(this, minecraftAccount, minecraftProfile, versionId, requiredJavaVersion);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
         Tools.runOnUiThread(() -> mServiceBinder.isActive = false);
+    }
+
+    /**
+     * Smart Java version recommendation based on Minecraft version and modloader type.
+     * Inspired by FCL's JavaManager.getSuitableJavaVersion()
+     */
+    private int getRecommendedJavaVersion(String versionId, JMinecraftVersionList.Version version) {
+        // 1. Trust the version manifest if it specifies a Java version
+        if (version.javaVersion != null && version.javaVersion.majorVersion > 0) {
+            return version.javaVersion.majorVersion;
+        }
+
+        // 2. Parse version number for inference
+        int inferredVersion = 8;
+        try {
+            String versionNum = versionId.replaceAll("[^0-9.]", "");
+            String[] parts = versionNum.split("\\.");
+            if (parts.length >= 2) {
+                int major = Integer.parseInt(parts[0]);
+                int minor = Integer.parseInt(parts[1]);
+                int patch = parts.length >= 3 ? Integer.parseInt(parts[2]) : 0;
+
+                if (major >= 1) {
+                    if (minor >= 21) inferredVersion = 21;
+                    else if (minor == 20 && patch >= 5) inferredVersion = 21;
+                    else if (minor >= 18) inferredVersion = 17;
+                    else if (minor >= 16) inferredVersion = 16;
+                    else if (minor >= 13) inferredVersion = 8;
+                }
+            }
+        } catch (Exception ignored) {
+            // Fallback to default
+        }
+
+        // 3. Check modloader requirements from profile
+        MinecraftProfile profile = LauncherProfiles.getCurrentProfile();
+        if (profile != null && profile.lastVersionId != null) {
+            String vid = profile.lastVersionId.toLowerCase();
+            // NeoForge 1.20.1+ typically needs Java 17+
+            // Forge 1.18+ needs Java 17
+            // Fabric 1.16+ generally works with Java 17
+            if (vid.contains("neoforge") || vid.contains("cleanroom")) {
+                inferredVersion = Math.max(inferredVersion, 17);
+            } else if (vid.contains("forge") && inferredVersion < 17) {
+                // Forge 1.16.5 and below can use Java 8, 1.17+ needs 17
+                if (inferredVersion >= 17) inferredVersion = 17;
+            }
+        }
+
+        return inferredVersion;
     }
 
     private void printLauncherInfo(String gameVersion, String javaArguments) {

@@ -32,7 +32,7 @@ public class AsyncVersionList {
             JMinecraftVersionList versionList = null;
             try {
                 if (!versionFile.exists() || (System.currentTimeMillis() > versionFile.lastModified() + 86400000)) {
-                    versionList = downloadVersionList(LauncherPreferences.PREF_VERSION_REPOS);
+                    versionList = downloadVersionList(Tools.getDownloadUrl(LauncherPreferences.PREF_VERSION_REPOS));
                 }
             } catch (Exception e) {
                 Log.e("AsyncVersionList", "Refreshing version list failed :" + e);

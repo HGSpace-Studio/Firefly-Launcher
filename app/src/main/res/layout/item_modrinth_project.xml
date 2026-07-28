@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_line"
+    android:paddingHorizontal="@dimen/_2sdp"
+    android:paddingVertical="@dimen/_2sdp"
+    android:layout_marginVertical="@dimen/padding_medium">
+
+    <ImageView
+        android:id="@+id/modrinth_icon"
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="@dimen/_65sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/modrinth_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_small"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@android:color/holo_blue_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="模组" />
+
+    <TextView
+        android:id="@+id/modrinth_title"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@id/modrinth_type"
+        app:layout_constraintStart_toEndOf="@id/modrinth_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="项目名称" />
+
+    <TextView
+        android:id="@+id/modrinth_description"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_medium"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_small"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/modrinth_icon"
+        app:layout_constraintTop_toBottomOf="@id/modrinth_title"
+        tools:text="项目描述文本" />
+
+    <TextView
+        android:id="@+id/modrinth_stats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_medium"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_small"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/modrinth_icon"
+        app:layout_constraintTop_toBottomOf="@id/modrinth_description"
+        tools:text="下载: 10000 | 关注: 500" />
+
+    <ViewStub
+        android:id="@+id/modrinth_detail_stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/dialog_modrinth_version"
+        app:layout_constraintTop_toBottomOf="@id/modrinth_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

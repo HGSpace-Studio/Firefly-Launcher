@@ -38,7 +38,7 @@ public class LauncherPreferences {
     public static boolean PREF_VERTYPE_OLDALPHA = false;
     public static boolean PREF_VERTYPE_OLDBETA = false;
     public static boolean PREF_HIDE_SIDEBAR = false;
-    public static boolean PREF_IGNORE_NOTCH = false;
+    public static boolean PREF_IGNORE_NOTCH = true;
     public static int PREF_NOTCH_SIZE = 0;
     public static float PREF_BUTTONSIZE = 100f;
     public static float PREF_MOUSESCALE = 100f;
@@ -87,7 +87,9 @@ public class LauncherPreferences {
     public static boolean FIX_Q3_BEHAVIOR = false;
 
     public static boolean PREF_VERIFY_MANIFEST = true;
-    public static String PREF_DOWNLOAD_SOURCE = "default";
+    public static String PREF_DOWNLOAD_SOURCE = "bmclapi";
+    public static boolean PREF_DOWNLOAD_MIRROR = true;
+    public static final String DEFAULT_DOWNLOAD_MIRROR = "bmclapi2.bangbang93.com";
     public static boolean PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = false;
     public static boolean PREF_VSYNC_IN_ZINK = true;
 
@@ -102,6 +104,13 @@ public class LauncherPreferences {
     public static boolean PREF_GAME_LANGUAGE_OVERRIDDEN = false;
     public static String PREF_GAME_LANGUAGE = ZHTools.getSystemLanguage();
     public static boolean PREF_MESA_INFO = false;
+
+    // 个性化设置
+    public static String PREF_THEME_ACCENT_COLOR = "blue";
+    public static boolean PREF_ENABLE_BACKGROUND_IMAGE = false;
+    public static boolean PREF_ENABLE_ANIMATIONS = true;
+    public static String PREF_MENU_STYLE = "grid";
+    public static int PREF_FONT_SIZE_MULTIPLIER = 100;
 
     // MobileGlues Settings
     public static String MG_GLSL_CACHE_SIZE = "30";
@@ -127,7 +136,7 @@ public class LauncherPreferences {
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
         PREF_MOUSESPEED = ((float) DEFAULT_PREF.getInt("mousespeed", 100)) / 100f;
         PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
-        PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
+        PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", true);
         PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
         PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
         PREF_VERTYPE_OLDALPHA = DEFAULT_PREF.getBoolean("vertype_oldalpha", false);
@@ -158,7 +167,8 @@ public class LauncherPreferences {
         PREF_DEADZONE_SCALE = ((float) DEFAULT_PREF.getInt("gamepad_deadzone_scale", 100)) / 100f;
         PREF_BIG_CORE_AFFINITY = DEFAULT_PREF.getBoolean("bigCoreAffinity", false);
         PREF_ZINK_PREFER_SYSTEM_DRIVER = DEFAULT_PREF.getBoolean("zinkPreferSystemDriver", false);
-        PREF_DOWNLOAD_SOURCE = DEFAULT_PREF.getString("downloadSource", "default");
+        PREF_DOWNLOAD_SOURCE = DEFAULT_PREF.getString("downloadSource", "bmclapi");
+        PREF_DOWNLOAD_MIRROR = DEFAULT_PREF.getBoolean("downloadMirror", true);
         PREF_VERIFY_MANIFEST = DEFAULT_PREF.getBoolean("verifyManifest", true);
         PREF_SKIP_NOTIFICATION_PERMISSION_CHECK = DEFAULT_PREF.getBoolean(PREF_KEY_SKIP_NOTIFICATION_CHECK, false);
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
@@ -170,6 +180,7 @@ public class LauncherPreferences {
         PREF_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("InitialFrameBuffer", false);
         PREF_GL_INITIAL_FRAMEBUFFER = DEFAULT_PREF.getBoolean("glInitialFrameBuffer", false);
         PREF_MESA_INFO = DEFAULT_PREF.getBoolean("osmesaInfo", false);
+        loadPersonalizePreferences();
         PREF_EXP_ENABLE_SYSTEM = DEFAULT_PREF.getBoolean("ebSystem", true);
         PREF_EXP_ENABLE_SPECIFIC = DEFAULT_PREF.getBoolean("ebSpecific", false);
         PREF_EXP_ENABLE_CUSTOM = DEFAULT_PREF.getBoolean("ebCustom", false);
@@ -215,6 +226,18 @@ public class LauncherPreferences {
             }
         }
         reloadRuntime();
+    }
+
+    /**
+     * 加载个性化偏好设置
+     */
+    public static void loadPersonalizePreferences() {
+        if (DEFAULT_PREF == null) return;
+        PREF_THEME_ACCENT_COLOR = DEFAULT_PREF.getString("themeAccentColor", "blue");
+        PREF_ENABLE_BACKGROUND_IMAGE = DEFAULT_PREF.getBoolean("enableBackgroundImage", false);
+        PREF_ENABLE_ANIMATIONS = DEFAULT_PREF.getBoolean("enableAnimations", true);
+        PREF_MENU_STYLE = DEFAULT_PREF.getString("menuStyle", "grid");
+        PREF_FONT_SIZE_MULTIPLIER = DEFAULT_PREF.getInt("fontSizeMultiplier", 100);
     }
 
     public static void reloadRuntime() {

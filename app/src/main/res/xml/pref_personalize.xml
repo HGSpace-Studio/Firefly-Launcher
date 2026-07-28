@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto">
+
+    <net.kdt.pojavlaunch.firefly.prefs.BackButtonPreference />
+
+    <PreferenceCategory android:title="主题颜色" app2:iconSpaceReserved="false">
+        <ListPreference
+            android:key="themeAccentColor"
+            android:title="强调色"
+            android:summary="选择启动器的主色调"
+            android:entries="@array/accent_color_names"
+            android:entryValues="@array/accent_color_values"
+            android:defaultValue="blue"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="背景" app2:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="enableBackgroundImage"
+            android:title="自定义背景"
+            android:summary="使用自定义图片作为启动器背景"
+            android:defaultValue="false"
+            app2:iconSpaceReserved="false" />
+        <Preference
+            android:key="selectBackgroundImage"
+            android:title="选择背景图片"
+            android:summary="从相册选择背景图片"
+            app2:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="界面" app2:iconSpaceReserved="false">
+        <SwitchPreference
+            android:key="enableAnimations"
+            android:title="界面动画"
+            android:summary="启用菜单展开/收起动画"
+            android:defaultValue="true"
+            app2:iconSpaceReserved="false" />
+        <ListPreference
+            android:key="menuStyle"
+            android:title="菜单样式"
+            android:summary="选择主界面菜单的展开方式"
+            android:entries="@array/menu_style_names"
+            android:entryValues="@array/menu_style_values"
+            android:defaultValue="grid"
+            app2:useSimpleSummaryProvider="true"
+            app2:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

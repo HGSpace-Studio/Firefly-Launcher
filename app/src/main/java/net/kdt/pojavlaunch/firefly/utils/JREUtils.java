@@ -211,6 +211,9 @@ public class JREUtils {
                 .append("/vendor/").append(libName).append(":")
                 .append("/vendor/").append(libName).append("/hw:")
                 .append(NATIVE_LIB_DIR);
+        // Add LWJGL natives path for correct native library loading
+        String lwjglVer = Tools.sLwjglVersion == null ? "3.3.3" : Tools.sLwjglVersion;
+        ldLibraryPath.append(String.format(":%s/lwjgl-%s-natives/%s", Tools.DIR_DATA, lwjglVer, Architecture.archAsStringAndroid(Architecture.getDeviceArchitecture())));
         LD_LIBRARY_PATH = ldLibraryPath.toString();
     }
 
@@ -645,7 +648,13 @@ public class JREUtils {
 
         // Force LWJGL to use the Freetype library intended for it, instead of using the one
         // that we ship with Java (since it may be older than what's needed)
-        userArgs.add("-Dorg.lwjgl.freetype.libname=" + NATIVE_LIB_DIR + "/libfreetype.so");
+        String freetypePath = Tools.lwjglNativesDir != null ? Tools.lwjglNativesDir + "/libfreetype.so" : NATIVE_LIB_DIR + "/libfreetype.so";
+        userArgs.add("-Dorg.lwjgl.freetype.libname=" + freetypePath);
+
+        // Additional LWJGL stability fixes from Amethyst
+        userArgs.add("-Dorg.lwjgl.spvc.libname=spirv-cross-c-shared");
+        userArgs.add("-Dorg.lwjgl.system.allocator=system");
+        userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());
 
         // Adds/changes methods for LWJGL2 compatibility
         File methodsInjectorAgent = new File(Tools.DIR_DATA, "methods_injector_agent/methods_injector_agent.jar");
@@ -724,8 +733,8 @@ public class JREUtils {
                 "-Duser.language=" + System.getProperty("user.language"),
                 "-Dos.name=Linux",
                 "-Dos.version=Android-" + Build.VERSION.RELEASE,
-                "-Dpojav.path.minecraft=" + ProfilePathHome.getGameHome(),
-                "-Dpojav.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
+                "-Dfirefly.path.minecraft=" + ProfilePathHome.getGameHome(),
+                "-Dfirefly.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 
                 "-Dorg.lwjgl.vulkan.libname=libvulkan.so",

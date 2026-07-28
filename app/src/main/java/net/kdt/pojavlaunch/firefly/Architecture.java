@@ -16,7 +16,7 @@ public class Architecture {
     public static final long ADDRESS_SPACE_LIMIT_32_BIT = 0xbfffffffL;
     /*
      * Technically, this is supposed to be 48 bits on x86_64, but nobody's allocating
-     * 524288 terabytes of RAM on Pojav any time soon.
+     * 524288 terabytes of RAM on Firefly any time soon.
      */
     public static final long ADDRESS_SPACE_LIMIT_64_BIT = 0x7fffffffffL;
 
@@ -104,6 +104,20 @@ public class Architecture {
     public static String archAsString(int arch) {
         if (arch == ARCH_ARM64) return "arm64";
         if (arch == ARCH_ARM) return "arm";
+        if (arch == ARCH_X86_64) return "x86_64";
+        if (arch == ARCH_X86) return "x86";
+        return "UNSUPPORTED_ARCH";
+    }
+
+    /**
+     * Convert to an Android ABI string for native library paths.
+     *
+     * @param arch The architecture as an int.
+     * @return "arm64-v8a" || "armeabi-v7a" || "x86_64" || "x86" || "UNSUPPORTED_ARCH"
+     */
+    public static String archAsStringAndroid(int arch) {
+        if (arch == ARCH_ARM64) return "arm64-v8a";
+        if (arch == ARCH_ARM) return "armeabi-v7a";
         if (arch == ARCH_X86_64) return "x86_64";
         if (arch == ARCH_X86) return "x86";
         return "UNSUPPORTED_ARCH";

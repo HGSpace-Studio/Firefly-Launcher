@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 
 public class DownloadMirror {
     public static final int DOWNLOAD_CLASS_LIBRARIES = 0;
@@ -19,18 +20,18 @@ public class DownloadMirror {
     public static final int DOWNLOAD_CLASS_ASSETS = 2;
 
     private static final String URL_PROTOCOL_TAIL = "://";
+
     private static final String[] MIRROR_BMCLAPI = {
             "https://bmclapi2.bangbang93.com/maven",
             "https://bmclapi2.bangbang93.com",
             "https://bmclapi2.bangbang93.com/assets"
     };
-    /*
+
     private static final String[] MIRROR_MCBBS = {
             "https://download.mcbbs.net/maven",
             "https://download.mcbbs.net",
             "https://download.mcbbs.net/assets"
     };
-    */
 
     /**
      * Download a file with the current mirror. If the file is missing on the mirror,
@@ -49,9 +50,9 @@ public class DownloadMirror {
             DownloadUtils.downloadFileMonitored(getMirrorMapping(downloadClass, urlInput),
                     outputFile, buffer, monitor);
             return;
-        } catch (FileNotFoundException e) {
-            Log.w("DownloadMirror", "Cannot find the file on the mirror", e);
-            Log.i("DownloadMirror", "Failling back to default source");
+        } catch (FileNotFoundException | SocketTimeoutException e) {
+            Log.w("DownloadMirror", "Cannot find the file on the mirror, or mirror timed out", e);
+            Log.i("DownloadMirror", "Falling back to default source");
         }
         DownloadUtils.downloadFileMonitored(urlInput, outputFile, buffer, monitor);
     }
@@ -70,9 +71,9 @@ public class DownloadMirror {
             DownloadUtils.downloadFile(getMirrorMapping(downloadClass, urlInput),
                     outputFile);
             return;
-        } catch (FileNotFoundException e) {
-            Log.w("DownloadMirror", "Cannot find the file on the mirror", e);
-            Log.i("DownloadMirror", "Failling back to default source");
+        } catch (FileNotFoundException | SocketTimeoutException e) {
+            Log.w("DownloadMirror", "Cannot find the file on the mirror, or mirror timed out", e);
+            Log.i("DownloadMirror", "Falling back to default source");
         }
         DownloadUtils.downloadFile(urlInput, outputFile);
     }
@@ -100,7 +101,7 @@ public class DownloadMirror {
         String resultString = null;
         try {
             resultString = DownloadUtils.downloadString(getMirrorMapping(downloadClass,urlInput));
-        }catch (FileNotFoundException e) {
+        }catch (FileNotFoundException | SocketTimeoutException e) {
             Log.w("DownloadMirror", "Failed to download string from mirror", e);
         }
         if(Tools.isValidString(resultString)) {
@@ -122,7 +123,8 @@ public class DownloadMirror {
 
     private static String[] getMirrorSettings() {
         switch (LauncherPreferences.PREF_DOWNLOAD_SOURCE) {
-            // case "mcbbs": return MIRROR_MCBBS;
+            case "mcbbs":
+                return MIRROR_MCBBS;
             case "bmclapi":
                 return MIRROR_BMCLAPI;
             case "default":

@@ -425,4 +425,6 @@
     <string name="mc_news_title">Minecraft 新闻</string>
     <string name="mc_news_loading">正在加载新闻...</string>
 
+    <string name="modrinth_search_hint">搜索 Mod、资源包、光影...</string>
+
 </resources>

@@ -17,6 +17,14 @@
             android:title="@string/mcl_setting_check_libraries"
             />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="downloadMirror"
+            android:summary="使用 BMCLAPI 镜像源下载游戏文件（国内推荐开启）"
+            android:title="BMCLAPI 镜像源"
+            app2:iconSpaceReserved="false"
+            />
+
         <SwitchPreference
             android:defaultValue="false"
             android:key="arc_capes"

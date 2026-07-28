@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_glass_dark"
+    android:paddingHorizontal="@dimen/fragment_padding_medium">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modrinth_search_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationZ="10dp"
+        android:background="@drawable/background_overlay"
+        android:paddingHorizontal="@dimen/padding_medium"
+        android:paddingVertical="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/fragment_padding_medium"
+        android:layout_marginHorizontal="@dimen/fragment_padding_medium"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/modrinth_search_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line"
+            android:textSize="@dimen/_13ssp"
+            android:translationZ="2dp"
+            android:ems="10"
+            android:hint="@string/modrinth_search_hint"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:paddingHorizontal="@dimen/padding_heavy"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/modrinth_search_button" />
+
+        <ImageButton
+            android:id="@+id/modrinth_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:minWidth="@dimen/_38sdp"
+            android:src="@drawable/ic_search"
+            android:paddingHorizontal="@dimen/padding_medium"
+            app:layout_constraintEnd_toStartOf="@id/modrinth_filter_button"
+            app:layout_constraintTop_toTopOf="@id/modrinth_search_edittext"
+            app:layout_constraintBottom_toBottomOf="@id/modrinth_search_edittext" />
+
+        <ImageButton
+            android:id="@+id/modrinth_filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:minWidth="@dimen/_38sdp"
+            android:src="@drawable/ic_filter"
+            android:paddingHorizontal="@dimen/padding_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/modrinth_search_edittext"
+            app:layout_constraintBottom_toBottomOf="@id/modrinth_search_edittext" />
+
+        <Spinner
+            android:id="@+id/modrinth_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_medium"
+            android:minHeight="@dimen/_30sdp"
+            app:layout_constraintTop_toBottomOf="@id/modrinth_search_edittext" />
+
+        <ProgressBar
+            android:id="@+id/modrinth_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/modrinth_type_spinner" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/modrinth_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/_15sdp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/modrinth_search_overlay"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/modrinth_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

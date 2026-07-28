@@ -1,7 +1,10 @@
 package net.kdt.pojavlaunch.firefly.prefs;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.preference.Preference;
 
@@ -27,6 +30,7 @@ public class BackButtonPreference extends Preference {
         if (getIcon() == null) {
             setIcon(R.drawable.ic_arrow_back_white);
         }
+        setLayoutResource(R.layout.preference_item_back_firefly);
     }
 
 

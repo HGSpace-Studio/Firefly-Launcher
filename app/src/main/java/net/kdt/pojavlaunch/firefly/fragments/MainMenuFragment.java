@@ -15,22 +15,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.animation.ValueAnimator;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import net.kdt.pojavlaunch.firefly.PojavApplication;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.StringReader;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,12 +45,14 @@ import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
 import net.kdt.pojavlaunch.firefly.extra.ExtraCore;
 import net.kdt.pojavlaunch.firefly.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.firefly.progresskeeper.TaskCountListener;
+import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
 
 public class MainMenuFragment extends Fragment implements TaskCountListener {
     public static final String TAG = "MainMenuFragment";
     private static final int REQUEST_CODE_PERMISSIONS = 0;
     private mcVersionSpinner mVersionSpinner;
     private boolean mTasksRunning;
+    private ValueAnimator mMenuAnimator;
 
     public MainMenuFragment() {
         super(R.layout.fragment_launcher);
@@ -69,6 +65,8 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
         Button mStartTerminalButton = view.findViewById(R.id.start_terminal_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
+        Button mMoreButton = view.findViewById(R.id.more_button);
+        View mMoreMenuContainer = view.findViewById(R.id.more_menu_container);
 
         ImageButton mPathManagerButton = view.findViewById(R.id.path_manager_button);
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
@@ -79,18 +77,71 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
             Tools.swapFragment(requireActivity(), AboutFragment.class, AboutFragment.TAG, null);
         });
 
-        // Load Minecraft news asynchronously
-        TextView newsTitle = view.findViewById(R.id.news_title);
-        TextView newsSummary = view.findViewById(R.id.news_summary);
-        loadMinecraftNews(newsTitle, newsSummary);
+        // Set welcome text with current account username
+        TextView welcomeText = view.findViewById(R.id.welcome_text);
+        updateWelcomeText(welcomeText);
         Button mModpackButton = view.findViewById(R.id.modpack_button);
         mModpackButton.setOnClickListener(v -> {
-            Activity launcheractivity = requireActivity();
-            if (!(launcheractivity instanceof LauncherActivity))
-                throw new IllegalStateException("Cannot import modpack without LauncherActivity");
-            ((LauncherActivity) launcheractivity).modpackImportLauncher.launch(null);
+            Tools.swapFragment(requireActivity(), ModpackCreateFragment.class,
+                    ModpackCreateFragment.TAG, null);
         });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
+
+        // "更多"折叠菜单，带动画展开/收起
+        mMoreButton.setOnClickListener(v -> {
+            if (mMenuAnimator != null && mMenuAnimator.isRunning()) {
+                mMenuAnimator.cancel();
+            }
+
+            boolean isExpanding = mMoreMenuContainer.getVisibility() != View.VISIBLE;
+            if (isExpanding) {
+                mMoreMenuContainer.setVisibility(View.VISIBLE);
+                mMoreMenuContainer.setAlpha(0f);
+                mMoreMenuContainer.measure(
+                        View.MeasureSpec.makeMeasureSpec(mMoreMenuContainer.getWidth(), View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                final int targetHeight = mMoreMenuContainer.getMeasuredHeight();
+                mMoreMenuContainer.getLayoutParams().height = 0;
+                mMoreMenuContainer.requestLayout();
+
+                mMenuAnimator = ValueAnimator.ofFloat(0f, 1f);
+                mMenuAnimator.setDuration(300);
+                mMenuAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+                mMenuAnimator.addUpdateListener(anim -> {
+                    float fraction = (float) anim.getAnimatedValue();
+                    mMoreMenuContainer.getLayoutParams().height = (int) (targetHeight * fraction);
+                    mMoreMenuContainer.setAlpha(fraction);
+                    mMoreMenuContainer.requestLayout();
+                });
+                mMenuAnimator.start();
+            } else {
+                final int startHeight = mMoreMenuContainer.getHeight();
+                mMenuAnimator = ValueAnimator.ofFloat(1f, 0f);
+                mMenuAnimator.setDuration(300);
+                mMenuAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+                mMenuAnimator.addUpdateListener(anim -> {
+                    float fraction = (float) anim.getAnimatedValue();
+                    mMoreMenuContainer.getLayoutParams().height = (int) (startHeight * fraction);
+                    mMoreMenuContainer.setAlpha(fraction);
+                    mMoreMenuContainer.requestLayout();
+                });
+                mMenuAnimator.addListener(new android.animation.Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(android.animation.Animator animation) {}
+                    @Override
+                    public void onAnimationEnd(android.animation.Animator animation) {
+                        mMoreMenuContainer.setVisibility(View.GONE);
+                        mMoreMenuContainer.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    }
+                    @Override
+                    public void onAnimationCancel(android.animation.Animator animation) {}
+                    @Override
+                    public void onAnimationRepeat(android.animation.Animator animation) {}
+                });
+                mMenuAnimator.start();
+            }
+        });
+
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
         mInstallJarButton.setOnLongClickListener(v -> {
             runInstallerWithConfirmation(true);
@@ -183,51 +234,18 @@ public class MainMenuFragment extends Fragment implements TaskCountListener {
                 .show();
     }
 
-    private void loadMinecraftNews(TextView newsTitle, TextView newsSummary) {
-        PojavApplication.sExecutorService.execute(() -> {
-            try {
-                OkHttpClient client = new OkHttpClient();
-                // 使用 Minecraft 版本清单 API 获取最新版本信息
-                Request request = new Request.Builder()
-                        .url("https://launchermeta.mojang.com/mc/game/version_manifest.json")
-                        .build();
-                Response response = client.newCall(request).execute();
-                String jsonString = response.body().string();
-
-                // 简单解析 JSON 获取最新版本信息
-                // 格式: {"latest":{"release":"1.21","snapshot":"24w21a"},"versions":[...]}
-                int latestIndex = jsonString.indexOf("\"latest\"");
-                if (latestIndex != -1) {
-                    int releaseIndex = jsonString.indexOf("\"release\":\"", latestIndex);
-                    if (releaseIndex != -1) {
-                        releaseIndex += 11; // 跳过 "release":"
-                        int releaseEnd = jsonString.indexOf("\"", releaseIndex);
-                        String releaseVersion = jsonString.substring(releaseIndex, releaseEnd);
-
-                        int snapshotIndex = jsonString.indexOf("\"snapshot\":\"", latestIndex);
-                        String snapshotVersion = "";
-                        if (snapshotIndex != -1) {
-                            snapshotIndex += 12; // 跳过 "snapshot":"
-                            int snapshotEnd = jsonString.indexOf("\"", snapshotIndex);
-                            snapshotVersion = jsonString.substring(snapshotIndex, snapshotEnd);
-                        }
-
-                        final String title = "Minecraft " + releaseVersion;
-                        final String summary = "最新正式版: " + releaseVersion + "\n最新快照: " + snapshotVersion;
-                        runOnUiThread(() -> {
-                            newsTitle.setText(title);
-                            newsSummary.setText(summary);
-                        });
-                    }
-                }
-            } catch (Exception e) {
-                // 加载失败时显示默认信息
-                runOnUiThread(() -> {
-                    newsTitle.setText("Minecraft 新闻");
-                    newsSummary.setText("点击按钮查看官方动态");
-                });
+    private void updateWelcomeText(TextView welcomeText) {
+        Activity activity = requireActivity();
+        if (activity instanceof LauncherActivity) {
+            MinecraftAccount account = ((LauncherActivity) activity).getSelectedAccount();
+            if (account != null) {
+                welcomeText.setText("欢迎, " + account.username);
+            } else {
+                welcomeText.setText("欢迎");
             }
-        });
+        } else {
+            welcomeText.setText("欢迎");
+        }
     }
 
     private interface RequestPermissions {

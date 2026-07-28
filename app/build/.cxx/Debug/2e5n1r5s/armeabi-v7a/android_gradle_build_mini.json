@@ -1,0 +1,278 @@
+{
+  "buildFiles": [
+    "/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+    "/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+      "NDK_PROJECT_PATH\u003dnull",
+      "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+      "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+      "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+      "APP_ABI\u003darmeabi-v7a",
+      "NDK_ALL_ABIS\u003darmeabi-v7a",
+      "NDK_DEBUG\u003d1",
+      "APP_PLATFORM\u003dandroid-26",
+      "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+      "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+    "NDK_PROJECT_PATH\u003dnull",
+    "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+    "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+    "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+    "APP_ABI\u003darmeabi-v7a",
+    "NDK_ALL_ABIS\u003darmeabi-v7a",
+    "NDK_DEBUG\u003d1",
+    "APP_PLATFORM\u003dandroid-26",
+    "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+    "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "pojavexec-debug-armeabi-v7a": {
+      "artifactName": "pojavexec",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpojavexec.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpojavexec.so",
+      "runtimeFiles": []
+    },
+    "OSMesaInfo-debug-armeabi-v7a": {
+      "artifactName": "OSMesaInfo",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libOSMesaInfo.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libOSMesaInfo.so",
+      "runtimeFiles": []
+    },
+    "awt_xawt-debug-armeabi-v7a": {
+      "artifactName": "awt_xawt",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libawt_xawt.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libawt_xawt.so",
+      "runtimeFiles": []
+    },
+    "awt_headless-debug-armeabi-v7a": {
+      "artifactName": "awt_headless",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libawt_headless.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libawt_headless.so",
+      "runtimeFiles": []
+    },
+    "driver_helper-debug-armeabi-v7a": {
+      "artifactName": "driver_helper",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libdriver_helper.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libdriver_helper.so",
+      "runtimeFiles": []
+    },
+    "linkerhook-debug-armeabi-v7a": {
+      "artifactName": "linkerhook",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/liblinkerhook.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/liblinkerhook.so",
+      "runtimeFiles": []
+    },
+    "bridge_config-debug-armeabi-v7a": {
+      "artifactName": "bridge_config",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libbridge_config.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libbridge_config.so",
+      "runtimeFiles": []
+    },
+    "glxshim-debug-armeabi-v7a": {
+      "artifactName": "glxshim",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libglxshim.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libglxshim.so",
+      "runtimeFiles": []
+    },
+    "pojavexec_awt-debug-armeabi-v7a": {
+      "artifactName": "pojavexec_awt",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpojavexec_awt.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpojavexec_awt.so",
+      "runtimeFiles": []
+    },
+    "br_common-debug-armeabi-v7a": {
+      "artifactName": "br_common",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libbr_common.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libbr_common.so",
+      "runtimeFiles": []
+    },
+    "native_hook-debug-armeabi-v7a": {
+      "artifactName": "native_hook",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libnative_hook.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libnative_hook.so",
+      "runtimeFiles": []
+    },
+    "pgw-debug-armeabi-v7a": {
+      "artifactName": "pgw",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/armeabi-v7a",
+        "APP_ABI\u003darmeabi-v7a",
+        "NDK_ALL_ABIS\u003darmeabi-v7a",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpgw.so"
+      ],
+      "abi": "armeabi-v7a",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/armeabi-v7a/libpgw.so",
+      "runtimeFiles": []
+    }
+  }
+}

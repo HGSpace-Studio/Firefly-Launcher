@@ -96,7 +96,7 @@
     <string name="setting_set_resolution_too_big">The current resolution is too large, maximum allowable size is %d</string>
     <string name="setting_set_resolution_too_small">The current resolution is too small, at least %d is required</string>
     <string name="setting_set_resolution_outofrange">The input value %s is out of the acceptable range</string>
-    <!-- Pojav Zenith Horizon -->
+    <!-- Firefly -->
     <string name="zh_setting_java_memory_desc">Control how much memory is allocated to Minecraft</string>
     <string name="zh_setting_java_memory_info">Current memory usage: %s / %s, Free memory size: %s</string>
     <string name="zh_setting_java_memory_max">Maximum allowable memory size: %s</string>

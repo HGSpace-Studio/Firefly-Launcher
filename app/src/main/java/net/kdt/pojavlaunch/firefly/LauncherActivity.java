@@ -8,7 +8,8 @@ import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,14 +32,12 @@ import com.firefly.feature.UpdateLauncher;
 import com.kdt.mcgui.ProgressLayout;
 import com.kdt.mcgui.mcAccountSpinner;
 
-import net.kdt.pojavlaunch.firefly.authenticator.listener.DoneListener;
-import net.kdt.pojavlaunch.firefly.authenticator.listener.ErrorListener;
-import net.kdt.pojavlaunch.firefly.authenticator.microsoft.MicrosoftBackgroundLogin;
 import net.kdt.pojavlaunch.firefly.contracts.OpenDocumentWithExtension;
 import net.kdt.pojavlaunch.firefly.extra.ExtraConstants;
 import net.kdt.pojavlaunch.firefly.extra.ExtraCore;
 import net.kdt.pojavlaunch.firefly.extra.ExtraListener;
 import net.kdt.pojavlaunch.firefly.fragments.MainMenuFragment;
+import net.kdt.pojavlaunch.firefly.fragments.MicrosoftLoginFragment;
 import net.kdt.pojavlaunch.firefly.fragments.SelectAuthFragment;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.firefly.lifecycle.ContextAwareDoneListener;
@@ -54,19 +53,16 @@ import net.kdt.pojavlaunch.firefly.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.firefly.tasks.AsyncVersionList;
 import net.kdt.pojavlaunch.firefly.tasks.MinecraftDownloader;
 import net.kdt.pojavlaunch.firefly.utils.NotificationUtils;
+import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
+import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
+import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
 import net.kdt.pojavlaunch.firefly.modloaders.modpacks.api.CommonApi;
 import net.kdt.pojavlaunch.firefly.modloaders.modpacks.api.ModLoader;
 import net.kdt.pojavlaunch.firefly.modloaders.modpacks.api.NotificationDownloadListener;
-import net.kdt.pojavlaunch.firefly.value.launcherprofiles.LauncherProfiles;
-import net.kdt.pojavlaunch.firefly.value.launcherprofiles.MinecraftProfile;
-import net.kdt.pojavlaunch.firefly.value.MinecraftAccount;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.security.NoSuchAlgorithmException;
+import java.lang.ref.WeakReference;
 
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
@@ -75,6 +71,7 @@ public class LauncherActivity extends BaseActivity {
             registerForActivityResult(new OpenDocumentWithExtension("jar"), (data) -> {
                 if (data != null) Tools.launchModInstaller(this, data);
             });
+
     public final ActivityResultLauncher<Object> modpackImportLauncher =
             registerForActivityResult(new OpenDocumentWithExtension(new String[]{"zip", "mrpack"}), (data) -> {
                 if (data != null) {
@@ -101,6 +98,10 @@ public class LauncherActivity extends BaseActivity {
     private ProgressServiceKeeper mProgressServiceKeeper;
     private ModloaderInstallTracker mInstallTracker;
     private NotificationManager mNotificationManager;
+
+    public MinecraftAccount getSelectedAccount() {
+        return mAccountSpinner.getSelectedAccount();
+    }
 
     /* Allows to switch from one button "type" to another */
     private final FragmentManager.FragmentLifecycleCallbacks mFragmentCallbackListener = new FragmentManager.FragmentLifecycleCallbacks() {
@@ -145,29 +146,6 @@ public class LauncherActivity extends BaseActivity {
 
     private final ExtraListener<Boolean> mSkipDownloadMinecraft = (key, value) -> {
         mLaunchGame(false);
-        return false;
-    };
-
-    /* Listener for Microsoft login callback from WebView */
-    private final ExtraListener mMicrosoftLoginListener = (key, value) -> {
-        if (!(value instanceof Uri)) return false;
-        Uri uri = (Uri) value;
-        String code = uri.getQueryParameter("code");
-        if (code == null) {
-            Toast.makeText(this, "Failed to get authorization code", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        MicrosoftBackgroundLogin msLogin = new MicrosoftBackgroundLogin(false, code);
-        msLogin.performLogin(
-                null,
-                (DoneListener) account -> {
-                    // Login succeeded, pass the account to mcAccountSpinner via ExtraCore
-                    ExtraCore.setValue(ExtraConstants.MICROSOFT_LOGIN_TODO, account);
-                },
-                (ErrorListener) error -> {
-                    Tools.showError(this, error);
-                }
-        );
         return false;
     };
 
@@ -255,6 +233,7 @@ public class LauncherActivity extends BaseActivity {
         );
         getWindow().setBackgroundDrawable(null);
         bindViews();
+        loadCustomBackground();
         checkNotificationPermission();
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         ProgressKeeper.addTaskCountListener(mDoubleLaunchPreventionListener);
@@ -268,7 +247,6 @@ public class LauncherActivity extends BaseActivity {
         // ExtraCore.addExtraListener(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
         ExtraCore.addExtraListener(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
         ExtraCore.addExtraListener(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
-        ExtraCore.addExtraListener(ExtraConstants.MICROSOFT_LOGIN_TODO, mMicrosoftLoginListener);
 
         new AsyncVersionList().getVersionList(versions -> ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions), false);
 
@@ -277,6 +255,7 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_MINECRAFT);
         mProgressLayout.observe(ProgressLayout.UNPACK_RUNTIME);
         mProgressLayout.observe(ProgressLayout.INSTALL_MODPACK);
+        mProgressLayout.observe(ProgressLayout.AUTHENTICATE_MICROSOFT);
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
         // 初始化并调用 UpdateLauncher 进行更新检查
         UpdateLauncher updateLauncher = new UpdateLauncher(this);
@@ -288,6 +267,8 @@ public class LauncherActivity extends BaseActivity {
         super.onResume();
         ContextExecutor.setActivity(this);
         mInstallTracker.attach();
+        // 重新加载背景（用户可能刚换了背景图片）
+        loadCustomBackground();
     }
 
     @Override
@@ -295,13 +276,6 @@ public class LauncherActivity extends BaseActivity {
         super.onPause();
         ContextExecutor.clearActivity();
         mInstallTracker.detach();
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Tools.updateWindowSize(this);
-        Tools.setFullscreen(this, setFullscreen());
     }
 
     @Override
@@ -326,7 +300,6 @@ public class LauncherActivity extends BaseActivity {
         // ExtraCore.removeExtraListenerFromValue(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.START_DOWNLOADER, mStartDownloadMinecraft);
         ExtraCore.removeExtraListenerFromValue(ExtraConstants.SKIP_DOWNLOADER, mSkipDownloadMinecraft);
-        ExtraCore.removeExtraListenerFromValue(ExtraConstants.MICROSOFT_LOGIN_TODO, mMicrosoftLoginListener);
 
         getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentCallbackListener);
     }
@@ -336,6 +309,13 @@ public class LauncherActivity extends BaseActivity {
      */
     @Override
     public void onBackPressed() {
+        MicrosoftLoginFragment fragment = (MicrosoftLoginFragment) getVisibleFragment(MicrosoftLoginFragment.TAG);
+        if (fragment != null) {
+            if (fragment.canGoBack()) {
+                fragment.goBack();
+                return;
+            }
+        }
         // Check if we are at the root then
         if (getVisibleFragment("ROOT") != null) {
             finish();
@@ -420,6 +400,33 @@ public class LauncherActivity extends BaseActivity {
         mSettingsButton = findViewById(R.id.setting_button);
         mAccountSpinner = findViewById(R.id.account_spinner);
         mProgressLayout = findViewById(R.id.progress_layout);
+    }
+
+    /**
+     * 加载用户自定义背景图片，如果启用了的话；否则使用默认的 bg_phone_dark
+     */
+    private void loadCustomBackground() {
+        View rootView = findViewById(android.R.id.content);
+        if (rootView == null) return;
+        try {
+            LauncherPreferences.loadPersonalizePreferences();
+            if (LauncherPreferences.PREF_ENABLE_BACKGROUND_IMAGE) {
+                String bgPath = LauncherPreferences.DEFAULT_PREF.getString("backgroundImagePath", "");
+                if (!bgPath.isEmpty()) {
+                    Uri uri = Uri.parse(bgPath);
+                    android.graphics.Bitmap bitmap = BitmapFactory.decodeStream(
+                            getContentResolver().openInputStream(uri));
+                    if (bitmap != null) {
+                        rootView.setBackground(new BitmapDrawable(getResources(), bitmap));
+                        return;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.w("LauncherActivity", "Failed to load custom background: " + e.getMessage());
+        }
+        // 默认背景
+        rootView.setBackgroundResource(R.drawable.bg_phone_dark);
     }
 
 }

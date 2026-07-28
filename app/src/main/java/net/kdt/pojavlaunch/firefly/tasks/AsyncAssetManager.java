@@ -78,11 +78,9 @@ public class AsyncAssetManager {
             String outVersionFile = DIR + "/version";
             File versionFile = new File(DIR + "/version");
             Tools.copyAssetFile(ctx, assetsVersionFile, versionFile.getParent(), false);
+            // Use Tools.read() for reliable reading instead of in.available()
             InputStream in = ctx.getAssets().open(assetsVersionFile);
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            int newVersion = Integer.parseInt(new String(b));
-            in.close();
+            int newVersion = Integer.parseInt(Tools.read(in).trim());
             versionFile.getParentFile().mkdirs();
             int oldVersion = Integer.parseInt(Tools.read(outVersionFile).trim());
             overwrite = newVersion > oldVersion;
@@ -98,11 +96,9 @@ public class AsyncAssetManager {
         try {
             File path = new File(Tools.DIR_GAME_HOME + "/login/version");
             Tools.copyAssetFile(ctx, "login/version", path.getParent(), false);
+            // Use Tools.read() for reliable reading instead of in.available()
             InputStream in = ctx.getAssets().open("login/version");
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            int newVersion = Integer.parseInt(new String(b));
-            in.close();
+            int newVersion = Integer.parseInt(Tools.read(in).trim());
             path.getParentFile().mkdirs();
             int oldVersion = Integer.parseInt(Tools.read(Tools.DIR_GAME_HOME + "/login/version").trim());
             boolean overwrite = newVersion > oldVersion;

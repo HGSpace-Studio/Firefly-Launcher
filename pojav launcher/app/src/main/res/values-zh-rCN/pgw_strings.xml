@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App New Annotation -->
+    <string name="microsoft_login_fragment">开始登陆!</string>
+    <string name="customctrl_visibility_title">可见性</string>
+    <string name="customctrl_visibility_ingame">游戏内显示</string>
+    <string name="customctrl_visibility_in_menus">游戏外显示</string>
+    <string name="preference_category_microsoft_account_title">微软账号</string>
+    <string name="preference_category_local_account_title">离线账号</string>
+    <string name="controller_button_start">开始</string>
+    <string name="controller_button_select">选择</string>
+    <string name="controller_button_trigger_left">左触发键</string>
+    <string name="controller_button_trigger_right">右触发键</string>
+    <string name="controller_button_shoulder_left">左肩键</string>
+    <string name="controller_button_shoulder_right">右肩键</string>
+    <string name="controller_direction_forward">摇杆上</string>
+    <string name="controller_direction_backward">摇杆下</string>
+    <string name="controller_direction_left">摇杆左</string>
+    <string name="controller_direction_right">摇杆右</string>
+    <string name="controller_stick_press_l">左摇杆（按下）</string>
+    <string name="controller_stick_press_r">右摇杆（按下）</string>
+    <string name="controller_dpad_up">方向键上</string>
+    <string name="controller_dpad_down">方向键下</string>
+    <string name="controller_dpad_left">方向键左</string>
+    <string name="controller_dpad_right">方向键右</string>
+    <string name="controller_remapper_exit_part1">按住</string>
+    <string name="controller_remapper_exit_part2">退出</string>
+    <string name="controller_remapper_operating_mode">当前模式</string>
+    <string name="controller_remapper_expand_entry">展开以更改键码</string>
+    <string name="preference_remap_controller_title">更改控制器按键绑定</string>
+    <string name="preference_remap_controller_description">允许您修改绑定到每个控制器按键的键盘按键</string>
+    <string name="mcn_signal_title">应用/游戏 因致命信号 %d 中止, 请查看 latestlog.txt 以获取更多详细信息</string>
+    <string name="local_login_bad_username_title">用户名不符合要求</string>
+    <string name="local_login_bad_username_text">用户名长度必须在 3 到 16 个字符之间，并且只能包含拉丁字母、阿拉伯数字和下划线。</string>
+    <!-- Pojav Glow·Worm -->
+    <string name="preference_enable_log_output_desc">在应用正式开始运行游戏时，开启日志输出界面</string>
+    <string name="preference_enable_log_output_title">启动游戏时打开日志输出</string>
+    <string name="preference_category_custom_path">自定义路径</string>
+    <string name="mcl_setting_current_fps">显示当前帧率</string>
+    <string name="mcl_setting_renderer_vgpu">vgpu - (1.16.5 及以下版本可用，速度较快)</string>
+    <string name="mcl_setting_renderer_virgl">virglrenderer - (所有版本, 中)</string>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno) - (所有版本, 中)</string>
+    <string name="mcl_setting_renderer_panfrost">Panfrost (Mali)</string>
+    <string name="app_start_toast">#欢迎使用Pojav Glow·Worm!!!!</string>
+    <string name="preference_mouse_description">设置游戏内鼠标图标</string>
+    <string name="preference_mouse_title">鼠标图标自定义</string>
+    <string name="notif_mouse">设置完成</string>
+    <string name="preference_mouse_title1">删除设置的鼠标图标</string>
+    <string name="notif_mouse1">删除成功</string>
+    <string name="preference_quit_launcher_title">退出启动器</string>
+    <string name="preference_quit_launcher">在应用正式开始运行游戏时,是否退出启动器</string>
+    <string name="preference_fix_q3_behavior_title">修复 Q3 行为</string>
+    <string name="preference_fix_q3_behavior_desc">修复 740v3 上的 Q3 行为</string>
+    <string name="worning_system_vulkan_adreno">我们检测到您的设备为 AdrenoGPU ,打开该选项可能会导致 Zink 渲染器无法正常使用\n你真的确定你要开启这个选项?</string>
+    <string name="neoforge_dl_searching">正在搜索 NeoForge 版本号</string>  
+    <string name="neoforge_dl_no_installer">抱歉, 此版本的 NeoForge 没有安装程序, 当前尚不支持</string>  
+    <string name="neoforge_dl_select_version">选择 NeoForge 版本</string>
+    <string name="modloader_dl_install_neoforge">创建 NeoForge 配置</string>
+    <!-- Terminal -->
+    <string name="main_terminal">Terminal</string>
+    <string name="main_termianl_init">初始化</string>
+    <string name="main_terminal_loading">加载中...</string>
+    <!-- Other login -->
+    <string name="other_login_api">外置登录</string>
+    <string name="other_login_authentication_server">身份验证服务器</string>
+    <string name="other_login_register">注册</string>
+    <string name="other_login_email">邮箱或用户名</string>
+    <string name="other_login_password">密码</string>
+    <string name="other_login">登录</string>
+    <string name="other_login_aut">请选择认证服务器类型</string>
+    <string name="other_login_tip">提示</string>
+    <string name="other_login_confirm">确定</string>
+    <string name="other_login_cancel">取消</string>
+    <string name="other_login_role">请选择角色</string>
+    <string name="other_login_warning">警告</string>
+    <string name="other_login_address">请输入Yggdrasil API 认证服务器地址</string>
+    <string name="other_login_setid">请输入32位服务器ID</string>
+    <string name="other_login_pass">统一通行证</string>
+    <string name="other_login_external">外置登陆</string>
+    <string name="other_login_server_error">无认证服务器</string>
+    <string name="other_login_server_connect_error">无法连接认证服务器, 请检查网络并确认你输入了正确的地址.</string>
+    <!-- Renderer Experimental Setup -->
+    <string name="preference_exp_title">实验性设置</string>
+    <string name="preference_exp_description">非专业人员请勿使用</string>
+    <string name="preference_category_renderer_experimental_settings">渲染器实验性设置</string>
+    <string name="preference_renderer_setup_title">启用渲染器实验性设置</string>
+    <string name="preference_renderer_setup">更多的渲染器特定设置</string>
+    <string name="preference_bridge_config_title">桥接配置</string>
+    <string name="preference_osm_initial_framebuffer_title">OSM初始帧缓冲区</string>
+    <string name="preference_gl_initial_framebuffer_title">GL初始帧缓冲区</string>
+    <string name="preference_renderer_setup_extra">渲染器 (拓展)</string>
+    <string name="preference_renderer_extra_default">Mesa25.1.4 (默认)</string>
+    <string name="preference_extra_mesa_version">Mesa版本</string>
+    <string name="preference_extra_driver_model">Gallium驱动程序</string>
+    <!-- Dialog -->
+    <string name="preference_rendererexp_alertdialog_warning">警告</string>
+    <string name="preference_rendererexp_alertdialog_message">您已打开实验性设置,此功能可能会产生意想不到的bug,是否继续使用?</string>
+    <string name="preference_rendererexp_alertdialog_done">不要管我</string>
+    <string name="preference_rendererexp_alertdialog_cancel">畏惧</string>
+    <string name="preference_alertdialog_know">我已知晓</string>
+    <string name="alertdialog_done">确定</string>
+    <string name="alertdialog_cancel">取消</string>
+    <!-- Custom GL/GLSL Version -->
+    <string name="preference_exp_custommv">GL/GLSL版本</string>
+    <string name="preference_exp_ebsystem">跟随系统</string>
+    <string name="preference_exp_ebspecific">使用固定版本</string>
+    <string name="preference_rendererexp_custom_glversion_title">自定义GL/GLSL</string>
+    <string name="preference_rendererexp_custom_glversion">允许您自定义Mesa GL/GLSL版本</string>
+    <string name="custom_gl_version">Mesa GL版本:</string>
+    <string name="custom_glsl_version">Mesa GLSL版本:</string>
+    <string name="customglglsl_alertdialog_error_gl">GL版本必须在2.8和4.6之间</string>
+    <string name="customglglsl_alertdialog_error_glsl">GLSL版本必须在280和460之间</string>
+    <!-- Customize Game Path  -->
+    <string name="permissions_manage_external_storage">Pojav Glow·Worm 需要管理设备所有文件的权限，以便自定义保存游戏文件位置，请为 Pojav Glow·Worm 开启权限！</string>
+    <string name="profiles_path_title">游戏路径管理</string>
+    <string name="profiles_path_default">默认路径</string>
+    <string name="profiles_path_create_new">添加新路径</string>
+    <string name="profiles_path_create_new_title">为此路径命名</string>
+    <string name="profiles_path_delete_title">删除此路径</string>
+    <string name="profiles_path_delete_message">启动器将删除此路径，但不会删除对应路径内保存的文件，删除之后仍然可以重新添加此路径</string>
+    <string name="profiles_path_task_in_progress">任务执行中，暂时无法使用路径管理功能</string>
+    <!-- Video resolution -->
+    <string name="setting_set_resolution_too_big">当前设置的分辨率过大,最多只能设置为 %d</string>
+    <string name="setting_set_resolution_too_small">当前设置的分辨率过小,至少需要设置为 %d</string>
+    <string name="setting_set_resolution_outofrange">输入值 %s 超出可接受范围</string>
+    <!-- Pojav Zenith·Horizon -->
+    <string name="zh_setting_java_memory_desc">控制给 Minecraft 分配多少内存</string>
+    <string name="zh_setting_java_memory_info">当前内存使用信息：%s / %s ,空闲内存大小：%s</string>
+    <string name="zh_setting_java_memory_max">最大可设置的内存大小：%s</string>
+    <string name="zh_setting_java_memory_exceeded">当前设置的内存空间超出了可用内存大小</string>
+    <string name="zh_setting_java_memory_too_big">当前设置的内存空间过大,最多只能设置为 %d MB</string>
+    <string name="zh_setting_java_memory_too_small">当前设置的内存空间过小,至少需要设置为 %d MB</string>
+    <string name="zh_setting_set_game_language_desc">当游戏开始时,自动将游戏语言设置为所选语言</string>
+    <string name="zh_setting_set_game_language_title">自动设置游戏语言</string>
+    <string name="zh_setting_set_game_language_list">设置游戏语言</string>
+    <string name="zh_setting_set_game_language_system">跟随系统语言</string>
+    <string name="zh_setting_set_game_language_overridden_title">覆盖游戏语言</string>
+    <string name="zh_setting_set_game_language_overridden_desc">忽略游戏中设置的语言,并将其强制设置为启动器中选择的语言</string>
+    <string name="setting_java_memory_outofrange">输入值 %s MB超出可接受范围</string>
+    <!-- Mesa Lib Download -->
+    <string name="preference_extra_mesa_download">下载Mesa运行库</string>
+    <string name="preference_rendererexp_mesa_get_fail">获取Mesa运行库列表失败</string>
+    <string name="preference_rendererexp_mesa_select_download">选择一个Mesa版本下载</string>
+    <string name="preference_rendererexp_mesa_download_load">正在加载Mesa运行库列表</string>
+    <string name="preference_rendererexp_mesa_downloading">正在下载Mesa运行库</string>
+    <string name="preference_rendererexp_mesa_download_fail">Mesa运行库下载失败</string>
+    <string name="preference_rendererexp_mesa_downloaded">Mesa运行库下载成功</string>
+    <string name="preference_rendererexp_mesa_dialogtitle">选择Mesa版本(长按删除)</string>
+    <string name="preference_rendererexp_mesa_delete_defaultlib">默认库无法删除</string>
+    <string name="preference_rendererexp_mesa_delete_title">删除Mesa库</string>
+    <string name="preference_rendererexp_mesa_delete_message">你真的确定你要删除 Mesa%s 库?</string>
+    <string name="preference_rendererexp_mesa_deleted">删除成功</string>
+    <string name="preference_rendererexp_mesa_delete_fail">删除失败</string>
+    <string name="pgw_settings_cml_saved">保存成功</string>
+    <string name="pgw_settings_cml_save_fail">保存 Mesa 库失败,文件已损坏或不可执行</string>
+    <string name="pgw_settings_cml_Illegitimate">格式错误,预期格式为 XX.X.X</string>
+    <string name="pgw_settings_cml_format">请输入 XX.X.X 格式的文本</string>
+    <!-- Custom Mesa Loader Driver Override -->
+    <string name="preference_extra_osm_cmldo_categ">自定义Mesa图形驱动程序</string>
+    <string name="osm_enable_drm_shim">使用 DRM Shim</string>  
+    <string name="osm_enable_drm_shim_desc">模拟 DRM 驱动行为</string>  
+    <string name="drm_shim_warning">DRM Shim 的主要用途是为开发者提供一个无需硬件的环境,用于调试 Mesa 驱动的行为和功能\n\n您确定要启用它吗?</string>
+    <string name="osm_enable_cmldo">允许自定义Mesa图形驱动程序(目前仅Freedreno)</string>
+    <string name="osm_enable_cmldo_desc">如果需要,您可以自由选择处理方法</string>
+    <string name="osm_choose_cmldo">选择Mesa图形驱动程序</string>
+    <!-- Update Launcher -->
+    <string name="preference_launcher_title">启动器设置</string>
+    <string name="preference_launcher_desc">启动器个性化</string>
+    <string name="preference_update_launcher_title">获取更新</string>
+    <string name="preference_update_launcher_desc">获取启动器更新</string>
+    <string name="pgw_settings_updatelauncher_updated">已经是最新版本 %s</string>
+    <string name="pgw_settings_updatelauncher_new_version">新版本 %s 可用,准备更新</string>
+    <string name="pgw_settings_updatelauncher_update">更新</string>
+    <string name="pgw_settings_updatelauncher_cancel">忽略</string>
+    <string name="pgw_settings_updatelauncher_source">选择更新源</string>
+    <string name="pgw_settings_updatelauncher_downloading">正在下载安装包</string>
+    <string name="pgw_settings_updatelauncher_download_fail">下载失败</string>
+    <string name="pgw_settings_updatelauncher_download_complete">下载完成</string>
+    <string name="pgw_settings_updatelauncher_file_location">APK 已保存到: %s</string>
+    <string name="pgw_settings_updatelauncher_install">安装</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_title">安装更新</string>
+    <string name="pgw_settings_updatelauncher_install_prompt_message">有新的版本已经下载到 %s. 你要安装它吗？</string>
+    <string name="pgw_settings_updatelauncher_re_download">重新下载</string>
+    <!-- 自定义 Turnip 驱动 -->
+    <string name="pgw_settings_custom_turnip_creat">添加</string>
+    <string name="pgw_settings_ctu_version_name">输入版本名称</string>
+    <string name="pgw_settings_ctu_saved">驱动已成功保存</string>
+    <string name="pgw_settings_ctu_save_fail">驱动保存失败, 选择的文件损坏或不是可执行文件</string>
+    <string name="pgw_settings_ctu_delete_title">删除 Turnip 驱动</string>
+    <string name="pgw_settings_ctu_delete_message">确定要删除 %s 吗？</string>
+    <string name="pgw_settings_ctu">自定义 Turnip 驱动</string>
+    <string name="pgw_settings_ctu_dia">选择 Turnip 驱动（长按删除）</string>
+    <string name="pgw_settings_ctu_download">下载 Turnip 驱动</string>  
+    <string name="pgw_settings_ctu_dl_load">正在加载 Turnip 驱动列表</string>  
+    <string name="pgw_settings_ctu_dl_loadfail">获取 Turnip 驱动列表失败</string>  
+    <string name="pgw_settings_ctu_dl_ms">选择一个版本进行下载</string>  
+    <string name="pgw_settings_ctu_dl_failed">Turnip 驱动下载失败</string>  
+    <string name="pgw_settings_ctu_dl_downloading">正在下载 Turnip 驱动</string>
+
+    <string name="pgw_settings_choose_download_source">选择下载源</string>
+
+    <!-- TouchController Settings -->
+    <string name="preference_category_touchcontroller_settings">TouchController 设置</string>
+    <string name="preference_force_enable_touchcontroller_title">强制启用 TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">启用 TouchController 集成，即使没有找到模组文件。</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController 震动长度</string>
+    <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的震动长度。</string>
+
+    <!-- MG Renderer Settings-->
+    <string name="preference_renderer_mobileglues_settings">MobileGlues 渲染器设置</string>
+
+    <string name="mg_option_glsl_cache">最大 GLSL 缓存大小</string>
+    <string name="mg_option_glsl_cache_hint">输入 -1 以禁用</string>
+    <string name="mg_option_glsl_cache_helper">单位：兆字节 (MB)</string>
+    <string name="mg_option_glsl_cache_error_invalid">错误：无效数字</string>
+    <string name="mg_option_glsl_cache_error_unexpected">错误：未知错误</string>
+    <string name="mg_option_glsl_cache_error_range">错误：数值不能为 0 或小于 -1</string>
+
+    <string name="mg_option_angle">将 ANGLE 作为 OpenGL ES 驱动程序使用</string>
+    <string name="mg_option_angle_disable_if_possible">尽可能禁用</string>
+    <string name="mg_option_angle_enable_if_possible">尽可能启用</string>
+    <string name="mg_option_angle_disable">禁用</string>
+    <string name="mg_option_angle_enable">启用</string>
+
+    <string name="mg_option_no_error">错误处理设置</string>
+    <string name="mg_option_no_error_auto">自动</string>
+    <string name="mg_option_no_error_enable">不忽略错误</string>
+    <string name="mg_option_no_error_disable_pri">忽略着色器/程序错误</string>
+    <string name="mg_option_no_error_disable_sec">忽略着色器/程序/帧缓冲区错误</string>
+
+    <string name="mg_option_multidraw_mode">MultiDraw 模拟方案</string>
+    <string name="mg_option_multidraw_mode_auto">自动</string>
+    <string name="mg_option_multidraw_mode_indirect">尽量使用 Indirect 方案模拟</string>
+    <string name="mg_option_multidraw_mode_basevertex">尽量使用 BaseVertex 方案模拟</string>
+    <string name="mg_option_multidraw_mode_multidraw_indirect">尽量使用 MultiDraw Indirect 方案模拟</string>
+    <string name="mg_option_multidraw_mode_drawelements">强制使用 DrawElements 方案模拟</string>
+
+    <string name="mg_option_angle_clear_workaround">ANGLE Depth Clear 修复方案</string>
+    <string name="mg_option_angle_clear_workaround_disable">不启用</string>
+    <string name="mg_option_angle_clear_workaround_enable_1">启用方案 #1</string>
+
+    <string name="mg_option_gl_version">自定义目标 OpenGL 版本</string>"
+    
+    <string name="mg_option_ext_gl43">启用不完整的 OpenGL43 扩展</string>
+    <string name="mg_option_ext_cs">启用不完整的 ARB_compute_shader 扩展</string>
+    <string name="mg_option_ext_timer_query">禁用推荐的 timer_query 扩展</string>
+    <string name="mg_option_ext_direct_state_access">启用高级的 direct_state_access 扩展</string>
+    <string name="mg_option_enable_fsr1">(实验性) 启用内置的 FSR1</string>
+
+    <!-- Mod Parser -->
+    <string name="mod_check_dialog_title">模组检查报告</string>
+    <string name="generic_no_more_reminders">不再提醒</string>
+    <string name="mod_check_progress_message">正在检查模组中 (%d / %d)</string>
+    <string name="mod_check_touch_controller">检查到已安装 Touch Controller 模组 (%s)，启动器已准备好启用控制代理，以适配该模组。</string>
+    <string name="mod_check_sodium_or_embeddium">检查到已安装 Sodium 或 Embeddium 模组 (%s)，启动器将会禁用该模组的警告，或防止它在 Android 设备上运行时刻意的崩溃。但请注意，由于该模组的社区已明确表态不再受理任何 Android 设备的问题，所以，如果你在使用该模组时遇到了任何问题，都请勿反馈至该模组的社区！</string>
+    <string name="mod_check_physics">当前使用的物理模组 (%s) 未经修补 (将 libPhysXJniBindings_64.so 从 x86_64 架构替换到 arm64)，启动后将会崩溃。</string>
+    <string name="mod_check_mcef">MCEF (%s) 无法在 Android 上运行。它通常被用来作为 WebDisplays/In-game Browser（浏览器）的前置依赖。</string>
+    <string name="mod_check_valkyrien_skies">瓦尔基里天空/瓦尔基里战争 (%s) 无法直接在单人模式下运行。你必须使用服务器运行（可以使用 Termux），否则游戏会崩溃。</string>
+    <string name="mod_check_yes_steve_model">是，史蒂夫模型 (%s) 2.2.2-2.5.1 无法在 Android 系统上运行。</string>
+    <string name="mod_check_imblocker">输入法冲突修复/游戏内输入法 (%s) 不适用于 Android ，它会使游戏在启动阶段崩溃。</string>
+    <string name="mod_check_replay_mod">ReplayMod (%s) 需要 FFmpeg 渲染视频，请单独安装 FFmpeg 插件\n%s\n%s</string>
+    <string name="mod_check_borderlesswindow">Borderless Window (%s) 不适用于安卓。它会使游戏在启动阶段崩溃。</string>
+    <!-- Mods Check -->
+    <string name="enable_mod_check_title">模组检查</string>
+    <string name="enable_mod_check_enable">启用模组检查</string>
+    <!-- Disable Downloader -->
+    <string name="vprof_disable_downloader_title">禁用下载器</string>
+    <string name="vprof_enable_disable_downloader">禁用下载检查, 直接启动</string>
+</resources>

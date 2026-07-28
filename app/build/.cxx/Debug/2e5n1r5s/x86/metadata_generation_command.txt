@@ -1,0 +1,16 @@
+                        NDK_PROJECT_PATH=null
+APP_BUILD_SCRIPT=/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk
+NDK_APPLICATION_MK=/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk
+NDK_GRADLE_INJECTED_IMPORT_PATH=/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86
+APP_ABI=x86
+NDK_ALL_ABIS=x86
+NDK_DEBUG=1
+APP_PLATFORM=android-26
+NDK_OUT=/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj
+NDK_LIBS_OUT=/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib
+APP_SHORT_COMMANDS=false
+LOCAL_SHORT_COMMANDS=false
+-B
+-n
+                        Build command args: []
+                        Version: 2

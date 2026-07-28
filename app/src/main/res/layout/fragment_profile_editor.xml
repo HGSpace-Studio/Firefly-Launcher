@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app"
+    android:background="@drawable/background_glass_dark"
     android:orientation="vertical"
     >
     <ScrollView
@@ -312,6 +312,14 @@
                 app:layout_constraintBottom_toBottomOf="@id/vprof_disable_downloader"
                 app:layout_constraintEnd_toEndOf="@id/vprof_disable_downloader"
                 app:layout_constraintTop_toTopOf="@id/vprof_disable_downloader" />
+
+            <com.kdt.mcgui.MineButton
+                android:id="@+id/vprof_modrinth_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="资源中心"
+                app:layout_constraintTop_toBottomOf="@+id/vprof_disable_downloader" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

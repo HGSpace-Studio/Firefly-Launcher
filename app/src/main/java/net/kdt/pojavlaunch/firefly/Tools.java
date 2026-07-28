@@ -108,9 +108,11 @@ import java.util.Objects;
 public final class Tools {
     public static final float BYTE_TO_MB = 1024 * 1024;
     public static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
-    public static String APP_NAME = "Pojav Glow·Worm";
+    public static String APP_NAME = "Firefly Launcher";
     public static String PGW_VERSION_CODE = null;
     public static int iLwjglVersion = 0;
+    public static String sLwjglVersion = null;
+    public static String lwjglNativesDir = null;
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -125,11 +127,11 @@ public final class Tools {
     public static String LOCAL_RENDERER = null;
     public static String BRIDGE_CONFIG;
     public static int DEVICE_ARCHITECTURE;
-    public static final String LAUNCHERPROFILES_RTPREFIX = "pojav://";
+    public static final String LAUNCHERPROFILES_RTPREFIX = "firefly://";
 
     // New since 3.3.1
     public static String DIR_ACCOUNT_NEW;
-    public static String DIR_GAME_HOME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/Pojav-Glow-Worm";
+    public static String DIR_GAME_HOME = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/FireflyAndroid";
 
     // New since 3.0.0
     public static String DIRNAME_HOME_JRE = "lib";
@@ -157,7 +159,7 @@ public final class Tools {
         if (SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);
         } else {
-            return new File(Environment.getExternalStorageDirectory(), "games/Pojav-Glow-Worm");
+            return new File(Environment.getExternalStorageDirectory(), "games/FireflyAndroid");
         }
     }
 
@@ -285,18 +287,8 @@ public final class Tools {
 
         javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir)));
         javaArgList.add("-cp");
-        String lwjgl3ClassPath = getLWJGL3ClassPath();
-        String classPath = launchClassPath + (lwjgl3ClassPath.isEmpty() ? "" : ":" + lwjgl3ClassPath);
-
-        // Add lwjgl-lwjglx.jar (LWJGL2 compatibility layer) for old Minecraft versions
-        if (iLwjglVersion <= 299) {
-            String internalLwjglVersion = iLwjglVersion >= 341 ? "3.4.1" : "3.3.3";
-            File lwjglxFile = new File(Tools.DIR_GAME_HOME, "lwjgl3/" + internalLwjglVersion + "/lwjgl-lwjglx.jar");
-            if (lwjglxFile.exists()) {
-                classPath = classPath + ":" + lwjglxFile.getAbsolutePath();
-            }
-        }
-        javaArgList.add(classPath);
+        // generateLaunchClassPath now includes LWJGL3 jars and lwjglx compat layer
+        javaArgList.add(launchClassPath);
 
         // Forge 1.6.4 crash mitigation
         // It fails certification and crashes because it thinks Minecraft is corrupted.
@@ -642,35 +634,27 @@ public final class Tools {
 
     private static String getLWJGL3ClassPath() {
         String internalLwjglVersion = iLwjglVersion >= 341 ? "3.4.1" : "3.3.3";
-        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3/" + internalLwjglVersion);
         StringBuilder libStr = new StringBuilder();
-
-        // 1. lwjgl.jar (core) - first in classpath
-        File lwjglCore = new File(lwjgl3Folder, "lwjgl.jar");
-        if (lwjglCore.exists()) {
-            libStr.append(lwjglCore.getAbsolutePath()).append(":");
-        }
-
-        // 2. lwjgl-merged-modules.jar - second in priority
-        File lwjglMerged = new File(lwjgl3Folder, "lwjgl-" + internalLwjglVersion + "-merged-modules.jar");
-        if (lwjglMerged.exists()) {
-            libStr.append(lwjglMerged.getAbsolutePath()).append(":");
-        }
-
-        // 3. All other LWJGL modules (excluding lwjgl.jar and lwjglx.jar)
-        File[] lwjglModules = lwjgl3Folder.listFiles(pathname ->
-                pathname.getName().endsWith(".jar") &&
-                        !pathname.getName().equals("lwjgl.jar") &&
-                        !pathname.getName().endsWith("lwjglx.jar") &&
-                        !pathname.getName().startsWith("lwjgl-" + internalLwjglVersion + "-merged-modules"));
-        if (lwjglModules != null) {
-            // Sort for consistent classpath order
-            Arrays.sort(lwjglModules, (a, b) -> a.getName().compareTo(b.getName()));
-            for (File file : lwjglModules) {
-                libStr.append(file.getAbsolutePath()).append(":");
+        File versionedDir = new File(Tools.DIR_GAME_HOME, "lwjgl3/" + internalLwjglVersion);
+        File[] files = versionedDir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.getName().endsWith(".jar")) {
+                    libStr.append(file.getAbsolutePath()).append(":");
+                }
             }
         }
-
+        if (libStr.length() == 0) {
+            File fallbackDir = new File(Tools.DIR_GAME_HOME, "lwjgl3");
+            File[] fallbackFiles = fallbackDir.listFiles();
+            if (fallbackFiles != null) {
+                for (File file : fallbackFiles) {
+                    if (file.getName().endsWith(".jar")) {
+                        libStr.append(file.getAbsolutePath()).append(":");
+                    }
+                }
+            }
+        }
         if (libStr.length() == 0) return "";
         libStr.setLength(libStr.length() - 1);
         return libStr.toString();
@@ -679,22 +663,60 @@ public final class Tools {
     private final static boolean isClientFirst = false;
 
     public static String generateLaunchClassPath(JMinecraftVersionList.Version info, String actualname) {
-        StringBuilder finalClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
+        StringBuilder finalClasspath = new StringBuilder();
 
-        String[] classpath = generateLibClasspath(info);
+        String[] classpath = generateLibClasspath(info); // Sets iLwjglVersion, sLwjglVersion, lwjglNativesDir
+        String internalLwjglVersion = iLwjglVersion >= 341 ? "3.4.1" : "3.3.3";
+        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3/" + internalLwjglVersion);
+        String lwjglCore = lwjgl3Folder.getAbsolutePath() + "/lwjgl.jar";
+        String lwjglMerged = lwjgl3Folder.getAbsolutePath() + "/lwjgl-" + internalLwjglVersion + "-merged-modules.jar";
+        String lwjglxFile = lwjgl3Folder + "/lwjgl-lwjglx.jar";
+        boolean hasMergedJar = new File(lwjglMerged).exists();
 
-        if (isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
+        if (!new File(lwjglCore).exists() || !new File(lwjglxFile).exists()) {
+            try {
+                if (lwjgl3Folder.exists())
+                    org.apache.commons.io.FileUtils.deleteDirectory(lwjgl3Folder);
+            } catch (Exception ignored) {}
+            throw new RuntimeException("LWJGL jars incomplete, restart the app to reextract them.");
         }
+
+        // Add LWJGL core jar first
+        finalClasspath.append(lwjglCore).append(":");
+        // Add merged-modules jar only if it exists (3.4.1 has it, 3.3.3 does not)
+        if (hasMergedJar) {
+            finalClasspath.append(lwjglMerged).append(":");
+        }
+
+        // Add other LWJGL module jars
+        File[] lwjglModules = lwjgl3Folder.listFiles(pathname ->
+                pathname.getName().endsWith(".jar") &&
+                !pathname.getName().equals("lwjgl.jar") &&
+                !pathname.getName().equals("lwjgl-" + internalLwjglVersion + "-merged-modules.jar") &&
+                !pathname.getName().endsWith("lwjglx.jar"));
+
+        if (lwjglModules != null) {
+            for (File lwjglModule : lwjglModules)
+                finalClasspath.append(lwjglModule.getAbsolutePath()).append(":");
+        } else {
+            Log.e("generateLaunchClassPath", "lwjgl modules are missing from components!");
+        }
+
+        // Add game libraries
         for (String jarFile : classpath) {
             if (!FileUtils.exists(jarFile)) {
                 Log.d(APP_NAME, "Ignored non-exists file: " + jarFile);
                 continue;
             }
-            finalClasspath.append((isClientFirst ? ":" : "")).append(jarFile).append(!isClientFirst ? ":" : "");
+            finalClasspath.append(jarFile).append(":");
         }
-        if (!isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
+
+        // Add client jar
+        finalClasspath.append(getClientClasspath(actualname));
+
+        // LWJGL2 versions need the lwjglx compatibility layer
+        if (iLwjglVersion <= 299) {
+            finalClasspath.append(":").append(lwjglxFile);
         }
 
         return finalClasspath.toString();
@@ -1006,34 +1028,42 @@ public final class Tools {
         List<String> libDir = new ArrayList<>();
         iLwjglVersion = 0;
         for (DependentLibrary libItem : info.libraries) {
-            // Detect LWJGL version from library manifest
-            int offset = 0;
-            if (libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:")) {
-                offset = "org.lwjgl.lwjgl:lwjgl:".length();
-            } else if (libItem.name.startsWith("org.lwjgl:lwjgl:")) {
-                offset = "org.lwjgl:lwjgl:".length();
-            }
-            if (offset != 0 && (iLwjglVersion < 200 || iLwjglVersion > 999)) {
-                while (offset < libItem.name.length()) {
-                    char c = libItem.name.charAt(offset);
-                    if (c >= '0' && c <= '9') {
-                        iLwjglVersion = iLwjglVersion * 10 + (c - '0');
-                    } else if (c == '.') {
-                        // skip dots
-                    } else {
-                        break;
+            boolean isLwjgl = libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:") || libItem.name.startsWith("org.lwjgl:lwjgl:");
+
+            if (isLwjgl && (iLwjglVersion < 200 || iLwjglVersion > 999)) {
+                int offset = 0;
+                if (libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:")) {
+                    offset = "org.lwjgl.lwjgl:lwjgl:".length();
+                } else if (libItem.name.startsWith("org.lwjgl:lwjgl:")) {
+                    offset = "org.lwjgl:lwjgl:".length();
+                }
+                if (offset != 0) {
+                    while (offset < libItem.name.length()) {
+                        char c = libItem.name.charAt(offset);
+                        if (c >= '0' && c <= '9') {
+                            iLwjglVersion = iLwjglVersion * 10 + (c - '0');
+                        } else if (c == '.') {
+                        } else {
+                            break;
+                        }
+                        offset++;
                     }
-                    offset++;
                 }
             }
 
             if (!checkRules(libItem.rules)) continue;
+            if (isLwjgl) {
+                Log.d(APP_NAME, "Excluded LWJGL library from classpath (replaced by custom lwjgl3): " + libItem.name);
+                continue;
+            }
             libDir.add(ProfilePathHome.getLibrariesHome() + "/" + artifactToPath(libItem));
         }
         if (iLwjglVersion < 200 || iLwjglVersion > 999) {
             Log.w(APP_NAME, "Unable to determine LWJGL version, defaulting to 3.3.3");
             iLwjglVersion = 299;
         }
+        sLwjglVersion = iLwjglVersion >= 341 ? "3.4.1" : "3.3.3";
+        lwjglNativesDir = String.format("%s/lwjgl-%s-natives/%s", Tools.DIR_DATA, sLwjglVersion, Architecture.archAsStringAndroid(Tools.DEVICE_ARCHITECTURE));
         return libDir.toArray(new String[0]);
     }
 
@@ -1378,6 +1408,24 @@ public final class Tools {
 
     public static boolean isValidString(String string) {
         return string != null && !string.isEmpty();
+    }
+
+    /**
+     * 根据是否启用 BMCLAPI 镜像源，替换 Mojang 官方下载 URL 为 BMCLAPI 镜像 URL。
+     * 如果未启用镜像，则直接返回原始 URL。
+     *
+     * @param originalUrl 原始 Mojang 下载 URL
+     * @return 镜像 URL 或原始 URL
+     */
+    public static String getDownloadUrl(String originalUrl) {
+        if (!LauncherPreferences.PREF_DOWNLOAD_MIRROR) return originalUrl;
+        return originalUrl
+            .replace("https://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com")
+            .replace("https://piston-meta.mojang.com", "https://bmclapi2.bangbang93.com")
+            .replace("https://piston-data.mojang.com", "https://bmclapi2.bangbang93.com")
+            .replace("https://launcher.mojang.com", "https://bmclapi2.bangbang93.com")
+            .replace("https://libraries.minecraft.net", "https://bmclapi2.bangbang93.com/libraries")
+            .replace("https://resources.download.minecraft.net", "https://bmclapi2.bangbang93.com/assets");
     }
 
     public static String getRuntimeName(String prefixedName) {

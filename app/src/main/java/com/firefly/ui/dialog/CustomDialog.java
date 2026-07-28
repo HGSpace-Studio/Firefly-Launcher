@@ -4,6 +4,11 @@ import androidx.annotation.Nullable;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Color;
+import android.graphics.RenderEffect;
+import android.graphics.RuntimeShader;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -159,6 +164,20 @@ public class CustomDialog implements DraggableDialog.DialogInitializationListene
 
     public void show() {
         dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            // Lighter dim for frosted glass feel
+            window.setDimAmount(0.2f);
+            // Android 12+ real background blur behind dialog
+            // Must call after show() to ensure DecorView is initialized
+            if (Build.VERSION.SDK_INT >= 31) {
+                try {
+                    window.setBackgroundBlurRadius(40);
+                } catch (Exception ignored) {
+                    // DecorView may be null on some devices/ROMs
+                }
+            }
+        }
     }
 
     public void dismiss() {

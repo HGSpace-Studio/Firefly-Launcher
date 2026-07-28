@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app"
+    android:background="@drawable/background_glass_dark"
     android:paddingHorizontal="@dimen/fragment_padding_medium">
 
     <View
@@ -28,7 +28,7 @@
 
     <Spinner
         android:id="@+id/server_spinner"
-        android:background="@color/background_app"
+        android:background="@drawable/background_glass_dark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/_10sdp"

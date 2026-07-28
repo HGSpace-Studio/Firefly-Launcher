@@ -11,10 +11,12 @@ import org.apache.commons.io.IOUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -24,7 +26,15 @@ import java.util.concurrent.Callable;
 @SuppressWarnings("IOStreamConstructor")
 public class DownloadUtils {
     public static final String USER_AGENT = Tools.APP_NAME;
-    private static final int TIME_OUT = 10000;
+    private static final int CONNECT_TIMEOUT = 15000;
+    private static final int READ_TIMEOUT = 30000;
+
+    private static final int DOWNLOAD_BUFFER_SIZE = 65536;
+    private static final int MAX_RETRIES = 3;
+
+    public interface SpeedListener {
+        void onSpeedUpdated(long bytesPerSecond);
+    }
 
     public static void download(String url, OutputStream os) throws IOException {
         download(new URL(url), os);
@@ -33,11 +43,10 @@ public class DownloadUtils {
     public static void download(URL url, OutputStream os) throws IOException {
         InputStream is = null;
         try {
-            // System.out.println("Connecting: " + url.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("User-Agent", USER_AGENT);
-            conn.setConnectTimeout(TIME_OUT);
-            conn.setReadTimeout(TIME_OUT);
+            conn.setConnectTimeout(CONNECT_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
             conn.setDoInput(true);
             conn.connect();
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -69,37 +78,133 @@ public class DownloadUtils {
     }
 
     public static void downloadFile(String url, File out) throws IOException {
+        downloadFileWithRetry(url, out, MAX_RETRIES);
+    }
+
+    private static void downloadFileWithRetry(String url, File out, int retries) throws IOException {
+        IOException lastException = null;
+        for (int attempt = 0; attempt < retries; attempt++) {
+            try {
+                downloadFileInternal(url, out);
+                return;
+            } catch (IOException e) {
+                lastException = e;
+                Log.w("DownloadUtils", "Download attempt " + (attempt + 1) + "/" + retries + " failed: " + url, e);
+                if (attempt < retries - 1) {
+                    try {
+                        Thread.sleep(1000L * (attempt + 1));
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        throw new IOException("Download interrupted", ie);
+                    }
+                }
+            }
+        }
+        throw lastException;
+    }
+
+    private static void downloadFileInternal(String url, File out) throws IOException {
         FileUtils.ensureParentDirectory(out);
-        try (FileOutputStream fileOutputStream = new FileOutputStream(out)) {
-            download(url, fileOutputStream);
+        boolean supportsResume = out.exists() && out.canWrite() && out.length() > 0;
+        HttpURLConnection conn = null;
+        InputStream readStr = null;
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestProperty("User-Agent", USER_AGENT);
+            conn.setConnectTimeout(CONNECT_TIMEOUT);
+            conn.setReadTimeout(READ_TIMEOUT);
+            conn.setDoInput(true);
+            if (supportsResume) {
+                long existingLength = out.length();
+                conn.setRequestProperty("Range", "bytes=" + existingLength + "-");
+            }
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                throw new FileNotFoundException("File not found: " + url);
+            }
+            if (responseCode != HttpURLConnection.HTTP_OK &&
+                responseCode != HttpURLConnection.HTTP_PARTIAL) {
+                throw new IOException("Server returned HTTP " + responseCode
+                        + ": " + conn.getResponseMessage());
+            }
+            readStr = conn.getInputStream();
+            try (RandomAccessFile raf = new RandomAccessFile(out, "rw")) {
+                if (responseCode == HttpURLConnection.HTTP_PARTIAL) {
+                    raf.seek(out.length());
+                } else {
+                    raf.setLength(0);
+                }
+                byte[] buffer = new byte[DOWNLOAD_BUFFER_SIZE];
+                int current;
+                while ((current = readStr.read(buffer)) != -1) {
+                    raf.write(buffer, 0, current);
+                }
+            }
+        } finally {
+            if (readStr != null) {
+                try { readStr.close(); } catch (Exception ignored) {}
+            }
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
     public static void downloadFileMonitored(String urlInput, File outputFile, @Nullable byte[] buffer,
                                              Tools.DownloaderFeedback monitor) throws IOException {
+        downloadFileMonitoredWithRetry(urlInput, outputFile, buffer, monitor, MAX_RETRIES);
+    }
+
+    private static void downloadFileMonitoredWithRetry(String urlInput, File outputFile, @Nullable byte[] buffer,
+                                                      Tools.DownloaderFeedback monitor, int retries) throws IOException {
+        IOException lastException = null;
+        for (int attempt = 0; attempt < retries; attempt++) {
+            try {
+                downloadFileMonitoredInternal(urlInput, outputFile, buffer, monitor);
+                return;
+            } catch (IOException e) {
+                lastException = e;
+                Log.w("DownloadUtils", "Monitored download attempt " + (attempt + 1) + "/" + retries + " failed: " + urlInput, e);
+                if (attempt < retries - 1) {
+                    try {
+                        Thread.sleep(1000L * (attempt + 1));
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        throw new IOException("Download interrupted", ie);
+                    }
+                }
+            }
+        }
+        throw lastException;
+    }
+
+    private static void downloadFileMonitoredInternal(String urlInput, File outputFile, @Nullable byte[] buffer,
+                                                        Tools.DownloaderFeedback monitor) throws IOException {
         FileUtils.ensureParentDirectory(outputFile);
 
         HttpURLConnection conn = (HttpURLConnection) new URL(urlInput).openConnection();
-        conn.setConnectTimeout(TIME_OUT);
-        conn.setReadTimeout(TIME_OUT);
+        conn.setRequestProperty("User-Agent", USER_AGENT);
+        conn.setConnectTimeout(CONNECT_TIMEOUT);
+        conn.setReadTimeout(READ_TIMEOUT);
         InputStream readStr = conn.getInputStream();
         try (FileOutputStream fos = new FileOutputStream(outputFile)) {
             int current;
             int overall = 0;
             int length = conn.getContentLength();
 
-            if (buffer == null) buffer = new byte[65535];
+            if (buffer == null) buffer = new byte[DOWNLOAD_BUFFER_SIZE];
 
             while ((current = readStr.read(buffer)) != -1) {
                 overall += current;
                 fos.write(buffer, 0, current);
                 monitor.updateProgress(overall, length);
             }
-            conn.disconnect();
         } catch (SocketTimeoutException e) {
             throw new IOException("Download timed out: " + urlInput, e);
+        } finally {
+            conn.disconnect();
         }
-
     }
 
     public static <T> T downloadStringCached(String url, String cacheName, ParseCallback<T> parseCallback) throws IOException, ParseException {
@@ -117,9 +222,6 @@ public class DownloadUtils {
             }
         }
         String urlContent = DownloadUtils.downloadString(url);
-        // if we download the file and fail parsing it, we will yeet outta there
-        // and not cache the unparseable sting. We will return this after trying to save the downloaded
-        // string into cache
         T parseResult = parseCallback.process(urlContent);
 
         boolean tryWriteCache;
@@ -152,9 +254,7 @@ public class DownloadUtils {
     }
 
     public static <T> T ensureSha1(File outputFile, @Nullable String sha1, Callable<T> downloadFunction) throws IOException {
-        // Skip if needed
         if (sha1 == null) {
-            // If the file exists and we don't know it's SHA1, don't try to redownload it.
             if (outputFile.exists()) return null;
             else return downloadFile(downloadFunction);
         }
@@ -168,13 +268,16 @@ public class DownloadUtils {
             fileOkay = verifyFile(outputFile, sha1);
         }
         if (!fileOkay)
-            throw new SHA1VerificationException("SHA1 verifcation failed after 5 download attempts");
+            throw new SHA1VerificationException("SHA1 verification failed after 5 download attempts");
         return result;
     }
 
     public static long getContentLength(String url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(url).openConnection();
+        urlConnection.setRequestProperty("User-Agent", USER_AGENT);
         urlConnection.setRequestMethod("HEAD");
+        urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
+        urlConnection.setReadTimeout(READ_TIMEOUT);
         urlConnection.setDoInput(false);
         urlConnection.setDoOutput(false);
         urlConnection.connect();
@@ -199,4 +302,3 @@ public class DownloadUtils {
         }
     }
 }
-

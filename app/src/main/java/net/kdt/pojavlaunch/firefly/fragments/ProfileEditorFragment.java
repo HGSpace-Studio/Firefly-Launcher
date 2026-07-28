@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.firefly.modrinth.ModrinthSearchFragment;
 import com.firefly.utils.ListUtils;
 import com.movtery.ui.subassembly.customprofilepath.ProfilePathManager;
 
@@ -236,6 +237,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mProfileIcon = view.findViewById(R.id.vprof_editor_profile_icon);
         mEnableModsCheck = view.findViewById(R.id.vprof_settings_enable_mods_check);
         mDisableDownloader = view.findViewById(R.id.vprof_settings_disable_downloader);
+
+        Button mModrinthButton = view.findViewById(R.id.vprof_modrinth_button);
+        mModrinthButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle(1);
+            bundle.putString("mc_version", mTempProfile.lastVersionId);
+            Tools.swapFragment(requireActivity(), ModrinthSearchFragment.class,
+                    ModrinthSearchFragment.TAG, bundle);
+        });
     }
 
     private void save() {

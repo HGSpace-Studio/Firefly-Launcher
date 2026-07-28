@@ -1,0 +1,278 @@
+{
+  "buildFiles": [
+    "/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+    "/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+      "NDK_PROJECT_PATH\u003dnull",
+      "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+      "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+      "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+      "APP_ABI\u003dx86",
+      "NDK_ALL_ABIS\u003dx86",
+      "NDK_DEBUG\u003d1",
+      "APP_PLATFORM\u003dandroid-26",
+      "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+      "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+    "NDK_PROJECT_PATH\u003dnull",
+    "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+    "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+    "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+    "APP_ABI\u003dx86",
+    "NDK_ALL_ABIS\u003dx86",
+    "NDK_DEBUG\u003d1",
+    "APP_PLATFORM\u003dandroid-26",
+    "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+    "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "bridge_config-debug-x86": {
+      "artifactName": "bridge_config",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libbridge_config.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libbridge_config.so",
+      "runtimeFiles": []
+    },
+    "glxshim-debug-x86": {
+      "artifactName": "glxshim",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libglxshim.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libglxshim.so",
+      "runtimeFiles": []
+    },
+    "driver_helper-debug-x86": {
+      "artifactName": "driver_helper",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libdriver_helper.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libdriver_helper.so",
+      "runtimeFiles": []
+    },
+    "native_hook-debug-x86": {
+      "artifactName": "native_hook",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libnative_hook.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libnative_hook.so",
+      "runtimeFiles": []
+    },
+    "awt_headless-debug-x86": {
+      "artifactName": "awt_headless",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libawt_headless.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libawt_headless.so",
+      "runtimeFiles": []
+    },
+    "pojavexec-debug-x86": {
+      "artifactName": "pojavexec",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpojavexec.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpojavexec.so",
+      "runtimeFiles": []
+    },
+    "OSMesaInfo-debug-x86": {
+      "artifactName": "OSMesaInfo",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libOSMesaInfo.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libOSMesaInfo.so",
+      "runtimeFiles": []
+    },
+    "br_common-debug-x86": {
+      "artifactName": "br_common",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libbr_common.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libbr_common.so",
+      "runtimeFiles": []
+    },
+    "pojavexec_awt-debug-x86": {
+      "artifactName": "pojavexec_awt",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpojavexec_awt.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpojavexec_awt.so",
+      "runtimeFiles": []
+    },
+    "pgw-debug-x86": {
+      "artifactName": "pgw",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpgw.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libpgw.so",
+      "runtimeFiles": []
+    },
+    "awt_xawt-debug-x86": {
+      "artifactName": "awt_xawt",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libawt_xawt.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/libawt_xawt.so",
+      "runtimeFiles": []
+    },
+    "linkerhook-debug-x86": {
+      "artifactName": "linkerhook",
+      "buildCommandComponents": [
+        "/root/Android/Sdk/ndk/25.2.9519653/ndk-build",
+        "NDK_PROJECT_PATH\u003dnull",
+        "APP_BUILD_SCRIPT\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Android.mk",
+        "NDK_APPLICATION_MK\u003d/mnt/d/FireflyAndroid-Launcher/app/src/main/jni/Application.mk",
+        "NDK_GRADLE_INJECTED_IMPORT_PATH\u003d/mnt/d/FireflyAndroid-Launcher/app/build/.cxx/Debug/2e5n1r5s/prefab/x86",
+        "APP_ABI\u003dx86",
+        "NDK_ALL_ABIS\u003dx86",
+        "NDK_DEBUG\u003d1",
+        "APP_PLATFORM\u003dandroid-26",
+        "NDK_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj",
+        "NDK_LIBS_OUT\u003d/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/lib",
+        "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/liblinkerhook.so"
+      ],
+      "abi": "x86",
+      "output": "/mnt/d/FireflyAndroid-Launcher/app/build/intermediates/cxx/Debug/2e5n1r5s/obj/local/x86/liblinkerhook.so",
+      "runtimeFiles": []
+    }
+  }
+}

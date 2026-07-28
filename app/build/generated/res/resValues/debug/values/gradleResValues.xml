@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Automatically generated file. DO NOT MODIFY -->
+
+    <!-- Value from build type: debug -->
+    <string name="application_package" translatable="false">work.HGSpace.FireflyAndroid.debug</string>
+    <!-- Value from build type: debug -->
+    <string name="base_version_code" translatable="false">100000000</string>
+    <!-- Value from build type: debug -->
+    <string name="curseforge_api_key" translatable="false">null</string>
+    <!-- Value from build type: debug -->
+    <string name="fileProviderAuthorities" translatable="false">work.HGSpace.FireflyAndroid.scoped.FileFileProvider.debug</string>
+    <!-- Value from build type: debug -->
+    <string name="storageProviderAuthorities" translatable="false">work.HGSpace.FireflyAndroid.scoped.gamefolder.debug</string>
+
+</resources>

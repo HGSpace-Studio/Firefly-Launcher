@@ -1,0 +1,13 @@
+
+make: Nothing to be done for 'OSMesaInfo'.
+make: Nothing to be done for 'awt_headless'.
+make: Nothing to be done for 'awt_xawt'.
+make: Nothing to be done for 'br_common'.
+make: Nothing to be done for 'bridge_config'.
+make: Nothing to be done for 'driver_helper'.
+make: Nothing to be done for 'glxshim'.
+make: Nothing to be done for 'linkerhook'.
+make: Nothing to be done for 'native_hook'.
+make: Nothing to be done for 'pgw'.
+make: Nothing to be done for 'pojavexec'.
+make: Nothing to be done for 'pojavexec_awt'.

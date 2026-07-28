@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 个性化 - 强调色 -->
+    <string-array name="accent_color_names">
+        <item>蓝色</item>
+        <item>紫色</item>
+        <item>红色</item>
+        <item>橙色</item>
+        <item>绿色</item>
+        <item>青色</item>
+        <item>粉色</item>
+    </string-array>
+
+    <string-array name="accent_color_values">
+        <item>blue</item>
+        <item>purple</item>
+        <item>red</item>
+        <item>orange</item>
+        <item>green</item>
+        <item>cyan</item>
+        <item>pink</item>
+    </string-array>
+
+    <!-- 个性化 - 菜单样式 -->
+    <string-array name="menu_style_names">
+        <item>网格</item>
+        <item>列表</item>
+        <item>抽屉</item>
+    </string-array>
+
+    <string-array name="menu_style_values">
+        <item>grid</item>
+        <item>list</item>
+        <item>drawer</item>
+    </string-array>
+</resources>

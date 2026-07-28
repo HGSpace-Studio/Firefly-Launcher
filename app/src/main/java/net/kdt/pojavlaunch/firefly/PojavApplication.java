@@ -31,8 +31,8 @@ import net.kdt.pojavlaunch.firefly.utils.*;
 import net.kdt.pojavlaunch.firefly.utils.FileUtils;
 
 public class PojavApplication extends Application {
-    public static final String CRASH_REPORT_TAG = "PojavCrashReport";
-    public static final ExecutorService sExecutorService = new ThreadPoolExecutor(4, 4, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+    public static final String CRASH_REPORT_TAG = "FireflyCrashReport";
+    public static final ExecutorService sExecutorService = new ThreadPoolExecutor(8, 8, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
     @Override
     public void onCreate() {
@@ -45,7 +45,7 @@ public class PojavApplication extends Application {
                 // Write to file, since some devices may not able to show error
                 FileUtils.ensureParentDirectory(crashFile);
                 PrintStream crashStream = new PrintStream(crashFile);
-                crashStream.append("Pojav Glow·Worm crash report\n");
+                crashStream.append("Firefly Launcher crash report\n");
                 crashStream.append(" - Time: ").append(DateFormat.getDateTimeInstance().format(new Date())).append("\n");
                 crashStream.append(" - Device: ").append(Build.PRODUCT).append(" ").append(Build.MODEL).append("\n");
                 crashStream.append(" - Android version: ").append(Build.VERSION.RELEASE).append("\n");

@@ -19,7 +19,7 @@ apply(plugin = "stringfog")
 
 val appPackageName = "work.HGSpace.FireflyAndroid"
 val javaNamespace = "net.kdt.pojavlaunch.firefly"
-val currentVersion = "bata0.1.0"
+val currentVersion = "0.1.6PE"
 
 var localProperty: Properties? = null
 if (file("${rootDir}/local.properties").exists()) {

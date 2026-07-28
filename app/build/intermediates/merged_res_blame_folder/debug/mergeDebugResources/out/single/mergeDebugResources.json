@@ -1,0 +1,754 @@
+[
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_modrinth_search.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_modrinth_search.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_modrinth_filter.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_modrinth_filter.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_personalize.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_personalize.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_gamepad_pointer.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_gamepad_pointer.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout-land_activity_pojav_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout-land/activity_pojav_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/font_minecraft_ten.ttf.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/font/minecraft_ten.ttf"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_folder.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_folder.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_mgrenderer_settings.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_mgrenderer_settings.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_misc.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_misc.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_mod_version_list.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_mod_version_list.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_modpack.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_modpack.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_controller_mapping.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_controller_mapping.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_settings.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_settings.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_add.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_add.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_multirt_runtime.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_multirt_runtime.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_notif_icon.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/notif_icon.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_minecraft_account.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_minecraft_account.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_video_resolution.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_video_resolution.xml"
+    },
+    {
+        "merged": "net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_button_glass_secondary.xml.flat",
+        "source": "net.kdt.pojavlaunch.firefly.app-main-6:/drawable/button_glass_secondary.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_view_progress.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/view_progress.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_no_focus_shown.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/no_focus_shown.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_image_about_cpucheck.jpg.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/image_about_cpucheck.jpg"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_preference_item_switch_firefly.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/preference_item_switch_firefly.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_microsoft_login.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_microsoft_login.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_mod_filters.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_mod_filters.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_preference_category_firefly.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/preference_category_firefly.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/font_noto_sans_bold.ttf.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/font/noto_sans_bold.ttf"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_palette.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_palette.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_create_modpack_profile.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_create_modpack_profile.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_centered_textview.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_centered_textview.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_hash_verification.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_hash_verification.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_control_button_setting.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_control_button_setting.xml"
+    },
+    {
+        "merged": "net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_card_glass_background.xml.flat",
+        "source": "net.kdt.pojavlaunch.firefly.app-main-6:/drawable/card_glass_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_pojav_full.webp.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_pojav_full.webp"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_ram.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_ram.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_gesture_disable.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_gesture_disable.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_home.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_home.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_edit_profile.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_edit_profile.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_modrinth_version.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_modrinth_version.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_keyboard.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_keyboard.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_spinner.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/spinner.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_simple_list_1.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_simple_list_1.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_controller_remapper.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_controller_remapper.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_control_editor.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_control_editor.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_mouse_editor.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_mouse_editor.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_card_glass_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/card_glass_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_image_about_hellochl.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/image_about_hellochl.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_mouse_pointer.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_mouse_pointer.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_spinner_arrow.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/spinner_arrow.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_card.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_card.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_curseforge.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_curseforge.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_image_about_pojavteam.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/image_about_pojavteam.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_slide_out_right.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/slide_out_right.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_storage_alert.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/storage_alert.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_control_scale.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_control_scale.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_basemain.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_basemain.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_profile_path_manager.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_profile_path_manager.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_control.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_control.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_per_version_control.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_per_version_control.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_list.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_list.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_misc.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_misc.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_view_handle.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_view_handle.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_layout_animation_fall_down.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/layout_animation_fall_down.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_install_jar.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_install_jar.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_add_modded.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_add_modded.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_arrow_back_white.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_arrow_back_white.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_spinner_mc_version.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/spinner_mc_version.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_engine.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_engine.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_mod_search.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_mod_search.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_view_loading.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/view_loading.xml"
+    },
+    {
+        "merged": "net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_card_glass_accent.xml.flat",
+        "source": "net.kdt.pojavlaunch.firefly.app-main-6:/drawable/card_glass_accent.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_close.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_close.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_gesture_time.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_gesture_time.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_preference_item_firefly.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/preference_item_firefly.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_item_fade_slide_up.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/item_fade_slide_up.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_file_selector.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_file_selector.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_refresh.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_console.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_console.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_line.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_line.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_custom_layout.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_custom_layout.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_modrinth_project.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_modrinth_project.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_filter.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_filter.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_button_glass_primary.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/button_glass_primary.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_profile_type.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_profile_type.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_profile_editor.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_profile_editor.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_preference_item_back_firefly.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/preference_item_back_firefly.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_java.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_java.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_slide_in_left.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/slide_in_left.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_line_selected.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_line_selected.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_renderer_mg.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_renderer_mg.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_file.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_file.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_spinner_arrow_right.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/spinner_arrow_right.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_news_card_border.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/news_card_border.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_local_login.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_local_login.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_slide_in_right.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/slide_in_right.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_image_about_happygray.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/image_about_happygray.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_version_profile_layout.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_version_profile_layout.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_cropper.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_cropper.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_mouse_speed.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_mouse_speed.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_line_unselected.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_line_unselected.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_custom_controls.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_custom_controls.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_profile_path.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_profile_path.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_quilt.webp.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_quilt.webp"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_icon_edit.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_icon_edit.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_java_runtime.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_java_runtime.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_search.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_mine_button_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/mine_button_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_about.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_about.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_java_gui_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_java_gui_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_custom_controls.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_custom_controls.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/font_harmonyos_sans_bold.ttf.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/font/harmonyos_sans_bold.ttf"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_storage_test_no_sdcard.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/storage_test_no_sdcard.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout-land_fragment_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout-land/fragment_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_fabric.webp.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_fabric.webp"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_file_paths.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/file_paths.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_item_centered_textview_large.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/item_centered_textview_large.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_video.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_video.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_steve.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/steve.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_menu_card_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/menu_card_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_glass_bar.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_glass_bar.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_bg_phone_dark.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/bg_phone_dark.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_preference_card_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/preference_card_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_view_logger.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/view_logger.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_bg_phone.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/bg_phone.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_view_mod_extended.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/view_mod_extended.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_card_glass_accent.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/card_glass_accent.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_video.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_video.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/font_harmonyos_sans_regular.ttf.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/font/harmonyos_sans_regular.ttf"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/menu_menu_runopt.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/menu/menu_runopt.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_info.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_info.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_view_mod.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/view_mod.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_color_selector.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_color_selector.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_mesa_version.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_mesa_version.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_news.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_news.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/menu_menu_customctrl.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/menu/menu_customctrl.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_menu_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/menu_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_more.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_more.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_provider_paths.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/provider_paths.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_dialog_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/dialog_background.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_preference_item_ripple.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/preference_item_ripple.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_provider.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/provider.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_sign_in_background.webp.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_sign_in_background.webp"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_button_glass_secondary.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/button_glass_secondary.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_glass_dark.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_glass_dark.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_terminal.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_terminal.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_select_auth_method.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_select_auth_method.xml"
+    },
+    {
+        "merged": "net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_card.xml.flat",
+        "source": "net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_card.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_bg_tablet.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/bg_tablet.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_background_overlay.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/background_overlay.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_live_mouse_speed_editor.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_live_mouse_speed_editor.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_alex.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/alex.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/menu_menu_versionopt.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/menu/menu_versionopt.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_import_control.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_import_control.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_pointer_scale.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_pointer_scale.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_activity_pojav_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/activity_pojav_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_screen_resolution.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_screen_resolution.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/xml_pref_main.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/xml/pref_main.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_modrinth.png.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_modrinth.png"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_sharp_settings_24.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_sharp_settings_24.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_hide_notch.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_hide_notch.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_dialog_expendable_list_view.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/dialog_expendable_list_view.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/anim_slide_out_left.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/anim/slide_out_left.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_setting_experimental.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_setting_experimental.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_fabric_install.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_fabric_install.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_preference_item_seekbar_firefly.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/preference_item_seekbar_firefly.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_view_text_progressbar.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/view_text_progressbar.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/layout_fragment_other_login.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/layout/fragment_other_login.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_terminal_scroll_shape.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/terminal_scroll_shape.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_ic_menu_delete_forever.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/ic_menu_delete_forever.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-debug-4:/drawable_control_button.xml.flat",
+        "source": "/root/.gradle/daemon/8.13/net.kdt.pojavlaunch.firefly.app-main-6:/drawable/control_button.xml"
+    }
+]

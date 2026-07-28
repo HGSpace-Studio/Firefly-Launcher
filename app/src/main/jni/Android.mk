@@ -124,6 +124,16 @@ LOCAL_SRC_FILES := \
     pojav/awt_bridge.c
 include $(BUILD_SHARED_LIBRARY)
 
+# pojavexec: wrapper that links libpgw.so so all pojav* symbols are available
+# Required by lwjgl-glfw-classes.jar's GLFW class which calls System.loadLibrary("pojavexec")
+include $(CLEAR_VARS)
+LOCAL_MODULE := pojavexec
+LOCAL_SHARED_LIBRARIES := pgw
+LOCAL_LDLIBS := -llog -ldl
+LOCAL_SRC_FILES := \
+    pojav/pojavexec_wrapper.c
+include $(BUILD_SHARED_LIBRARY)
+
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := awt_headless

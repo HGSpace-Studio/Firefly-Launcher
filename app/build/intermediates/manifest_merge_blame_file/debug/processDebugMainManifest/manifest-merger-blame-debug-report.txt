@@ -1,0 +1,372 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="work.HGSpace.FireflyAndroid.debug"
+4    android:versionCode="9999999"
+5    android:versionName="0.1.6PE-20260728-" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="28" />
+10
+11    <uses-feature android:glEsVersion="0x00020000" />
+11-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:6:5-54
+11-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:6:19-51
+12    <uses-feature
+12-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:7:5-9:36
+13        android:name="android.hardware.type.pc"
+13-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:8:9-48
+14        android:required="false" />
+14-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:9:9-33
+15
+16    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+16-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:11:5-77
+16-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:11:22-74
+17    <uses-permission
+17-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:12:5-14:38
+18        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+18-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:13:9-65
+19        android:maxSdkVersion="28" />
+19-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:14:9-35
+20    <uses-permission
+20-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:15:5-17:38
+21        android:name="android.permission.READ_EXTERNAL_STORAGE"
+21-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:16:9-64
+22        android:maxSdkVersion="28" />
+22-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:17:9-35
+23    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+23-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:18:5-19:40
+23-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:18:22-79
+24    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+24-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:20:5-83
+24-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:20:22-80
+25    <uses-permission android:name="android.permission.INTERNET" />
+25-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:21:5-67
+25-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:21:22-64
+26    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+26-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:22:5-79
+26-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:22:22-76
+27    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+27-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:23:5-71
+27-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:23:22-68
+28    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+28-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:24:5-77
+28-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:24:22-74
+29    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+29-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:25:5-89
+29-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:25:22-86
+30    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+30-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:26:5-94
+30-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:26:22-92
+31    <uses-permission android:name="android.permission.VIBRATE" />
+31-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:27:5-66
+31-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:27:22-63
+32
+33    <queries>
+33-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:184:5-186:15
+34        <package android:name="net.kdt.pojavlaunch.ffmpeg" />
+34-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:185:9-62
+34-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:185:18-59
+35    </queries>
+36
+37    <application
+37-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:29:5-183:19
+38        android:name="net.kdt.pojavlaunch.firefly.PojavApplication"
+38-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:30:9-41
+39        android:allowBackup="true"
+39-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:31:9-35
+40        android:allowNativeHeapPointerTagging="false"
+40-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:32:9-54
+41        android:appCategory="game"
+41-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:33:9-35
+42        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+42-->[androidx.core:core:1.6.0] /root/.gradle/caches/8.13/transforms/4b1dd2cf5b882b14d78dbfe568e6df43/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
+43        android:debuggable="true"
+44        android:extractNativeLibs="true"
+45        android:hasFragileUserData="true"
+45-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:34:9-42
+46        android:icon="@mipmap/ic_launcher"
+46-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:36:9-43
+47        android:isGame="true"
+47-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:37:9-30
+48        android:label="@string/app_name"
+48-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:38:9-41
+49        android:process=":launcher"
+49-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:39:9-36
+50        android:requestLegacyExternalStorage="true"
+50-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:35:9-52
+51        android:resizeableActivity="true"
+51-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:40:9-42
+52        android:roundIcon="@mipmap/ic_launcher_round"
+52-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:41:9-54
+53        android:theme="@style/AppTheme" >
+53-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:42:9-40
+54        <activity
+54-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:43:9-45:40
+55            android:name="net.kdt.pojavlaunch.firefly.MissingStorageActivity"
+55-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:44:13-51
+56            android:exported="false" />
+56-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:45:13-37
+57
+58        <meta-data
+58-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:47:9-49:43
+59            android:name="android.max_aspect"
+59-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:48:13-46
+60            android:value="ratio_float" />
+60-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:49:13-40
+61
+62        <activity
+62-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:51:9-61:20
+63            android:name="net.kdt.pojavlaunch.firefly.TestStorageActivity"
+63-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:52:13-48
+64            android:exported="true"
+64-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:53:13-36
+65            android:label="@string/app_short_name"
+65-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:54:13-51
+66            android:launchMode="singleTop" >
+66-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:55:13-43
+67            <intent-filter>
+67-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:56:13-60:29
+68                <action android:name="android.intent.action.MAIN" />
+68-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:57:17-69
+68-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:57:25-66
+69
+70                <category android:name="android.intent.category.LAUNCHER" />
+70-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:59:17-77
+70-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:59:27-74
+71            </intent-filter>
+72        </activity>
+73        <activity
+73-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:62:9-66:57
+74            android:name="net.kdt.pojavlaunch.firefly.LauncherActivity"
+74-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:63:13-45
+75            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
+75-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:64:13-133
+76            android:label="@string/app_short_name"
+76-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:65:13-51
+77            android:windowSoftInputMode="adjustResize" />
+77-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:66:13-55
+78        <activity
+78-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:67:9-86:20
+79            android:name="net.kdt.pojavlaunch.firefly.ImportControlActivity"
+79-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:68:13-50
+80            android:configChanges="keyboard|keyboardHidden"
+80-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:69:13-60
+81            android:exported="true"
+81-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:70:13-36
+82            android:launchMode="singleInstance"
+82-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:71:13-48
+83            android:windowSoftInputMode="stateVisible" >
+83-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:72:13-55
+84            <intent-filter
+84-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:73:13-85:29
+85                android:label="@string/import_control_label"
+85-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:74:17-61
+86                android:scheme="content" >
+86-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:75:17-41
+87                <action android:name="android.intent.action.VIEW" />
+87-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:77:17-69
+87-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:77:25-66
+88                <action android:name="android.intent.action.SEND" />
+88-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:78:17-69
+88-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:78:25-66
+89
+90                <category android:name="android.intent.category.DEFAULT" />
+90-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:80:17-76
+90-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:80:27-73
+91
+92                <data android:mimeType="application/json" />
+92-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:17-61
+92-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:23-58
+93                <data android:mimeType="text/json" />
+93-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:17-61
+93-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:23-58
+94                <data android:mimeType="text/plain" />
+94-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:17-61
+94-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:82:23-58
+95            </intent-filter>
+96        </activity>
+97        <activity
+97-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:87:9-90:70
+98            android:name="net.kdt.pojavlaunch.firefly.FatalErrorActivity"
+98-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:88:13-47
+99            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+99-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:89:13-94
+100            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+100-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:90:13-67
+101        <activity
+101-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:91:9-94:70
+102            android:name="net.kdt.pojavlaunch.firefly.ShowErrorActivity"
+102-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:92:13-46
+103            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+103-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:93:13-94
+104            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+104-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:94:13-67
+105        <activity
+105-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:95:9-98:70
+106            android:name="net.kdt.pojavlaunch.firefly.ExitActivity"
+106-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:96:13-41
+107            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+107-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:97:13-94
+108            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+108-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:98:13-67
+109        <activity
+109-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:99:9-103:55
+110            android:name="net.kdt.pojavlaunch.firefly.JavaGUILauncherActivity"
+110-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:101:13-52
+111            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
+111-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:102:13-133
+112            android:process=":gui_installer"
+112-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:100:13-45
+113            android:screenOrientation="unspecified" />
+113-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:103:13-52
+114        <activity
+114-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:104:9-114:20
+115            android:name="net.kdt.pojavlaunch.firefly.CustomControlsActivity"
+115-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:105:13-51
+116            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+116-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:106:13-94
+117            android:exported="false"
+117-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:107:13-37
+118            android:screenOrientation="sensorLandscape" >
+118-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:108:13-56
+119            <intent-filter>
+119-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:109:13-113:29
+120                <action android:name=".CustomControlsActivity" />
+121
+122                <category android:name="android.intent.category.DEFAULT" />
+122-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:80:17-76
+122-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:80:27-73
+123            </intent-filter>
+124        </activity>
+125        <activity
+125-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:115:9-120:55
+126            android:name="net.kdt.pojavlaunch.firefly.MainActivity"
+126-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:116:13-41
+127            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
+127-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:117:13-133
+128            android:launchMode="singleTop"
+128-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:118:13-43
+129            android:process=":game"
+129-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:119:13-36
+130            android:screenOrientation="unspecified" />
+130-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:120:13-52
+131        <activity
+131-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:122:9-132:39
+132            android:name="com.qz.terminal2.ConsoleActivity"
+132-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:123:13-60
+133            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+133-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:124:13-83
+134            android:exported="true"
+134-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:132:13-36
+135            android:label="@string/main_terminal"
+135-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:128:13-50
+136            android:launchMode="singleInstance"
+136-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:130:13-48
+137            android:process=":terminal"
+137-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:131:13-40
+138            android:resizeableActivity="true"
+138-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:127:13-46
+139            android:taskAffinity=""
+139-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:129:13-36
+140            android:theme="@style/Theme.AppCompat"
+140-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:126:13-51
+141            android:windowSoftInputMode="adjustResize|stateHidden" />
+141-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:125:13-67
+142
+143        <provider
+143-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:134:9-143:20
+144            android:name="net.kdt.pojavlaunch.firefly.scoped.FolderProvider"
+144-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:135:13-50
+145            android:authorities="@string/storageProviderAuthorities"
+145-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:136:13-69
+146            android:exported="true"
+146-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:137:13-36
+147            android:grantUriPermissions="true"
+147-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:138:13-47
+148            android:permission="android.permission.MANAGE_DOCUMENTS" >
+148-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:139:13-69
+149            <intent-filter>
+149-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:140:13-142:29
+150                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+150-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:141:17-84
+150-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:141:25-81
+151            </intent-filter>
+152        </provider>
+153        <provider
+153-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:145:9-153:20
+154            android:name="net.kdt.pojavlaunch.firefly.scoped.FileProvider"
+154-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:146:13-48
+155            android:authorities="@string/fileProviderAuthorities"
+155-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:147:13-66
+156            android:exported="false"
+156-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:148:13-37
+157            android:grantUriPermissions="true" >
+157-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:149:13-47
+158            <meta-data
+158-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:150:13-152:54
+159                android:name="android.support.FILE_PROVIDER_PATHS"
+159-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:151:17-67
+160                android:resource="@xml/file_paths" />
+160-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:152:17-51
+161        </provider>
+162        <provider
+163            android:name="androidx.core.content.FileProvider"
+163-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:156:13-62
+164            android:authorities="work.HGSpace.FireflyAndroid.debug.provider"
+164-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:157:13-60
+165            android:exported="false"
+165-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:158:13-37
+166            android:grantUriPermissions="true" >
+166-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:159:13-47
+167            <meta-data
+167-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:150:13-152:54
+168                android:name="android.support.FILE_PROVIDER_PATHS"
+168-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:151:17-67
+169                android:resource="@xml/provider_paths" />
+169-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:152:17-51
+170        </provider>
+171
+172        <service
+172-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:166:9-169:40
+173            android:name="net.kdt.pojavlaunch.firefly.services.ProgressService"
+173-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:167:13-53
+174            android:exported="false"
+174-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:169:13-37
+175            android:foregroundServiceType="specialUse" />
+175-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:168:13-55
+176        <service
+176-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:171:9-175:40
+177            android:name="net.kdt.pojavlaunch.firefly.services.GameService"
+177-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:172:13-49
+178            android:exported="false"
+178-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:175:13-37
+179            android:foregroundServiceType="specialUse"
+179-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:174:13-55
+180            android:process=":game" />
+180-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:173:13-36
+181        <service
+181-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:177:9-181:40
+182            android:name="com.qz.terminal2.TermuxService"
+182-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:178:13-58
+183            android:exported="false"
+183-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:181:13-37
+184            android:foregroundServiceType="specialUse"
+184-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:179:13-55
+185            android:process=":terminal" />
+185-->/mnt/d/FireflyAndroid-Launcher/app/src/main/AndroidManifest.xml:180:13-40
+186
+187        <uses-library
+187-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:25:9-27:40
+188            android:name="androidx.window.extensions"
+188-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:26:13-54
+189            android:required="false" />
+189-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:27:13-37
+190        <uses-library
+190-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:28:9-30:40
+191            android:name="androidx.window.sidecar"
+191-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:29:13-51
+192            android:required="false" />
+192-->[androidx.window:window:1.0.0] /root/.gradle/caches/8.13/transforms/76e81c295358cda9f42eac643cebca7a/transformed/window-1.0.0/AndroidManifest.xml:30:13-37
+193    </application>
+194
+195</manifest>
