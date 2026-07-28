@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "firefile_launcher",
+  "productName": "Firefly Launcher",
   "version": "0.1.0",
   "identifier": "com.hgspace.firefile",
   "build": {
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "firefile_launcher",
+        "title": "Firefly Launcher",
         "width": 1200,
         "height": 800,
         "minWidth": 800,
@@ -20,8 +20,8 @@
         "decorations": true,
         "visible": false,
         "trafficLightPosition": {
-          "x": 12,
-          "y": 18
+          "x": 14,
+          "y": 23
         },
         "hiddenTitle": true
       }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
-import { Icon as VIcon } from "@vicons/utils";
-import { Games24Regular, Square24Regular, ArrowClockwise24Regular, Flash24Regular, Settings24Regular, PuzzlePiece24Regular, WindowConsole20Regular, Options24Regular, Save24Regular } from "@vicons/fluent";
+import { Gamepad2, Square, RefreshCw, Zap, Settings, Puzzle, Terminal, SlidersHorizontal, Save } from "@lucide/vue";
 import { invoke } from "@tauri-apps/api/core";
 
 interface InstanceCardData {
@@ -292,7 +291,7 @@ async function saveSettings() {
     <div class="detail-header">
       <div class="detail-icon-area">
         <img v-if="instance.icon" :src="instance.icon" class="detail-icon" />
-        <VIcon v-else :size="40" class="detail-icon-placeholder"><Games24Regular /></VIcon>
+        <Gamepad2 v-else :size="40" class="detail-icon-placeholder" />
       </div>
       <div class="detail-meta">
         <span class="detail-loader">{{ loaderLabel }}</span>
@@ -307,7 +306,7 @@ async function saveSettings() {
             <div class="dcard-screenshot">
               <img v-if="cardScreenshotUrl" :src="cardScreenshotUrl" class="dcard-screenshot-img" />
               <div v-else class="dcard-screenshot-placeholder">
-                <VIcon :size="32" class="dcard-screenshot-icon"><Games24Regular /></VIcon>
+                <Gamepad2 :size="32" class="dcard-screenshot-icon" />
                 <span>暂无截图</span>
               </div>
               <div class="dcard-screenshot-gradient"></div>
@@ -343,23 +342,23 @@ async function saveSettings() {
         <div class="set-layout">
           <div class="set-sidebar">
             <button class="set-nav-item" :class="{ active: settingsTab === 'general' }" @click="settingsTab = 'general'">
-              <VIcon :size="16"><Settings24Regular /></VIcon>
+              <Settings :size="16" />
               <span>常规</span>
             </button>
             <button class="set-nav-item" :class="{ active: settingsTab === 'quicklaunch' }" @click="settingsTab = 'quicklaunch'">
-              <VIcon :size="16"><Flash24Regular /></VIcon>
+              <Zap :size="16" />
               <span>快速启动</span>
             </button>
             <button class="set-nav-item" :class="{ active: settingsTab === 'extensions' }" @click="settingsTab = 'extensions'">
-              <VIcon :size="16"><PuzzlePiece24Regular /></VIcon>
+              <Puzzle :size="16" />
               <span>可选扩展</span>
             </button>
             <button class="set-nav-item" :class="{ active: settingsTab === 'java' }" @click="settingsTab = 'java'">
-              <VIcon :size="16"><WindowConsole20Regular /></VIcon>
+              <Terminal :size="16" />
               <span>Java 与运行</span>
             </button>
             <button class="set-nav-item" :class="{ active: settingsTab === 'other' }" @click="settingsTab = 'other'">
-              <VIcon :size="16"><Options24Regular /></VIcon>
+              <SlidersHorizontal :size="16" />
               <span>其他</span>
             </button>
           </div>
@@ -516,7 +515,7 @@ async function saveSettings() {
             </div>
             <div class="set-footer">
               <button class="set-save-btn" @click="saveSettings">
-                <VIcon :size="15"><Save24Regular /></VIcon>
+                <Save :size="15" />
                 <span>保存设置</span>
               </button>
               <span v-if="saveMsg" class="set-save-msg">{{ saveMsg }}</span>
@@ -529,8 +528,8 @@ async function saveSettings() {
     </div>
     <div v-if="activeTab === 'launch'" class="tab-footer">
       <div v-if="launchState === 'launching' || launchState === 'running'" class="launch-status">
-        <VIcon v-if="launchState === 'launching'" :size="16"><ArrowClockwise24Regular class="spin" /></VIcon>
-        <VIcon v-else :size="16"><Square24Regular /></VIcon>
+        <RefreshCw v-if="launchState === 'launching'" :size="16" class="spin" />
+        <Square v-else :size="16" />
         <span>{{ launchLabel }}</span>
         <div v-if="launchState === 'launching'" class="launch-bar">
           <div class="launch-bar-fill" :style="{ width: (launchProgress * 100) + '%' }"></div>

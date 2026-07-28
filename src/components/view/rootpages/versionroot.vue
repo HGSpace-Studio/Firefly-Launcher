@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref, inject, onMounted, onUnmounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Icon as VIcon } from "@vicons/utils";
-import { CircleOff16Regular, Add24Regular, Games24Regular, ArrowClockwise24Regular } from "@vicons/fluent";
+import { CircleOff, Plus, Gamepad2, RefreshCw } from "@lucide/vue";
 import { invoke } from "@tauri-apps/api/core";
 import InstanceDetail from "./instance_detail.vue";
 import type { InstanceData } from "./instance_detail.vue";
@@ -107,18 +106,18 @@ onUnmounted(() => {
       <div class="lib-header-row">
         <span class="lib-header-main">我的 Minecraft 实例</span>
         <button class="lib-create-btn" @click="emit('openNewInstance')">
-          <VIcon :size="16"><Add24Regular /></VIcon>
+          <Plus :size="16" />
           <span>新建实例</span>
         </button>
       </div>
     </div>
     <div class="lib-area">
       <div v-if="loading" class="lib-loading">
-        <VIcon :size="20"><ArrowClockwise24Regular class="spinner" /></VIcon>
+        <RefreshCw :size="20" class="spinner" />
         <span>加载中...</span>
       </div>
       <div v-else-if="instances.length === 0" class="lib-empty">
-        <VIcon :size="56" class="lib-empty-icon"><CircleOff16Regular /></VIcon>
+        <CircleOff :size="56" class="lib-empty-icon" />
         <span class="lib-empty-text">这里什么都没有啊</span>
       </div>
       <div v-else class="lib-grid">
@@ -129,7 +128,7 @@ onUnmounted(() => {
           @click="openDetail(inst)"
         >
           <div class="card-icon-wrap">
-            <VIcon :size="28"><Games24Regular class="card-icon" /></VIcon>
+            <Gamepad2 :size="28" class="card-icon" />
           </div>
           <div class="card-body">
             <span class="card-version">Minecraft {{ inst.version }}</span>

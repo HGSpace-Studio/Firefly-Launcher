@@ -3,8 +3,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { listen } from "@tauri-apps/api/event";
-import { Icon as VIcon } from "@vicons/utils";
-import { DocumentArrowDown16Regular, FolderOpen24Regular, Warning24Regular } from "@vicons/fluent";
+import { FileDown, FolderOpen, AlertTriangle } from "@lucide/vue";
 
 interface CrashReport {
   instanceName: string;
@@ -74,16 +73,16 @@ async function closeWindow() {
   <div class="crash-window" v-if="report">
     <div class="crash-appbar">
       <div class="crash-appbar-left">
-        <VIcon :size="18"><Warning24Regular /></VIcon>
+        <AlertTriangle :size="18" />
         <span>游戏非正常退出，请查看详细信息</span>
       </div>
       <div class="crash-appbar-right">
         <button class="crash-appbar-btn" @click="exportLog">
-          <VIcon :size="15"><DocumentArrowDown16Regular /></VIcon>
+          <FileDown :size="15" />
           <span>导出日志</span>
         </button>
         <button class="crash-appbar-btn" @click="openLogFolder">
-          <VIcon :size="15"><FolderOpen24Regular /></VIcon>
+          <FolderOpen :size="15" />
           <span>打开日志文件夹</span>
         </button>
         <button class="crash-appbar-close" @click="closeWindow">
@@ -125,7 +124,7 @@ async function closeWindow() {
       </div>
 
       <div class="crash-warn-bar">
-        <VIcon :size="14"><Warning24Regular /></VIcon>
+        <AlertTriangle :size="14" />
         <span>请不要直接截图本窗口！请勿泄露个人隐私信息。</span>
       </div>
     </div>

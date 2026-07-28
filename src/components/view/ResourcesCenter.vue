@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Icon as VIcon } from "@vicons/utils";
-import { PuzzlePiece24Regular, Box24Regular, WeatherSunny24Regular, GridDots24Regular, ArrowClockwise24Regular, ChevronLeft24Regular, ChevronRight24Regular } from "@vicons/fluent";
+import { Puzzle, Box, Sun, Grip, RefreshCw, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { getCache, setCache } from "../../utils/cache";
 
 const { t } = useI18n();
@@ -10,10 +9,10 @@ const { t } = useI18n();
 const activeTab = ref("mods");
 
 const tabs = [
-  { id: "mods", label: "模组", icon: PuzzlePiece24Regular },
-  { id: "modpack", label: "整合包", icon: Box24Regular },
-  { id: "shader", label: "光影包", icon: WeatherSunny24Regular },
-  { id: "resourcepack", label: "资源包", icon: GridDots24Regular },
+  { id: "mods", label: "模组", icon: Puzzle },
+  { id: "modpack", label: "整合包", icon: Box },
+  { id: "shader", label: "光影包", icon: Sun },
+  { id: "resourcepack", label: "资源包", icon: Grip },
 ];
 
 interface ModrinthProject {
@@ -141,24 +140,24 @@ function formatDate(iso: string): string {
             :class="{ active: activeTab === tab.id }"
             @click="activeTab = tab.id"
           >
-            <VIcon :size="16"><component :is="tab.icon" /></VIcon>
+            <component :is="tab.icon" :size="16" />
             <span>{{ tab.label }}</span>
           </button>
         </div>
         <div v-if="totalPages > 1" class="pagination">
           <button class="page-btn" :disabled="currentPage <= 1" @click="currentPage--; fetchProjects()">
-            <VIcon :size="16"><ChevronLeft24Regular /></VIcon>
+            <ChevronLeft :size="16" />
           </button>
           <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
           <button class="page-btn" :disabled="currentPage >= totalPages" @click="currentPage++; fetchProjects()">
-            <VIcon :size="16"><ChevronRight24Regular /></VIcon>
+            <ChevronRight :size="16" />
           </button>
         </div>
       </div>
     </div>
     <div class="resources-area">
       <div v-if="loading" class="resources-loading">
-        <VIcon :size="20"><ArrowClockwise24Regular class="spinner" /></VIcon>
+        <RefreshCw :size="20" class="spinner" />
         <span>正在获取资源列表...</span>
       </div>
       <div v-else-if="projects.length === 0" class="resources-empty">

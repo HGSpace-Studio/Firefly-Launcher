@@ -5,8 +5,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { message } from "@tauri-apps/plugin-dialog";
 import { useI18n } from "vue-i18n";
 import { getSystemLocale } from "../../../i18n";
-import { Icon as VIcon } from "@vicons/utils";
-import { Globe24Regular, Color24Regular, DrinkCoffee24Regular, Person24Regular, CheckmarkCircle24Regular, Dismiss24Regular, ChevronRight24Regular, ChevronLeft24Regular, ArrowClockwise24Regular, MoreHorizontal24Regular, ArrowSync24Regular, ArrowDownload24Regular } from "@vicons/fluent";
+import { Globe, Palette, Coffee, User, CheckCircle, X, ChevronRight, ChevronLeft, RefreshCw, MoreHorizontal, RefreshCcw, Download } from "@lucide/vue";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { listen } from "@tauri-apps/api/event";
 import steveAvatar from "../../../assets/imgs/skins/avator/steve.png";
@@ -78,11 +77,11 @@ watch(themeDropdownOpen, async (open) => {
 });
 
 const tabs = [
-  { id: "language", label: "语言", icon: Globe24Regular },
-  { id: "appearance", label: "外观", icon: Color24Regular },
-  { id: "java", label: "Java JRE", icon: DrinkCoffee24Regular },
-  { id: "account", label: "账户", icon: Person24Regular },
-  { id: "complete", label: "完成", icon: CheckmarkCircle24Regular },
+  { id: "language", label: "语言", icon: Globe },
+  { id: "appearance", label: "外观", icon: Palette },
+  { id: "java", label: "Java JRE", icon: Coffee },
+  { id: "account", label: "账户", icon: User },
+  { id: "complete", label: "完成", icon: CheckCircle },
 ];
 
 const isLastTab = computed(() => activeTab.value === tabs.length - 1);
@@ -250,7 +249,7 @@ onUnmounted(() => {
             class="tab-item"
             :class="{ active: activeTab === idx }"
           >
-            <VIcon :size="14"><component :is="tab.icon" class="tab-icon" /></VIcon>
+            <component :is="tab.icon" :size="14" class="tab-icon" />
             <span class="tab-label">{{ tab.label }}</span>
           </button>
         </div>
@@ -258,7 +257,7 @@ onUnmounted(() => {
 
       <div class="oobe-body">
         <div v-if="!initialized" class="loading-state">
-          <VIcon :size="24"><ArrowClockwise24Regular class="spinner" /></VIcon>
+          <RefreshCw :size="24" class="spinner" />
           <span>初始化中...</span>
         </div>
 
@@ -266,7 +265,7 @@ onUnmounted(() => {
           <!-- 语言 -->
           <div v-show="activeTab === 0" class="tab-content lang-content">
             <div class="lang-center">
-              <VIcon :size="28"><Globe24Regular class="lang-icon" /></VIcon>
+              <Globe :size="28" class="lang-icon" />
               <div class="section-title">选择语言</div>
               <div class="section-desc">选择应用的显示语言</div>
               <div class="lang-combobox">
@@ -296,7 +295,7 @@ onUnmounted(() => {
           <!-- 外观 -->
           <div v-show="activeTab === 1" class="tab-content lang-content">
             <div class="lang-center">
-              <VIcon :size="28"><Color24Regular class="lang-icon" /></VIcon>
+              <Palette :size="28" class="lang-icon" />
               <div class="section-title">选择外观</div>
               <div class="section-desc">选择应用的明暗主题</div>
               <div class="lang-combobox">
@@ -326,7 +325,7 @@ onUnmounted(() => {
           <!-- Java JRE -->
           <div v-show="activeTab === 2" class="tab-content java-content">
             <div class="java-sidebar">
-              <VIcon :size="64"><DrinkCoffee24Regular class="java-big-icon" /></VIcon>
+              <Coffee :size="64" class="java-big-icon" />
             </div>
             <div class="java-main">
               <div class="java-main-header">
@@ -335,7 +334,7 @@ onUnmounted(() => {
               </div>
               <div class="java-list">
                 <div v-if="javaDetecting" class="java-list-loading">
-                  <VIcon :size="16"><ArrowClockwise24Regular class="spinner" /></VIcon>
+                  <RefreshCw :size="16" class="spinner" />
                   <span>检测中...</span>
                 </div>
                 <button
@@ -367,7 +366,7 @@ onUnmounted(() => {
           <!-- 账户 -->
           <div v-show="activeTab === 3" class="tab-content lang-content">
             <div class="lang-center">
-              <VIcon :size="28"><Person24Regular class="lang-icon" /></VIcon>
+              <User :size="28" class="lang-icon" />
               <div class="section-title">账户设置</div>
               <div class="section-desc">选择登录方式</div>
               <div class="account-cards">
@@ -376,14 +375,14 @@ onUnmounted(() => {
                   :class="{ selected: settings.accountType === 'microsoft' }"
                   @click="onAccountTypeChange('microsoft')"
                 >
-                  <VIcon :size="24" class="account-card-icon"><Person24Regular /></VIcon>
+                  <User :size="24" class="account-card-icon" />
                   <div class="account-card-text">
                     <span class="account-card-header">微软账户</span>
                     <span class="account-card-desc">如果您有正版 Minecraft，可点击此处以继续</span>
                   </div>
                 </button>
                 <button class="account-card disabled-card">
-                  <VIcon :size="24" class="account-card-icon"><MoreHorizontal24Regular /></VIcon>
+                  <MoreHorizontal :size="24" class="account-card-icon" />
                   <div class="account-card-text">
                     <span class="account-card-header">第三方登录</span>
                     <span class="account-card-desc">通过其他的第三方认证服务以继续</span>
@@ -394,7 +393,7 @@ onUnmounted(() => {
                   :class="{ selected: settings.accountType === 'offline' }"
                   @click="openOfflineDialog"
                 >
-                  <VIcon :size="24" class="account-card-icon"><Globe24Regular /></VIcon>
+                  <Globe :size="24" class="account-card-icon" />
                   <div class="account-card-text">
                     <span class="account-card-header">我没有正版 Minecraft</span>
                     <span class="account-card-desc">点击以创建离线账号</span>
@@ -413,19 +412,19 @@ onUnmounted(() => {
           <!-- 完成 -->
           <div v-show="activeTab === 4" class="tab-content lang-content">
             <div class="finish-center">
-              <VIcon :size="28"><CheckmarkCircle24Regular class="lang-icon" /></VIcon>
+              <CheckCircle :size="28" class="lang-icon" />
               <div class="section-title">设置完成</div>
               <div class="section-desc">现在您可以进行以下操作</div>
               <div class="finish-cards">
                 <button class="finish-card" @click="openUrl('https://github.com/HGSpace-Studio/FirefileLauncher')">
-                  <VIcon :size="24" class="finish-card-icon"><ArrowSync24Regular /></VIcon>
+                  <RefreshCcw :size="24" class="finish-card-icon" />
                   <div class="finish-card-text">
                     <span class="finish-card-header">GitHub 仓库</span>
                     <span class="finish-card-desc">查看本应用的开源代码</span>
                   </div>
                 </button>
                 <button class="finish-card">
-                  <VIcon :size="24" class="finish-card-icon"><ArrowDownload24Regular /></VIcon>
+                  <Download :size="24" class="finish-card-icon" />
                   <div class="finish-card-text">
                     <span class="finish-card-header">创建第一个 MC 实例</span>
                     <span class="finish-card-desc">获取最新版 Minecraft</span>
@@ -439,17 +438,17 @@ onUnmounted(() => {
 
       <div class="oobe-footer">
         <button v-if="!isFirstTab" class="nav-btn prev" @click="goPrev">
-          <VIcon :size="16"><ChevronLeft24Regular /></VIcon>
+          <ChevronLeft :size="16" />
           <span>上一步</span>
         </button>
         <div v-else class="nav-btn-placeholder"></div>
         <button v-if="isLastTab" class="nav-btn complete" :disabled="accountMissing" @click="completeSetup">
-          <VIcon :size="16"><CheckmarkCircle24Regular /></VIcon>
+          <CheckCircle :size="16" />
           <span>我什么都不需要，继续</span>
         </button>
         <button v-else class="nav-btn next" :disabled="accountMissing" @click="goNext">
           <span>下一步</span>
-          <VIcon :size="16"><ChevronRight24Regular /></VIcon>
+          <ChevronRight :size="16" />
         </button>
       </div>
     </div>
@@ -459,11 +458,11 @@ onUnmounted(() => {
       <div v-if="showExitDialog" class="dialog-overlay" @click.self="cancelExit">
         <div class="dialog-box">
           <div class="dialog-header">
-            <VIcon :size="18" class="dialog-close" @click="cancelExit"><Dismiss24Regular /></VIcon>
+            <X :size="18" class="dialog-close" @click="cancelExit" />
           </div>
           <div class="dialog-body">
             <div class="dialog-icon">
-              <VIcon :size="32"><DrinkCoffee24Regular /></VIcon>
+              <Coffee :size="32" />
             </div>
             <div class="dialog-title">还未完成设置</div>
             <div class="dialog-desc">
@@ -484,11 +483,11 @@ onUnmounted(() => {
       <div v-if="showOfflineDialog" class="dialog-overlay" @click.self="showOfflineDialog = false">
         <div class="dialog-box">
           <div class="dialog-header">
-            <VIcon :size="18" class="dialog-close" @click="showOfflineDialog = false"><Dismiss24Regular /></VIcon>
+            <X :size="18" class="dialog-close" @click="showOfflineDialog = false" />
           </div>
           <div class="dialog-body">
             <div class="dialog-icon">
-              <VIcon :size="32"><Person24Regular /></VIcon>
+              <User :size="32" />
             </div>
             <div class="dialog-title">创建离线账号</div>
             <div class="dialog-desc">输入您的玩家名称以继续</div>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { Icon as VIcon } from "@vicons/utils";
 import {
-  Person24Regular, Add24Regular, Dismiss24Regular, Delete24Regular, Edit24Regular,
-  Color24Regular, ArrowClockwise24Regular, Cloud24Regular, Person24Filled,
-} from "@vicons/fluent";
+  User, Plus, X, Trash2, Pencil, Palette, RefreshCw, Cloud,
+} from "@lucide/vue";
 import steveAvatar from "../assets/imgs/skins/avator/steve.png";
 import alexAvatar from "../assets/imgs/skins/avator/alex.png";
 
@@ -302,11 +300,11 @@ onUnmounted(() => {
     <div class="acc-window">
       <div class="acc-header-bar">
         <div class="acc-header-left">
-          <span class="acc-header-icon"><VIcon :size="16"><Person24Regular /></VIcon></span>
+          <span class="acc-header-icon"><User :size="16" /></span>
           <span class="acc-header-title">管理账号</span>
         </div>
         <button class="acc-close-btn" @click="emit('close')">
-          <VIcon :size="18"><Dismiss24Regular /></VIcon>
+          <X :size="18" />
         </button>
       </div>
       <div class="acc-divider"></div>
@@ -316,26 +314,26 @@ onUnmounted(() => {
           <div class="acc-sidebar-list">
             <div class="acc-sidebar-hint">选择以下方式创建对应账户名</div>
             <div class="acc-sidebar-item" @click="selectMicrosoft">
-              <span class="acc-sidebar-icon"><VIcon :size="16"><Person24Filled /></VIcon></span>
+              <span class="acc-sidebar-icon"><User :size="16" /></span>
               <span class="acc-sidebar-label">正版账号</span>
             </div>
             <div class="acc-sidebar-item" @click="selectOffline">
-              <span class="acc-sidebar-icon"><VIcon :size="16"><Person24Regular /></VIcon></span>
+              <span class="acc-sidebar-icon"><User :size="16" /></span>
               <span class="acc-sidebar-label">离线账户</span>
             </div>
 
             <div v-if="authServers.length > 0" class="acc-sidebar-divider"></div>
             <div v-for="s in authServers" :key="s.url" class="acc-sidebar-item">
-              <span class="acc-sidebar-icon"><VIcon :size="16"><Cloud24Regular /></VIcon></span>
+              <span class="acc-sidebar-icon"><Cloud :size="16" /></span>
               <span class="acc-sidebar-label">{{ s.name }}</span>
               <button class="acc-sidebar-remove" @click.stop="removeAuthServer(s.url)" title="删除">
-                <VIcon :size="12"><Dismiss24Regular /></VIcon>
+                <X :size="12" />
               </button>
             </div>
           </div>
           <div class="acc-sidebar-footer">
             <button class="acc-add-server-btn" @click="showAddServer = true">
-              <VIcon :size="14"><Add24Regular /></VIcon>
+              <Plus :size="14" />
               <span>新增认证服务器</span>
             </button>
           </div>
@@ -351,7 +349,7 @@ onUnmounted(() => {
 
           <div class="acc-content-body">
             <div v-if="accounts.length === 0" class="acc-empty">
-              <VIcon :size="48" class="acc-empty-icon"><Person24Regular /></VIcon>
+              <User :size="48" class="acc-empty-icon" />
               <span class="acc-empty-text">暂无账号</span>
             </div>
             <div v-else class="acc-list">
@@ -370,13 +368,13 @@ onUnmounted(() => {
                 </div>
                 <div class="acc-card-actions">
                   <button class="acc-action-btn" title="编辑">
-                    <VIcon :size="16"><Edit24Regular /></VIcon>
+                    <Pencil :size="16" />
                   </button>
                   <button class="acc-action-btn" title="皮肤">
-                    <VIcon :size="16"><Color24Regular /></VIcon>
+                    <Palette :size="16" />
                   </button>
                   <button class="acc-action-btn danger" title="删除" @click="removeAccount(acc.name)">
-                    <VIcon :size="16"><Delete24Regular /></VIcon>
+                    <Trash2 :size="16" />
                   </button>
                 </div>
               </div>
@@ -393,7 +391,7 @@ onUnmounted(() => {
           <div class="dialog-header">
             <span class="dialog-title">新增认证服务器</span>
             <button class="dialog-close-btn" @click="closeAddServer">
-              <VIcon :size="18"><Dismiss24Regular /></VIcon>
+              <X :size="18" />
             </button>
           </div>
           <div class="dialog-body">
@@ -428,7 +426,7 @@ onUnmounted(() => {
           <div class="dialog-header">
             <span class="dialog-title">添加离线账户</span>
             <button class="dialog-close-btn" @click="showAddOffline = false">
-              <VIcon :size="18"><Dismiss24Regular /></VIcon>
+              <X :size="18" />
             </button>
           </div>
           <div class="dialog-body">
@@ -467,7 +465,7 @@ onUnmounted(() => {
           <div class="dialog-header">
             <span class="dialog-title">添加微软账户</span>
             <button class="dialog-close-btn" @click="closeMsAuth">
-              <VIcon :size="18"><Dismiss24Regular /></VIcon>
+              <X :size="18" />
             </button>
           </div>
           <div class="dialog-body">
@@ -475,7 +473,7 @@ onUnmounted(() => {
               <div v-if="!msDeviceCode" class="ms-start">
                 <span class="ms-desc">使用 Microsoft 账户登录以获取您的 Minecraft Java 角色</span>
                 <button class="ms-login-btn" :disabled="msLoading" @click="startMsLogin">
-                  <VIcon :size="16"><ArrowClockwise24Regular v-if="msLoading" class="spin" /></VIcon>
+                  <RefreshCw :size="16" v-if="msLoading" class="spin" />
                   <span>{{ msLoading ? '请稍候...' : '登录微软账户' }}</span>
                 </button>
                 <span v-if="msError" class="ms-error">{{ msError }}</span>

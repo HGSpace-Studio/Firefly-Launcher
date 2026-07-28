@@ -3,8 +3,7 @@ import { ref, watch, onMounted, onUnmounted, computed, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { getSystemLocale } from "../i18n";
 import { invoke } from "@tauri-apps/api/core";
-import { Icon as VIcon } from "@vicons/utils";
-import { Settings24Regular, Globe24Regular, Color24Regular, Info24Regular, Dismiss24Regular, DrinkCoffee24Regular, ArrowClockwise24Regular, ChevronDown24Regular, ArrowUpload24Regular, Table24Regular, BuildingBank24Regular } from "@vicons/fluent";
+import { Settings, Globe, Palette, Info, X, Coffee, RefreshCw, ChevronDown, Upload, Table2, Landmark } from "@lucide/vue";
 import { open } from "@tauri-apps/plugin-dialog";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import logo from "../assets/logos/logo.png";
@@ -246,12 +245,12 @@ onUnmounted(() => {
       <div class="settings-header">
         <div class="settings-header-left">
           <span class="settings-icon-wrap">
-            <VIcon :size="16" class="settings-icon"><Settings24Regular /></VIcon>
+            <Settings :size="16" class="settings-icon" />
           </span>
           <span class="settings-title">{{ t("app.mainwindow.settings.title") }}</span>
         </div>
         <button class="settings-close" @click="emit('close')">
-          <VIcon :size="18"><Dismiss24Regular /></VIcon>
+          <X :size="18" />
         </button>
       </div>
       <div class="settings-divider"></div>
@@ -262,7 +261,7 @@ onUnmounted(() => {
             :class="{ active: activeSetting === 'java-runtime' }"
             @click="activeSetting = 'java-runtime'"
           >
-            <VIcon :size="18"><DrinkCoffee24Regular /></VIcon>
+            <Coffee :size="18" />
             <span>{{ t("app.mainwindow.settings.java-runtime") }}</span>
           </button>
           <div class="settings-nav-divider"></div>
@@ -271,7 +270,7 @@ onUnmounted(() => {
             :class="{ active: activeSetting === 'appearance' }"
             @click="activeSetting = 'appearance'"
           >
-            <VIcon :size="18"><Color24Regular /></VIcon>
+            <Palette :size="18" />
             <span>{{ t("app.mainwindow.settings.appearance") }}</span>
           </button>
           <button
@@ -279,7 +278,7 @@ onUnmounted(() => {
             :class="{ active: activeSetting === 'ui-layout' }"
             @click="activeSetting = 'ui-layout'"
           >
-            <VIcon :size="18"><Table24Regular /></VIcon>
+            <Table2 :size="18" />
             <span>UI 布局</span>
           </button>
           <button
@@ -287,7 +286,7 @@ onUnmounted(() => {
             :class="{ active: activeSetting === 'language' }"
             @click="activeSetting = 'language'"
           >
-            <VIcon :size="18"><Globe24Regular /></VIcon>
+            <Globe :size="18" />
             <span>{{ t("app.mainwindow.settings.language") }}</span>
           </button>
           <button
@@ -295,7 +294,7 @@ onUnmounted(() => {
             :class="{ active: activeSetting === 'about' }"
             @click="activeSetting = 'about'"
           >
-            <VIcon :size="18"><Info24Regular /></VIcon>
+            <Info :size="18" />
             <span>{{ t("app.mainwindow.settings.about") }}</span>
           </button>
         </nav>
@@ -309,10 +308,10 @@ onUnmounted(() => {
                 </div>
                 <div class="expander-right">
                   <button class="refresh-btn" @click.stop="fetchJavaVersions" :disabled="javaLoading">
-                      <VIcon v-if="javaLoading" :size="14"><ArrowClockwise24Regular class="spinner" /></VIcon>
+                      <RefreshCw v-if="javaLoading" :size="14" class="spinner" />
                       <span v-else>刷新</span>
                   </button>
-                  <VIcon :size="18" class="expander-chevron" :class="{ expanded: javaExpanded }"><ChevronDown24Regular /></VIcon>
+                  <ChevronDown :size="18" class="expander-chevron" :class="{ expanded: javaExpanded }" />
                 </div>
               </div>
               <Transition name="expander">
@@ -428,7 +427,7 @@ onUnmounted(() => {
                   <span class="bg-name">{{ cbg.name }}</span>
                 </div>
                 <div class="bg-card upload-card" @click="uploadBg">
-                  <div class="bg-preview">                  <VIcon :size="24"><ArrowUpload24Regular /></VIcon></div>
+                  <div class="bg-preview">                  <Upload :size="24" /></div>
                   <span class="bg-name">上传</span>
                 </div>
               </div>
@@ -495,7 +494,7 @@ onUnmounted(() => {
               <span class="about-version">版本 1.11.0</span>
             </div>
             <div class="setting-card license-card">
-              <span class="license-icon"><VIcon :size="24"><BuildingBank24Regular /></VIcon></span>
+              <span class="license-icon"><Landmark :size="24" /></span>
               <div class="license-text">
                 <span class="license-sub">Copyright(c) 2026  HGSpace Studio</span>
                 <span class="license-main">本应用使用GNU General Public License v3.0 进行开源</span>
@@ -513,7 +512,7 @@ onUnmounted(() => {
 .settings-overlay {
   position: fixed;
   inset: 0;
-  top: 38px;
+  top: 30px;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
@@ -670,6 +669,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 9px;
+  padding-top: 4px;
 }
 
 .setting-card {

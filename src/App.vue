@@ -1,49 +1,37 @@
 <script setup lang="ts">
-import { ref, computed, provide, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useTaskStore } from "./stores/taskStore";
-import { navigateToInstance } from "./stores/navigation";
-import { currentInstanceName, currentLaunchFn, currentStopFn } from "./stores/instanceLaunch";
+import { addTask, updateTask, registerLaunchListeners } from "./stores/taskStore";
+import { currentInstanceName, currentStopFn } from "./stores/instanceLaunch";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { listen } from "@tauri-apps/api/event";
-import { invoke } from "@tauri-apps/api/core";
-import { Icon as VIcon } from "@vicons/utils";
-import { Home24Regular, StoreMicrosoft24Regular, Grid24Regular, Add24Regular, Settings24Regular, Flash24Regular, Square24Regular, ChevronRight24Regular, Play24Regular, ArrowClockwise24Regular, Games24Regular, MoreHorizontal24Regular } from "@vicons/fluent";
-import logo from "./assets/logos/logo.png";
+import { invoke } from "@tauri-apps/api/core";import { Home, Store, LayoutGrid, Plus, Settings, Zap, Square, ChevronRight, Play, RefreshCw, Search, Gamepad2, ArrowLeftRight } from "@lucide/vue";
+
 import steve from "./assets/imgs/skins/avator/steve.png";
 import alex from "./assets/imgs/skins/avator/alex.png";
 import default1Bg from "./assets/imgs/background/default1.png";
 
-import Sidebar from "./components/Sidebar.vue";
 import NewMciRoot from "./components/view/new_mci/root_interface.vue";
 import HomePage from "./components/view/HomePage.vue";
-import LibraryPage from "./components/view/rootpages/versionroot.vue";
 import ResourcesCenter from "./components/view/ResourcesCenter.vue";
 import AccountInterface from "./components/accinterface.vue";
 import SettingsInterface from "./components/settings_interface.vue";
 import InstanceSettingsInterface from "./components/InstanceSettingsInterface.vue";
+import SpotlightSearch from "./components/SpotlightSearch.vue";
 import OnboardingWindow from "./components/view/onboarding/OnboardingWindow.vue";
 import CrashShell from "./components/view/window/crush_shell.vue";
 const app = getCurrentWindow();
 const isOobe = app.label === "oobe";
 const isCrash = app.label === "crash-shell";
 
-const isMac = navigator.userAgent.toLowerCase().includes("mac");
-const isLinux = navigator.userAgent.toLowerCase().includes("linux");
-const maxed = ref(false);
 const nav = ref("home");
 const showSettings = ref(false);
+const showSpotlight = ref(false);
+const spotlightScope = ref<"global" | "instances" | "modrinth">("global");
 const showInstanceSettings = ref(false);
 const showAccount = ref(false);
 const showNewInst = ref(false);
-const showingInstance = ref(false);
-provide('showingInstance', showingInstance);
-const goBackLib = ref(0);
-provide('goBackLib', goBackLib);
 const taskOpen = ref(false);
-const isFullscreenUI = ref(localStorage.getItem("firefile-ui-layout") !== "sidebar");
-watch(showSettings, (val: boolean) => {
-  if (!val) isFullscreenUI.value = localStorage.getItem("firefile-ui-layout") !== "sidebar";
-});
 const userName = ref("");
 const userType = ref("");
 
@@ -59,11 +47,10 @@ const userLabel = computed(() => {
 });
 
 const navItems = [
-  { id: "home", icon: Home24Regular },
-  { id: "resourcescenter", icon: StoreMicrosoft24Regular },
-  { id: "library", icon: Grid24Regular },
-  { id: "add-instance", icon: Add24Regular },
-  { id: "settings", icon: Settings24Regular },
+  { id: "home", icon: Home },
+  { id: "resourcescenter", icon: Store },
+  { id: "add-instance", icon: Plus },
+  { id: "settings", icon: Settings },
 ];
 const taskTab = ref<"tasks" | "running">("tasks");
 const { tasks } = useTaskStore();
@@ -88,16 +75,19 @@ async function loadInstances() {
   }
 }
 
-const MAX_VISIBLE_INSTANCES = 3;
-const visibleInstances = computed(() => instances.value.slice(0, MAX_VISIBLE_INSTANCES));
-const overflowInstances = computed(() => instances.value.slice(MAX_VISIBLE_INSTANCES));
-const instMenuOpen = ref(false);
-const instMoreRef = ref<HTMLElement | null>(null);
-function closeInstMenu(e: MouseEvent) {
-  if (instMoreRef.value && !instMoreRef.value.contains(e.target as Node)) {
-    instMenuOpen.value = false;
-  }
-}
+
+const loaderDisplayNames: Record<string, string> = {
+  fabric: "Fabric",
+  forge: "Forge",
+  neoforge: "NeoForge",
+  quilt: "Quilt",
+};
+
+const currentInstEntry = computed(() => {
+  if (!currentInstanceName.value) return null;
+  return instances.value.find(i => i.name === currentInstanceName.value) || null;
+});
+
 const dockTask = computed(() => {
   if (!currentInstanceName.value) return null;
   return tasks.value.find(t => t.id === "launch:" + currentInstanceName.value) || null;
@@ -106,8 +96,61 @@ const dockTask = computed(() => {
 function onDockLaunch() {
   if (dockTask.value?.status === "running" && currentStopFn.value) {
     currentStopFn.value();
-  } else if (currentLaunchFn.value) {
-    currentLaunchFn.value();
+    return;
+  }
+  if (!currentInstanceName.value) return;
+  launchGame(currentInstanceName.value);
+}
+
+async function launchGame(instName: string) {
+  const inst = instances.value.find(i => i.name === instName);
+  if (!inst) return;
+
+  const taskId = "launch:" + instName;
+  const existing = tasks.value.find(t => t.id === taskId);
+  if (existing && existing.status !== "idle" && existing.status !== "exited" && existing.status !== "error") return;
+
+  const ua = navigator.userAgent.toLowerCase();
+  const osName = ua.includes("mac") ? "macOS" : ua.includes("linux") ? "Linux" : "Windows";
+
+  addTask({
+    id: taskId,
+    type: "launch",
+    title: inst.name,
+    status: "launching",
+    progress: 0,
+    label: "准备启动...",
+    instanceId: inst.name,
+    gameVersion: inst.version,
+    systemVersion: osName + " " + navigator.userAgent,
+  });
+  await registerLaunchListeners(instName);
+
+  try {
+    const acc = await invoke<{ name: string; account_type: string; uuid: string }>("get_current_account");
+    const oobe = await invoke<{ accountName: string; javaPath: string }>("get_oobe_settings");
+    const mcDir = await invoke<string>("get_minecraft_dir_string");
+
+    updateTask(taskId, { javaVersion: oobe.javaPath || "未知" });
+
+    await invoke("launch_minecraft", {
+      args: {
+        version: inst.version,
+        username: acc.name || oobe.accountName || "Player",
+        game_dir: mcDir,
+        min_mem: "1024",
+        max_mem: "4096",
+        loader_type: inst.loader?.type || null,
+        loader_build: inst.loader?.version || null,
+        instance: inst.name,
+        download_only: false,
+        fullscreen: false,
+        java_path: null,
+        download_concurrency: 16,
+      },
+    });
+  } catch (err) {
+    updateTask(taskId, { status: "error", label: "启动失败: " + String(err) });
   }
 }
 
@@ -130,17 +173,6 @@ function ensureStats(name: string): InstanceStats {
     instanceStats.value[name] = { lastPlayDuration: 0, lastPlayTime: '', totalPlayTime: 0, currentSessionStart: null }
   }
   return instanceStats.value[name]
-}
-function fmtDuration(sec: number): string {
-  if (sec <= 0) return '0s'
-  const h = Math.floor(sec / 3600)
-  const m = Math.floor((sec % 3600) / 60)
-  const s = sec % 60
-  let r = ''
-  if (h > 0) r += h + 'h '
-  if (m > 0 || h > 0) r += m + 'm '
-  r += s + 's'
-  return r.trim()
 }
 function fmtDate(d: Date): string {
   const y = d.getFullYear()
@@ -182,31 +214,6 @@ watch(dockTask, (n, o) => {
 })
 watch(currentInstanceName, () => { liveTimer.value = Date.now() })
 
-const currentStats = computed(() => {
-  const name = currentInstanceName.value
-  if (!name) return null
-  return ensureStats(name)
-})
-const displayLastDuration = computed(() => {
-  const s = currentStats.value
-  if (!s) return '0s'
-  if (s.currentSessionStart) {
-    return '正在游玩 ' + fmtDuration(Math.floor((Date.now() - s.currentSessionStart) / 1000))
-  }
-  return fmtDuration(s.lastPlayDuration)
-})
-const displayLastTime = computed(() => {
-  const s = currentStats.value
-  if (!s) return '--'
-  if (s.currentSessionStart) return '正在游玩'
-  return s.lastPlayTime || '--'
-})
-const displayTotalTime = computed(() => {
-  const s = currentStats.value
-  if (!s) return '0s'
-  return fmtDuration(s.totalPlayTime)
-})
-
 const currentInstForSettings = computed(() => {
   const inst = instances.value.find(i => i.name === currentInstanceName.value)
   if (!inst) return null
@@ -223,17 +230,12 @@ function onNav(id: string) {
   if (id === "settings") { showSettings.value = true; return; }
   if (id === "account") { showAccount.value = true; return; }
   if (id === "add-instance") { showNewInst.value = true; return; }
-  if (id === "library" && showingInstance.value) {
-    goBackLib.value++;
-    return;
-  }
   nav.value = id;
 }
 
 function goInst(inst: any) {
   taskOpen.value = false;
-  nav.value = 'library';
-  navigateToInstance(inst);
+  currentInstanceName.value = inst.name;
 }
 
 async function loadAccount() {
@@ -254,8 +256,6 @@ onMounted(async () => {
   const savedBlur = Number(localStorage.getItem("firefile-bg-blur")) || 5;
   document.documentElement.style.setProperty("--bg-blur", savedBlur + "px");
   document.addEventListener("contextmenu", e => e.preventDefault());
-  maxed.value = await app.isMaximized();
-  listen("tauri://resize", async () => { maxed.value = await app.isMaximized(); });
   loadAccount();
   loadInstances();
   loadStats();
@@ -263,10 +263,20 @@ onMounted(async () => {
   listen("account-refresh", loadAccount);
   window.addEventListener("account-changed", loadAccount);
   window.addEventListener("instance-installed", loadInstances);
+  window.addEventListener("spotlight-new-instance", () => { showNewInst.value = true; });
+  window.addEventListener("spotlight-select-inst", (e: Event) => {
+    currentInstanceName.value = (e as CustomEvent).detail;
+  });
+  window.addEventListener("spotlight-launch", (e: Event) => {
+    launchGame((e as CustomEvent).detail);
+  });
+  window.addEventListener("spotlight-inst-settings", (e: Event) => {
+    currentInstanceName.value = (e as CustomEvent).detail;
+    showInstanceSettings.value = true;
+  });
   document.addEventListener("click", e => {
     if (!(e.target as HTMLElement).closest(".task-wrap")) taskOpen.value = false;
   });
-  document.addEventListener("click", closeInstMenu);
 });
 </script>
 
@@ -274,91 +284,62 @@ onMounted(async () => {
   <OnboardingWindow v-if="isOobe" />
   <CrashShell v-else-if="isCrash" />
   <div v-else class="root">
-    <header class="bar" :class="{ mac: isMac, 'bar-bordered': !isFullscreenUI }" @mousedown="(e: MouseEvent) => { const t = e.target as HTMLElement; if (isLinux && !t.closest('button,input,select,a')) app.startDragging(); }">
-      <div class="bar-left">
-        <img class="barlogo" :src="logo" />
-        <span class="bartitle" v-if="!isMac">Firefiles Launcher</span>
-        <button v-if="!isFullscreenUI" class="bar-account" @click="onNav('account')">
-          <img :src="avatar" class="bar-avatar" />
-          <div class="bar-accinfo">
-            <span class="bar-accname">{{ userName || '未设置' }}</span>
-            <span class="bar-acctype">{{ userLabel }}</span>
-          </div>
-        </button>
-      </div>
-      <div class="bar-center"></div>
-      <div class="bar-right">
-        <div class="task-wrap">
-          <button class="taskbtn" @click.stop="taskOpen = !taskOpen">
-            <VIcon :size="16"><Flash24Regular /></VIcon>
-            <span class="tasklbl">{{ tasks.length > 0 ? tasks.length + ' 个任务进行中' : '还没有任务啊' }}</span>
-          </button>
-          <div v-if="taskOpen" class="taskdrop">
-            <div class="tasktabs">
-              <button class="tasktab" :class="{ on: taskTab === 'tasks' }" @click="taskTab = 'tasks'">下载任务</button>
-              <button class="tasktab" :class="{ on: taskTab === 'running' }" @click="taskTab = 'running'">运行中</button>
-            </div>
-            <div v-if="taskTab === 'tasks'">
-              <div v-if="!filteredTasks.length" class="taskempty">暂无任务</div>
-              <div v-for="t in filteredTasks" :key="t.id" class="titem">
-                <div class="tih">
-                  <span class="titl">{{ t.title }}</span>
-                  <span class="titype">{{ t.type === 'launch' ? '启动' : '安装' }}</span>
-                </div>
-                <span class="tlabel">{{ t.label }}</span>
-                <div class="tibar"><div class="tifill" :style="{ width: (t.progress * 100) + '%' }"></div></div>
-              </div>
-            </div>
-            <div v-if="taskTab === 'running'">
-              <div v-if="!running.length" class="taskempty">没有运行中的游戏</div>
-              <div v-for="t in running" :key="t.id" class="titem ritem">
-                <div class="tih">
-                  <span class="titl">{{ t.title }}</span>
-                  <div class="tiactions">
-                    <button class="tiaction stop" @click="invoke('stop_game')"><VIcon :size="14"><Square24Regular /></VIcon></button>
-                    <button class="tiaction" @click="goInst({ name: t.title, version: '', version_type: '' })"><VIcon :size="14"><ChevronRight24Regular /></VIcon></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div v-if="!isMac" class="winctrl">
-          <button class="wbtn" @click="app.minimize()">
-            <svg width="12" height="12" viewBox="0 0 12 12"><line x1="1.5" y1="6" x2="10.5" y2="6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          </button>
-          <button class="wbtn" @click="app.toggleMaximize().then(() => app.isMaximized().then(v => maxed = v))">
-            <svg v-if="!maxed" width="12" height="12" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" rx="0.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
-            <svg v-else width="12" height="12" viewBox="0 0 12 12"><rect x="2" y="4" width="7" height="7" rx="0.5" fill="none" stroke="currentColor" stroke-width="1"/><rect x="4" y="2" width="7" height="7" rx="0.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-          </button>
-          <button class="wbtn close" @click="app.close()">
-            <svg width="12" height="12" viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="11" y1="1" x2="1" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          </button>
+    <Teleport to="body">
+      <div class="spotlight-wrap">
+        <div class="spotlight-bar" @click="showSpotlight = true; spotlightScope = 'global'">
+          <Search :size="15" class="spotlight-icon" />
+          <span class="spotlight-input">在此处搜索一切</span>
         </div>
       </div>
-    </header>
-    <div class="body-area" :class="{ 'with-dock': isFullscreenUI }">
-      <Sidebar
-        v-if="!isFullscreenUI"
-        :nav-items="navItems"
-        :visible-instances="visibleInstances"
-        :overflow-instances="overflowInstances"
-        :active-nav="nav"
-        :showing-instance="showingInstance"
-        :current-instance-name="currentInstanceName"
-        @navigate="onNav"
-        @go-inst="goInst"
-        @toggle-inst-menu="instMenuOpen = !instMenuOpen"
-      />
-      <main class="main" :class="{ 'main-bordered': !isFullscreenUI }" :style="{ '--content-bottom-pad': isFullscreenUI ? '80px' : '12px' }">
+    </Teleport>
+    <div class="body-area">
+      <main class="main">
         <HomePage v-show="nav === 'home'" />
-        <LibraryPage v-show="nav === 'library'" @open-new-instance="showNewInst = true" />
         <ResourcesCenter v-show="nav === 'resourcescenter'" />
       </main>
     </div>
+    <Teleport to="body">
+      <div class="task-float">
+      <div class="task-wrap">
+        <button class="taskbtn" @click.stop="taskOpen = !taskOpen">
+          <Zap :size="16" />
+          <span class="tasklbl">{{ tasks.length > 0 ? tasks.length + ' 个任务进行中' : '还没有任务啊' }}</span>
+        </button>
+        <div v-if="taskOpen" class="taskdrop">
+          <div class="tasktabs">
+            <button class="tasktab" :class="{ on: taskTab === 'tasks' }" @click="taskTab = 'tasks'">下载任务</button>
+            <button class="tasktab" :class="{ on: taskTab === 'running' }" @click="taskTab = 'running'">运行中</button>
+          </div>
+          <div v-if="taskTab === 'tasks'">
+            <div v-if="!filteredTasks.length" class="taskempty">暂无任务</div>
+            <div v-for="t in filteredTasks" :key="t.id" class="titem">
+              <div class="tih">
+                <span class="titl">{{ t.title }}</span>
+                <span class="titype">{{ t.type === 'launch' ? '启动' : '安装' }}</span>
+              </div>
+              <span class="tlabel">{{ t.label }}</span>
+              <div class="tibar"><div class="tifill" :style="{ width: (t.progress * 100) + '%' }"></div></div>
+            </div>
+          </div>
+          <div v-if="taskTab === 'running'">
+            <div v-if="!running.length" class="taskempty">没有运行中的游戏</div>
+            <div v-for="t in running" :key="t.id" class="titem ritem">
+              <div class="tih">
+                <span class="titl">{{ t.title }}</span>
+                <div class="tiactions">
+                  <button class="tiaction stop" @click="invoke('stop_game')"><Square :size="14" /></button>
+                  <button class="tiaction" @click="goInst({ name: t.title, version: '', version_type: '' })"><ChevronRight :size="14" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </Teleport>
     <AccountInterface v-if="showAccount" @close="showAccount = false" />
     <NewMciRoot v-if="showNewInst" @close="showNewInst = false" @navigate="(id: string) => { showNewInst = false; nav = id }" />
-    <template v-if="isFullscreenUI">
+    <Teleport to="body">
       <div class="dock-wrap">
         <nav class="dock">
           <button class="daccount" @click="onNav('account')">
@@ -367,109 +348,70 @@ onMounted(async () => {
               <span class="daccname">{{ userName || '未设置' }}</span>
               <span class="dacctype">{{ userLabel }}</span>
             </div>
+            <span class="dtooltip">账户</span>
           </button>
           <div class="dsep"></div>
           <button
-            v-for="item in navItems.slice(0, 3)"
-            :key="item.id"
-            class="ditem"
-            :class="{ on: nav === item.id && !(item.id === 'library' && showingInstance) }"
-            @click="onNav(item.id)"
-          >
-            <VIcon :size="21"><component :is="item.icon" /></VIcon>
-          </button>
-          <div class="dsep"></div>
-          <button
-            v-for="inst in visibleInstances"
-            :key="inst.name"
-            class="ditem inst-icon"
-            :class="{ on: nav === 'library' && currentInstanceName === inst.name }"
-            @click="goInst(inst)"
-          >
-            <VIcon :size="18"><Games24Regular /></VIcon>
-          </button>
-          <button
-            v-if="overflowInstances.length > 0"
-            ref="instMoreRef"
-            class="ditem inst-more"
-            :class="{ on: instMenuOpen }"
-            @click.stop="instMenuOpen = !instMenuOpen"
-          >
-            <VIcon :size="18"><MoreHorizontal24Regular /></VIcon>
-          </button>
-          <Teleport to="body">
-            <div v-if="instMenuOpen" class="inst-menu" @click.stop>
-              <button
-                v-for="inst in overflowInstances"
-                :key="inst.name"
-                class="inst-menu-item"
-                :class="{ on: currentInstanceName === inst.name }"
-                @click="goInst(inst); instMenuOpen = false"
-              >
-                <VIcon :size="16"><Games24Regular /></VIcon>
-                <span>{{ inst.name }}</span>
-              </button>
-            </div>
-          </Teleport>
-          <button
-            v-for="item in navItems.slice(3)"
+            v-for="item in navItems.slice(0, 2)"
             :key="item.id"
             class="ditem"
             :class="{ on: nav === item.id }"
             @click="onNav(item.id)"
           >
-            <VIcon :size="21"><component :is="item.icon" /></VIcon>
+            <component :is="item.icon" :size="21" />
+            <span class="dtooltip">{{ item.id === 'home' ? '首页' : '资源中心' }}</span>
+          </button>
+          <button
+            class="ditem"
+            :class="{ on: false }"
+            @click="showSpotlight = true; spotlightScope = 'instances'"
+          >
+            <LayoutGrid :size="21" />
+            <span class="dtooltip">库</span>
+          </button>
+          <button
+            v-for="item in navItems.slice(2)"
+            :key="item.id"
+            class="ditem"
+            :class="{ on: nav === item.id }"
+            @click="onNav(item.id)"
+          >
+            <component :is="item.icon" :size="21" />
+            <span class="dtooltip">{{ item.id === 'add-instance' ? '创建实例' : '设置' }}</span>
           </button>
         </nav>
-        <button v-if="nav === 'library' && showingInstance" class="dlaunch" :class="{ running: dockTask?.status === 'running' }" @click="onDockLaunch">
-          <VIcon v-if="dockTask?.status === 'launching'" :size="18"><ArrowClockwise24Regular class="spin" /></VIcon>
-          <VIcon v-else-if="dockTask?.status === 'running'" :size="18"><Square24Regular /></VIcon>
-          <VIcon v-else :size="18"><Play24Regular /></VIcon>
-          <span>{{ dockTask?.status === 'running' ? '运行中' : dockTask?.status === 'launching' ? '启动中...' : '启动该实例' }}</span>
-        </button>
-      </div>
-    </template>
-    <template v-if="!isFullscreenUI && nav === 'library' && showingInstance">
-      <div class="saction-wrap">
-        <button class="slaunch" :class="{ running: dockTask?.status === 'running' }" @click="onDockLaunch">
-          <VIcon v-if="dockTask?.status === 'launching'" :size="18"><ArrowClockwise24Regular class="spin" /></VIcon>
-          <VIcon v-else-if="dockTask?.status === 'running'" :size="18"><Square24Regular /></VIcon>
-          <VIcon v-else :size="18"><Play24Regular /></VIcon>
-          <span>{{ dockTask?.status === 'running' ? '运行中' : dockTask?.status === 'launching' ? '启动中...' : '启动该实例' }}</span>
-        </button>
-        <button class="ssettings" @click="showInstanceSettings = true">
-          <VIcon :size="18"><Settings24Regular /></VIcon>
-        </button>
-        <div class="sdivider"></div>
-        <div class="sinfo">
-          <div class="sinfo-item">
-            <span class="sinfo-label">上次游玩时长</span>
-            <span class="sinfo-value">{{ displayLastDuration }}</span>
+        <div class="inst-info-card">
+          <div class="inst-info-icon-wrap">
+            <Gamepad2 :size="22" />
           </div>
-          <div class="sinfo-sep"></div>
-          <div class="sinfo-item">
-            <span class="sinfo-label">最后游玩时间</span>
-            <span class="sinfo-value">{{ displayLastTime }}</span>
-          </div>
-          <div class="sinfo-sep"></div>
-          <div class="sinfo-item">
-            <span class="sinfo-label">总游玩时间</span>
-            <span class="sinfo-value">{{ displayTotalTime }}</span>
-          </div>
+          <template v-if="currentInstEntry">
+            <span class="inst-info-name">{{ currentInstEntry.name }}</span>
+            <div class="inst-info-sep"></div>
+            <div class="inst-info-col">
+              <span class="inst-info-label">游戏本体版本</span>
+              <span class="inst-info-value">{{ currentInstEntry.version }}</span>
+            </div>
+            <template v-if="currentInstEntry.loader">
+              <div class="inst-info-sep"></div>
+              <div class="inst-info-col">
+                <span class="inst-info-label">{{ loaderDisplayNames[currentInstEntry.loader.type] || currentInstEntry.loader.type }}版本</span>
+                <span class="inst-info-value">{{ currentInstEntry.loader.version }}</span>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <span class="inst-info-name inst-info-empty">未选择实例</span>
+          </template>
+          <button class="inst-info-switch" @click="showSpotlight = true; spotlightScope = 'instances'">
+            <ArrowLeftRight :size="15" />
+            <span class="dtooltip">切换实例</span>
+          </button>
         </div>
-      </div>
-    </template>
-    <Teleport to="body">
-      <div v-if="!isFullscreenUI && instMenuOpen" class="inst-menu sidebar-inst-menu" @click.stop>
-        <button
-          v-for="inst in overflowInstances"
-          :key="inst.name"
-          class="inst-menu-item"
-          :class="{ on: currentInstanceName === inst.name }"
-          @click="goInst(inst); instMenuOpen = false"
-        >
-          <VIcon :size="16"><Games24Regular /></VIcon>
-          <span>{{ inst.name }}</span>
+        <button class="dlaunch" :class="{ running: dockTask?.status === 'running' }" @click="onDockLaunch">
+          <RefreshCw v-if="dockTask?.status === 'launching'" :size="18" class="spin" />
+          <Square v-else-if="dockTask?.status === 'running'" :size="18" />
+          <Play v-else :size="18" />
+          <span>{{ dockTask?.status === 'running' ? '运行中' : dockTask?.status === 'launching' ? '启动中...' : '启动该实例' }}</span>
         </button>
       </div>
     </Teleport>
@@ -479,6 +421,7 @@ onMounted(async () => {
       :instance="currentInstForSettings"
       @close="showInstanceSettings = false"
     />
+    <SpotlightSearch v-if="showSpotlight" :default-scope="spotlightScope" @close="showSpotlight = false" />
   </div>
 </template>
 
@@ -502,36 +445,6 @@ body {
 .root {
   height: 100vh; display: flex; flex-direction: column; overflow: hidden; position: relative;
   border-radius: 16px;
-}
-
-/* titlebar */
-.bar {
-  display: flex; align-items: center; height: 38px; flex-shrink: 0;
-  background: transparent; -webkit-app-region: drag; user-select: none; z-index: 10;
-}
-.bar.mac { padding-left: 70px; }
-.bar-left {
-  display: flex; align-items: center; gap: 8px; padding-left: 14px;
-  -webkit-app-region: no-drag;
-}
-.bar.mac .bar-left { padding-left: 0; }
-.barlogo { height: 24px; width: auto; }
-.bar.mac .barlogo { margin-left: 8px; }
-.bartitle { font-size: 13px; font-weight: 600; color: var(--title-color); opacity: 0.85; white-space: nowrap; }
-.bar.mac .bartitle { display: none; }
-.bar-account {
-  display: flex; align-items: center; gap: 8px; padding: 2px 8px 2px 4px;
-  border: none; border-radius: 8px; background: transparent; cursor: pointer;
-  color: var(--title-color); transition: background 0.15s;
-}
-.bar-account:hover { background: var(--sidebar-hover); }
-.bar-avatar { width: 24px; height: 24px; border-radius: 6px; image-rendering: pixelated; }
-.bar-accinfo { display: flex; flex-direction: column; gap: 1px; text-align: left; }
-.bar-accname { font-size: 12px; font-weight: 600; line-height: 1.2; }
-.bar-acctype { font-size: 10px; opacity: 0.5; line-height: 1; }
-.bar-center { flex: 1; }
-.bar-right { display: flex; align-items: center; gap: 4px; -webkit-app-region: no-drag; }
-.bar-bordered {
 }
 
 /* background */
@@ -561,24 +474,19 @@ body {
   display: flex;
   overflow: hidden;
   min-height: 0;
-}
-.body-area.with-dock {
-  padding: 0 0 0 12px;
+  padding: 0 12px;
 }
 
 /* main */
 .main {
   flex: 1; display: flex; overflow: hidden; min-height: 0;
-}
-.main-bordered {
-  border-top: 1px solid var(--content-border);
-  border-left: 1px solid var(--content-border);
-  border-radius: 9px 0 0 0;
-  box-shadow: inset 1px 1px 4px rgba(0,0,0,0.26);
+  --content-bottom-pad: 80px;
+  padding-top: 8px;
 }
 
-/* task btn */
-.task-wrap { position: relative; display: flex; align-items: center; height: 100%; }
+/* task float */
+.task-float { position: fixed; top: 8px; right: 16px; z-index: 20; }
+.task-wrap { position: relative; display: flex; align-items: center; }
 .taskbtn {
   display: flex; align-items: center; gap: 6px; padding: 0 10px; height: 32px;
   border: none; border-radius: 8px; background: rgba(128,128,128,0.08); color: var(--title-color);
@@ -628,6 +536,32 @@ body {
 .tiaction:hover { background: rgba(128,128,128,0.12); opacity: 0.8; }
 .tiaction.stop:hover { background: rgba(212,58,58,0.15); color: #d43a3a; opacity: 1; }
 
+/* spotlight */
+.spotlight-wrap {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  z-index: 30; pointer-events: auto;
+}
+.spotlight-bar {
+  display: flex; align-items: center; gap: 8px;
+  width: 340px; height: 34px; padding: 0 14px;
+  background: rgba(128,128,128,0.12); border: 1px solid rgba(128,128,128,0.1);
+  border-radius: 10px; backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.spotlight-bar:hover {
+  background: rgba(128,128,128,0.18); border-color: rgba(128,128,128,0.2);
+}
+.spotlight-icon {
+  color: var(--title-color); opacity: 0.35; flex-shrink: 0;
+}
+.spotlight-input {
+  flex: 1; font-size: 13px; font-family: inherit; color: var(--title-color);
+  opacity: 0.5; pointer-events: none; cursor: default;
+}
+
 /* floating dock */
 .dock-wrap {
   position: fixed;
@@ -644,9 +578,14 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  height: 50px;
+  padding: 0 10px;
   border-radius: 18px;
-  background: transparent;
+  background: rgba(128,128,128,0.15);
+  border: 1px solid rgba(128,128,128,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
 
 .dlaunch {
@@ -654,9 +593,9 @@ body {
   align-items: center;
   gap: 6px;
   padding: 0 18px;
-  height: 36px;
+  height: 50px;
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
   background: #00BAAD;
   color: #fff;
   font-size: 13px;
@@ -679,107 +618,57 @@ body {
   background: #d43a3a;
 }
 
-.saction-wrap {
-  position: fixed;
-  top: 50%;
-  left: 78px;
-  transform: translateY(calc(-50% - 60px));
+/* instance info card */
+.inst-info-card {
   display: flex;
   align-items: center;
-  gap: 4px;
-  z-index: 40;
+  gap: 10px;
+  padding: 6px 16px;
+  height: 50px;
+  border-radius: 14px;
+  background: rgba(128,128,128,0.12);
+  border: 1px solid rgba(128,128,128,0.1);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
-
-.slaunch {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 18px;
-  height: 36px;
-  border: none;
-  border-radius: 10px;
-  background: #00BAAD;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s, opacity 0.15s;
-  white-space: nowrap;
-}
-
-.ssettings {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--title-color);
-  opacity: 0.5;
-  cursor: pointer;
-  transition: opacity 0.15s, background 0.15s;
-}
-
-.ssettings:hover {
-  background: rgba(128, 128, 128, 0.12);
-}
-
-.sdivider {
-  width: 1px;
-  height: 24px;
-  background: rgba(128, 128, 128, 0.2);
-  flex-shrink: 0;
-  margin: 0 2px;
-}
-
-.sinfo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-left: 12px;
-}
-
-.sinfo-item {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.sinfo-label {
-  font-size: 10px;
-  color: var(--title-color);
-  opacity: 0.4;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.sinfo-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--title-color);
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.sinfo-sep {
-  width: 1px;
-  height: 24px;
-  background: rgba(128, 128, 128, 0.15);
+.inst-info-icon-wrap {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: rgba(128,128,128,0.12); color: var(--title-color); opacity: 0.75;
   flex-shrink: 0;
 }
+.inst-info-name {
+  font-size: 13px; font-weight: 600; color: var(--title-color);
+  max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  flex-shrink: 0;
+}
+.inst-info-sep {
+  width: 1px; height: 26px; background: rgba(128,128,128,0.2); flex-shrink: 0;
+}
+.inst-info-col {
+  display: flex; flex-direction: column; gap: 1px; flex-shrink: 0;
+}
+.inst-info-label {
+  font-size: 10px; color: var(--title-color); opacity: 0.4; line-height: 1; white-space: nowrap;
+}
+.inst-info-value {
+  font-size: 14px; font-weight: 600; color: var(--title-color); line-height: 1.2; white-space: nowrap;
+}
+.inst-info-empty {
+  opacity: 0.35; font-weight: 400;
+}
+.inst-info-switch {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border: none; border-radius: 8px;
+  background: rgba(128,128,128,0.12); color: var(--title-color);
+  opacity: 0.5; cursor: pointer; flex-shrink: 0;
+  transition: background 0.15s, opacity 0.15s; margin-left: 4px;
+}
+.inst-info-switch:hover {
+  background: rgba(128,128,128,0.22); opacity: 1;
+}
 
-.slaunch:hover {
-  background: #00CFC0;
-}
-.slaunch.running {
-  background: rgba(212,58,58,0.85);
-}
-.slaunch.running:hover {
-  background: #d43a3a;
-}
 
 .spin {
   animation: spin 1s linear infinite;
@@ -800,6 +689,7 @@ body {
   background: transparent;
   cursor: pointer;
   transition: background 0.15s;
+  position: relative;
 }
 
 .daccount:hover {
@@ -842,6 +732,7 @@ body {
 }
 
 .ditem {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -861,8 +752,30 @@ body {
   opacity: 0.85;
 }
 
+.dtooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 100;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-color);
+}
+.ditem:hover .dtooltip,
+.daccount:hover .dtooltip,
+.inst-info-switch:hover .dtooltip {
+  opacity: 1;
+}
+
 .ditem.on {
-  background: #0078d4;
+  background: #00ED5F;
   color: #fff;
   opacity: 1;
 }
@@ -914,23 +827,6 @@ body {
   color: #fff;
 }
 
-.sidebar-inst-menu {
-  left: 190px !important;
-  bottom: 70px !important;
-  transform: none !important;
-}
-
-/* window controls */
-.winctrl { display: flex; height: 100%; }
-.wbtn {
-  width: 46px; height: 100%; border: none; background: transparent;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--title-color); transition: background 0.1s, box-shadow 0.1s;
-  border-radius: 10px;
-}
-.wbtn:hover { background: rgba(0,0,0,0.08); box-shadow: 0 0 10px rgba(0,0,0,0.15); }
-.wbtn.close:hover { background: #e81123; color: #fff; box-shadow: 0 0 10px rgba(232,17,35,0.5); }
-
 /* scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -964,8 +860,6 @@ body {
     --content-border: rgba(255,255,255,0.2); --dock-border: #555555;
     --blur-overlay: rgba(20, 20, 22, 0.45);
   }
-  .wbtn:hover { background: rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-  .wbtn.close:hover { background: #e81123; color: #fff; box-shadow: 0 0 10px rgba(232,17,35,0.5); }
 }
 html[data-theme="light"] {
   --panel-bg: #ececec; --title-color: #1d1d1f; --sidebar-color: #1d1d1f;
@@ -983,6 +877,5 @@ html[data-theme="dark"] {
   --content-border: rgba(255,255,255,0.2); --dock-border: #555555;
   --blur-overlay: rgba(20, 20, 22, 0.45);
 }
-html[data-theme="dark"] .wbtn:hover { background: rgba(255,255,255,0.1); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-html[data-theme="dark"] .wbtn.close:hover { background: #e81123; color: #fff; box-shadow: 0 0 10px rgba(232,17,35,0.5); }
+
 </style>

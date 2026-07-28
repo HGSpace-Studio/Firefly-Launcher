@@ -2,8 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { Icon as VIcon } from "@vicons/utils";
-import { BoxArrowUp24Regular, Box24Regular, Search24Regular, Dismiss24Regular, ChevronDown24Regular, ArrowClockwise24Regular, Toolbox24Regular, ArrowRight24Regular, ArrowLeft24Regular, Info24Regular } from "@vicons/fluent";
+import { ExternalLink, Box, Search, X, ChevronDown, RefreshCw, Wrench, ArrowRight, ArrowLeft, Info } from "@lucide/vue";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import fabricIcon from "../../../assets/imgs/mod_loader_imgs/fabric.png";
@@ -321,12 +320,12 @@ onUnmounted(() => {
         <div class="header">
           <div class="header-left">
             <span class="icon-wrap">
-              <VIcon :size="16" class="icon"><BoxArrowUp24Regular /></VIcon>
+              <ExternalLink :size="16" class="icon" />
             </span>
             <span class="title">{{ t("app.mainwindow.sidebar.add-instance") }}</span>
           </div>
           <button class="close-btn" @click="handleClose">
-            <VIcon :size="18"><Dismiss24Regular /></VIcon>
+            <X :size="18" />
           </button>
         </div>
         <div class="divider"></div>
@@ -334,7 +333,7 @@ onUnmounted(() => {
           <div class="top-row">
             <div class="icon-box">
               <div v-if="forgeEnabled || neoforgeEnabled" class="icon-preview icon-preview-anvil">
-                <VIcon :size="32"><Toolbox24Regular /></VIcon>
+                <Wrench :size="32" />
               </div>
               <div v-else class="icon-preview" :style="{ backgroundImage: `url(${loaderEnabled ? fabricIcon : mcIcon})` }"></div>
             </div>
@@ -349,13 +348,13 @@ onUnmounted(() => {
                 <span class="version-combo-sub">{{ t("app.mainwindow.addinstance.versionSub") }}</span>
                 <span class="version-combo-value">{{ selectedMcVersion }}</span>
               </div>
-              <VIcon :size="16" class="version-combo-arrow"><ChevronDown24Regular /></VIcon>
+              <ChevronDown :size="16" class="version-combo-arrow" />
             </div>
           </div>
           <div class="section-divider"></div>
           <div class="card-row" :class="{ 'card-row-loading': loading }">
             <div v-if="loading" class="loading-overlay">
-              <VIcon :size="20"><ArrowClockwise24Regular class="spinner" /></VIcon>
+              <RefreshCw :size="20" class="spinner" />
               <span>{{ t("app.mainwindow.addinstance.loading") }}</span>
             </div>
             <div v-else-if="loadError" class="loading-overlay error">
@@ -386,7 +385,7 @@ onUnmounted(() => {
                        @click.stop="loaderEnabled && (fabricDropdownOpen = !fabricDropdownOpen)"
                      >
                        <span class="combo-text">{{ selectedFabricVersion || t('app.mainwindow.addinstance.noSelection') }}</span>
-                        <VIcon :size="14" class="combo-arrow"><ChevronDown24Regular /></VIcon>
+                        <ChevronDown :size="14" class="combo-arrow" />
                      </button>
                      <div v-if="fabricDropdownOpen" class="combo-dropdown">
                        <button
@@ -410,7 +409,7 @@ onUnmounted(() => {
                         @mouseenter="(loaderEnabled || neoforgeEnabled) && (hoveredTooltip = 'forge')"
                         @mouseleave="hoveredTooltip = null"
                       >
-                         <VIcon :size="20" class="loader-icon"><Toolbox24Regular /></VIcon>
+                         <Wrench :size="20" class="loader-icon" />
                         <span>Forge</span>
                       </button>
                       <span v-if="hoveredTooltip === 'forge'" class="btn-tooltip">{{ t("app.mainwindow.addinstance.tooltipConflict") }}</span>
@@ -424,8 +423,8 @@ onUnmounted(() => {
                      >
                        <span v-if="forgeLoading" class="combo-loading-text">{{ t("app.mainwindow.addinstance.forgeLoading") }}</span>
                        <span v-else class="combo-text">{{ selectedForgeVersion }}</span>
-                        <VIcon v-if="forgeLoading" :size="14"><ArrowClockwise24Regular class="combo-spinner" /></VIcon>
-                        <VIcon v-else :size="14" class="combo-arrow"><ChevronDown24Regular /></VIcon>
+                        <RefreshCw v-if="forgeLoading" :size="14" class="combo-spinner" />
+                        <ChevronDown v-else :size="14" class="combo-arrow" />
                      </button>
                      <div v-if="forgeDropdownOpen" class="combo-dropdown">
                        <button
@@ -449,7 +448,7 @@ onUnmounted(() => {
                         @mouseenter="(loaderEnabled || forgeEnabled) && (hoveredTooltip = 'neoforge')"
                         @mouseleave="hoveredTooltip = null"
                       >
-                         <VIcon :size="20" class="loader-icon"><Toolbox24Regular /></VIcon>
+                         <Wrench :size="20" class="loader-icon" />
                         <span>NeoForge</span>
                       </button>
                       <span v-if="hoveredTooltip === 'neoforge'" class="btn-tooltip">{{ t("app.mainwindow.addinstance.tooltipConflict") }}</span>
@@ -463,8 +462,8 @@ onUnmounted(() => {
                       >
                         <span v-if="neoforgeLoading" class="combo-loading-text">{{ t("app.mainwindow.addinstance.forgeLoading") }}</span>
                         <span v-else class="combo-text">{{ selectedNeoForgeVersion }}</span>
-                         <VIcon v-if="neoforgeLoading" :size="14"><ArrowClockwise24Regular class="combo-spinner" /></VIcon>
-                         <VIcon v-else :size="14" class="combo-arrow"><ChevronDown24Regular /></VIcon>
+                         <RefreshCw v-if="neoforgeLoading" :size="14" class="combo-spinner" />
+                         <ChevronDown v-else :size="14" class="combo-arrow" />
                       </button>
                       <div v-if="neoforgeDropdownOpen" class="combo-dropdown">
                         <button
@@ -484,7 +483,7 @@ onUnmounted(() => {
           <div class="footer">
             <Transition name="slide-right">
               <div v-if="loaderEnabled && selectedFabricVersion && !fabricInfoDismissed" class="fabric-info">
-                <VIcon :size="16" class="info-icon"><Info24Regular /></VIcon>
+                <Info :size="16" class="info-icon" />
                 <span>{{ t("app.mainwindow.addinstance.fabricInfo", { version: selectedFabricVersion }) }}</span>
               </div>
             </Transition>
@@ -499,12 +498,12 @@ onUnmounted(() => {
             </template>
             <template v-else>
               <button class="pack-btn">
-                <VIcon :size="16"><Box24Regular /></VIcon>
+                <Box :size="16" />
                 <span>安装整合包</span>
               </button>
               <button class="confirm-btn" :disabled="!canProceed" @click="startInstall">
                 <span>{{ t("app.mainwindow.addinstance.confirm") }}</span>
-                <VIcon :size="16"><ArrowRight24Regular /></VIcon>
+                <ArrowRight :size="16" />
               </button>
             </template>
           </div>
@@ -514,7 +513,7 @@ onUnmounted(() => {
         <div class="header mc-version-header">
           <div class="header-left">
             <button class="back-btn" @click="viewState = 'root'">
-              <VIcon :size="21"><ArrowLeft24Regular /></VIcon>
+              <ArrowLeft :size="21" />
             </button>
             <div class="header-title-group">
               <span class="header-sub">{{ t("app.mainwindow.addinstance.headerSub") }}</span>
@@ -522,11 +521,11 @@ onUnmounted(() => {
             </div>
           </div>
           <div class="header-search">
-            <VIcon :size="16" class="search-icon"><Search24Regular /></VIcon>
+            <Search :size="16" class="search-icon" />
             <input v-model="searchQuery" class="search-input" placeholder="搜索版本..." />
           </div>
           <button class="close-btn" @click="emit('close')">
-            <VIcon :size="18"><Dismiss24Regular /></VIcon>
+            <X :size="18" />
           </button>
         </div>
         <div class="divider"></div>
@@ -542,7 +541,7 @@ onUnmounted(() => {
 .overlay {
   position: fixed;
   inset: 0;
-  top: 38px;
+  top: 30px;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
