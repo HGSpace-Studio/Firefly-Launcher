@@ -1,0 +1,134 @@
+.mc-version-body {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+.version-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  border-right: 1px solid rgba(128, 128, 128, 0.2);
+  padding-right: 16px;
+  margin-left: -3px;
+  box-sizing: border-box;
+}
+
+.version-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--title-color);
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.version-nav-item:hover {
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.version-nav-item.active {
+  background: var(--sidebar-active);
+  color: var(--sidebar-active-color);
+}
+
+.version-nav-divider {
+  height: 1px;
+  background: rgba(128, 128, 128, 0.2);
+  margin: 6px 12px;
+}
+
+.version-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.version-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 1;
+  color: var(--title-color);
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.version-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+
+.version-card-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s;
+  box-sizing: border-box;
+}
+
+.version-card-item:hover {
+  background: rgba(128, 128, 128, 0.08);
+}
+
+.version-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.version-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.version-card-id {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--title-color);
+  line-height: 1.2;
+}
+
+.version-card-date {
+  font-size: 12px;
+  color: var(--title-color);
+  opacity: 0.45;
+  line-height: 1;
+}

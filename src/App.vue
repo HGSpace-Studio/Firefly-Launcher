@@ -28,6 +28,7 @@ const nav = ref("home");
 const showSettings = ref(false);
 const showSpotlight = ref(false);
 const spotlightScope = ref<"global" | "instances" | "modrinth">("global");
+const spotlightSelectMode = ref(false);
 const showInstanceSettings = ref(false);
 const showAccount = ref(false);
 const showNewInst = ref(false);
@@ -286,7 +287,7 @@ onMounted(async () => {
   <div v-else class="root">
     <Teleport to="body">
       <div class="spotlight-wrap">
-        <div class="spotlight-bar" @click="showSpotlight = true; spotlightScope = 'global'">
+        <div class="spotlight-bar" @click="showSpotlight = true; spotlightScope = 'global'; spotlightSelectMode = false">
           <Search :size="15" class="spotlight-icon" />
           <span class="spotlight-input">在此处搜索一切</span>
         </div>
@@ -364,7 +365,7 @@ onMounted(async () => {
           <button
             class="ditem"
             :class="{ on: false }"
-            @click="showSpotlight = true; spotlightScope = 'instances'"
+            @click="showSpotlight = true; spotlightScope = 'instances'; spotlightSelectMode = false"
           >
             <LayoutGrid :size="21" />
             <span class="dtooltip">库</span>
@@ -402,7 +403,7 @@ onMounted(async () => {
           <template v-else>
             <span class="inst-info-name inst-info-empty">未选择实例</span>
           </template>
-          <button class="inst-info-switch" @click="showSpotlight = true; spotlightScope = 'instances'">
+          <button class="inst-info-switch" @click="showSpotlight = true; spotlightScope = 'instances'; spotlightSelectMode = true">
             <ArrowLeftRight :size="15" />
             <span class="dtooltip">切换实例</span>
           </button>
@@ -421,7 +422,7 @@ onMounted(async () => {
       :instance="currentInstForSettings"
       @close="showInstanceSettings = false"
     />
-    <SpotlightSearch v-if="showSpotlight" :default-scope="spotlightScope" @close="showSpotlight = false" />
+    <SpotlightSearch v-if="showSpotlight" :default-scope="spotlightScope" :select-mode="spotlightSelectMode" @close="showSpotlight = false" />
   </div>
 </template>
 

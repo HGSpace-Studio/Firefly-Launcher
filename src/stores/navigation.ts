@@ -1,24 +1,42 @@
-import { ref } from "vue"
+type Listener = () => void;
 
 export interface InstanceNavTarget {
-  name: string
-  version: string
-  version_type: string
+  name: string;
+  version: string;
+  version_type: string;
   loader?: {
-    type: "fabric" | "forge" | "neoforge" | "quilt"
-    version: string
+    type: "fabric" | "forge" | "neoforge" | "quilt";
+    version: string;
+  };
+  icon?: string;
+}
+
+class NavigationStore {
+  private _pendingInstance: InstanceNavTarget | null = null;
+  private _listeners = new Set<Listener>();
+
+  get pendingInstance(): InstanceNavTarget | null { return this._pendingInstance; }
+
+  navigateToInstance(target: InstanceNavTarget) {
+    this._pendingInstance = target;
+    this._notify();
   }
-  icon?: string
+
+  consumePendingInstance(): InstanceNavTarget | null {
+    const val = this._pendingInstance;
+    this._pendingInstance = null;
+    this._notify();
+    return val;
+  }
+
+  subscribe(listener: Listener): () => void {
+    this._listeners.add(listener);
+    return () => this._listeners.delete(listener);
+  }
+
+  private _notify() {
+    for (const l of this._listeners) l();
+  }
 }
 
-export const pendingInstance = ref<InstanceNavTarget | null>(null)
-
-export function navigateToInstance(target: InstanceNavTarget) {
-  pendingInstance.value = target
-}
-
-export function consumePendingInstance(): InstanceNavTarget | null {
-  const val = pendingInstance.value
-  pendingInstance.value = null
-  return val
-}
+export const navigationStore = new NavigationStore();

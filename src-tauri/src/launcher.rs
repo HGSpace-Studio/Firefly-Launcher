@@ -134,105 +134,7 @@ fn discover_java() -> Vec<JavaInstall> {
         }
     }
 
-    // 2. macOS: /usr/libexec/java_home -V
-    #[cfg(target_os = "macos")]
-    {
-        let output = std::process::Command::new("/usr/libexec/java_home")
-            .arg("-V")
-            .output();
-        if let Ok(out) = output {
-            let stderr = String::from_utf8_lossy(&out.stderr);
-            for line in stderr.lines() {
-                if let Some(idx) = line.find('/') {
-                    let path_part = &line[idx..].trim();
-                    let java_bin = std::path::Path::new(path_part).join("bin").join("java");
-                    if java_bin.exists() {
-                        if let Some(info) = probe_java(&java_bin) {
-                            if seen.insert(info.path.clone()) {
-                                found.push(info);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // Also scan /Library/Java/JavaVirtualMachines/
-        if let Ok(entries) = std::fs::read_dir("/Library/Java/JavaVirtualMachines/") {
-            for entry in entries.flatten() {
-                let java_bin = entry
-                    .path()
-                    .join("Contents")
-                    .join("Home")
-                    .join("bin")
-                    .join("java");
-                if java_bin.exists() {
-                    if let Some(info) = probe_java(&java_bin) {
-                        if seen.insert(info.path.clone()) {
-                            found.push(info);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // 3. Linux: /usr/lib/jvm/
-    #[cfg(target_os = "linux")]
-    {
-        let jvm_base = std::path::Path::new("/usr/lib/jvm");
-        if jvm_base.exists() {
-            if let Ok(entries) = std::fs::read_dir(jvm_base) {
-                for entry in entries.flatten() {
-                    let java_bin = entry.path().join("bin").join("java");
-                    if java_bin.exists() {
-                        if let Some(info) = probe_java(&java_bin) {
-                            if seen.insert(info.path.clone()) {
-                                found.push(info);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // 4. Windows: common install paths
-    #[cfg(target_os = "windows")]
-    {
-        let prog_files = ["Program Files", "Program Files (x86)"];
-        for pf in &prog_files {
-            let path = std::path::Path::new("C:\\").join(pf).join("Java");
-            if path.exists() {
-                if let Ok(entries) = std::fs::read_dir(&path) {
-                    for entry in entries.flatten() {
-                        let java_bin = entry.path().join("bin").join("java.exe");
-                        if java_bin.exists() {
-                            if let Some(info) = probe_java(&java_bin) {
-                                if seen.insert(info.path.clone()) {
-                                    found.push(info);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // Also try `where java`
-        if let Ok(out) = std::process::Command::new("where").arg("java").output() {
-            let stdout = String::from_utf8_lossy(&out.stdout);
-            for line in stdout.lines() {
-                let p = line.trim().to_string();
-                if !p.is_empty() && seen.insert(p.clone()) {
-                    let java_bin = std::path::Path::new(&p);
-                    if let Some(info) = probe_java(java_bin) {
-                        found.push(info);
-                    }
-                }
-            }
-        }
-    }
-
-    // 5. Check PATH for `java`
+    // 2. Check PATH for `java`
     let java_cmd = if cfg!(target_os = "windows") {
         "java.exe"
     } else {
@@ -251,7 +153,328 @@ fn discover_java() -> Vec<JavaInstall> {
         }
     }
 
+    // 3. Platform-specific comprehensive search
+    // Each platform function uses native search tools (mdfind, locate, etc.)
+    // to find java executables anywhere on the system, not just in known paths.
+    #[cfg(target_os = "macos")]
+    search_java_macos(&mut found, &mut seen);
+
+    #[cfg(target_os = "linux")]
+    search_java_linux(&mut found, &mut seen);
+
+    #[cfg(target_os = "windows")]
+    search_java_windows(&mut found, &mut seen);
+
+    // 4. SDKMAN (cross-platform fallback)
+    {
+        let sdkman_dir = std::env::var("SDKMAN_DIR").unwrap_or_else(|_| {
+            let home = std::env::var("HOME").unwrap_or_default();
+            format!("{}/.sdkman", home)
+        });
+        let candidates = std::path::Path::new(&sdkman_dir).join("candidates").join("java");
+        if let Ok(entries) = std::fs::read_dir(candidates) {
+            for entry in entries.flatten() {
+                let java_bin = entry.path().join("bin").join("java");
+                if java_bin.exists() {
+                    if let Some(info) = probe_java(&java_bin) {
+                        if seen.insert(info.path.clone()) {
+                            found.push(info);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 5. jabba (cross-platform fallback)
+    {
+        let home = std::env::var("HOME").unwrap_or_default();
+        let jabba_dir = std::path::Path::new(&home).join(".jabba").join("jdk");
+        if jabba_dir.exists() {
+            if let Ok(entries) = std::fs::read_dir(jabba_dir) {
+                for entry in entries.flatten() {
+                    let java_bin = if cfg!(target_os = "windows") {
+                        entry.path().join("bin").join("java.exe")
+                    } else {
+                        entry.path().join("bin").join("java")
+                    };
+                    if java_bin.exists() {
+                        if let Some(info) = probe_java(&java_bin) {
+                            if seen.insert(info.path.clone()) {
+                                found.push(info);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     found
+}
+
+/// macOS: use Spotlight (mdfind) to find ALL java executables on the system,
+/// plus classic paths (/Library, /usr/local/opt, /opt/homebrew/opt).
+#[cfg(target_os = "macos")]
+fn search_java_macos(found: &mut Vec<JavaInstall>, seen: &mut std::collections::HashSet<String>) {
+    // Use /usr/libexec/java_home -V to list all registered JVMs
+    if let Ok(output) = std::process::Command::new("/usr/libexec/java_home")
+        .arg("-V")
+        .output()
+    {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        for line in stderr.lines() {
+            if let Some(idx) = line.find('/') {
+                let java_bin = std::path::Path::new(line[idx..].trim()).join("bin").join("java");
+                if java_bin.exists() {
+                    if let Some(info) = probe_java(&java_bin) {
+                        if seen.insert(info.path.clone()) {
+                            found.push(info);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Scan /Library/Java/JavaVirtualMachines/
+    if let Ok(entries) = std::fs::read_dir("/Library/Java/JavaVirtualMachines/") {
+        for entry in entries.flatten() {
+            let java_bin = entry.path().join("Contents").join("Home").join("bin").join("java");
+            if java_bin.exists() {
+                if let Some(info) = probe_java(&java_bin) {
+                    if seen.insert(info.path.clone()) {
+                        found.push(info);
+                    }
+                }
+            }
+        }
+    }
+
+    // Homebrew directories
+    for base in ["/usr/local/opt", "/opt/homebrew/opt"] {
+        if let Ok(entries) = std::fs::read_dir(base) {
+            for entry in entries.flatten() {
+                let name = entry.file_name().to_string_lossy().to_string();
+                if name.starts_with("openjdk") || name.starts_with("java") {
+                    let java_bin = entry.path().join("bin").join("java");
+                    if java_bin.exists() {
+                        if let Some(info) = probe_java(&java_bin) {
+                            if seen.insert(info.path.clone()) {
+                                found.push(info);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // mdfind: Spotlight-based search to find ALL java executables on the system.
+    // This is fast (uses macOS indexed metadata) and catches any installation.
+    if let Ok(output) = std::process::Command::new("mdfind")
+        .args(["-0", "-name", "java"])
+        .output()
+    {
+        for path_bytes in output.stdout.split(|&b| b == 0) {
+            if path_bytes.is_empty() {
+                continue;
+            }
+            let path_str = String::from_utf8_lossy(path_bytes);
+            let p = std::path::Path::new(path_str.as_ref());
+
+            // Only keep files named exactly "java" (not javac, java.util, etc.)
+            if p.file_name().and_then(|s| s.to_str()) != Some("java") {
+                continue;
+            }
+            // Skip if not a regular file (or symlink to one)
+            if !p.is_file() {
+                continue;
+            }
+            // Skip non-executable files
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                if let Ok(meta) = std::fs::metadata(p) {
+                    if meta.permissions().mode() & 0o111 == 0 {
+                        continue;
+                    }
+                }
+            }
+            // Probe it (probe_java runs java -version and checks success)
+            if let Some(info) = probe_java(p) {
+                if seen.insert(info.path.clone()) {
+                    found.push(info);
+                }
+            }
+        }
+    }
+}
+
+/// Linux: scan standard locations, use locate if available,
+/// and check common alternative directories.
+#[cfg(target_os = "linux")]
+fn search_java_linux(found: &mut Vec<JavaInstall>, seen: &mut std::collections::HashSet<String>) {
+    // Standard JVM directory
+    let jvm_base = std::path::Path::new("/usr/lib/jvm");
+    if jvm_base.exists() {
+        if let Ok(entries) = std::fs::read_dir(jvm_base) {
+            for entry in entries.flatten() {
+                let java_bin = entry.path().join("bin").join("java");
+                if java_bin.exists() {
+                    if let Some(info) = probe_java(&java_bin) {
+                        if seen.insert(info.path.clone()) {
+                            found.push(info);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Additional common directory scans
+    for base in ["/usr/java", "/usr/local", "/opt"] {
+        let dir = std::path::Path::new(base);
+        if dir.exists() {
+            scan_for_java(dir, found, seen);
+        }
+    }
+
+    // Try locate (fast, but depends on updatedb having been run)
+    if let Ok(output) = std::process::Command::new("locate")
+        .args(["-b", "--regex", r"^java$"])
+        .output()
+    {
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        for line in stdout.lines() {
+            let p = std::path::Path::new(line.trim());
+            if p.is_file() {
+                if let Some(info) = probe_java(p) {
+                    if seen.insert(info.path.clone()) {
+                        found.push(info);
+                    }
+                }
+            }
+        }
+    }
+
+    // Scan home SDKMAN/jabba (cross-platform but keep here for thoroughness)
+    if let Ok(home) = std::env::var("HOME") {
+        for candidate_dir in &[
+            format!("{home}/.sdkman/candidates/java"),
+            format!("{home}/.jabba/jdk"),
+        ] {
+            let dir = std::path::Path::new(candidate_dir);
+            if dir.exists() {
+                if let Ok(entries) = std::fs::read_dir(dir) {
+                    for entry in entries.flatten() {
+                        let java_bin = entry.path().join("bin").join("java");
+                        if java_bin.exists() {
+                            if let Some(info) = probe_java(&java_bin) {
+                                if seen.insert(info.path.clone()) {
+                                    found.push(info);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// Windows: registry scanning, common install paths, and where.exe.
+#[cfg(target_os = "windows")]
+fn search_java_windows(found: &mut Vec<JavaInstall>, seen: &mut std::collections::HashSet<String>) {
+    // Common program file locations
+    let prog_files = ["Program Files", "Program Files (x86)"];
+    for pf in &prog_files {
+        let path = std::path::Path::new("C:\\").join(pf).join("Java");
+        if path.exists() {
+            if let Ok(entries) = std::fs::read_dir(&path) {
+                for entry in entries.flatten() {
+                    let java_bin = entry.path().join("bin").join("java.exe");
+                    if java_bin.exists() {
+                        if let Some(info) = probe_java(&java_bin) {
+                            if seen.insert(info.path.clone()) {
+                                found.push(info);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // where.exe - finds java in PATH and beyond
+    if let Ok(output) = std::process::Command::new("where").arg("java").output() {
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        for line in stdout.lines() {
+            let p = line.trim().to_string();
+            if !p.is_empty() {
+                let java_bin = std::path::Path::new(&p);
+                if java_bin.is_file() && seen.insert(p.clone()) {
+                    if let Some(info) = probe_java(java_bin) {
+                        found.push(info);
+                    }
+                }
+            }
+        }
+    }
+
+    // Registry-based discovery: query CurrentVersion for the JRE path
+    let reg_keys = [
+        r"HKLM\SOFTWARE\JavaSoft\Java Runtime Environment",
+        r"HKLM\SOFTWARE\JavaSoft\Java Development Kit",
+        r"HKLM\SOFTWARE\WOW6432Node\JavaSoft\Java Runtime Environment",
+        r"HKLM\SOFTWARE\WOW6432Node\JavaSoft\Java Development Kit",
+    ];
+    for key in &reg_keys {
+        if let Ok(output) = std::process::Command::new("reg")
+            .args(["query", key, "-s"])
+            .output()
+        {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            for line in stdout.lines() {
+                if let Some(val) = line.split("REG_SZ").nth(1) {
+                    let java_path = val.trim().trim_matches('"').to_string() + "\\bin\\java.exe";
+                    let java_bin = std::path::Path::new(&java_path);
+                    if java_bin.is_file() && seen.insert(java_path) {
+                        if let Some(info) = probe_java(java_bin) {
+                            found.push(info);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#[cfg(target_os = "linux")]
+fn scan_for_java(dir: &std::path::Path, found: &mut Vec<JavaInstall>, seen: &mut std::collections::HashSet<String>) {
+    if let Ok(entries) = std::fs::read_dir(dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                // Check if this directory has a bin/java
+                let java_bin = if cfg!(target_os = "windows") {
+                    path.join("bin").join("java.exe")
+                } else {
+                    path.join("bin").join("java")
+                };
+                if java_bin.exists() {
+                    if let Some(info) = probe_java(&java_bin) {
+                        if seen.insert(info.path.clone()) {
+                            found.push(info);
+                        }
+                    }
+                } else {
+                    // Recurse one level
+                    scan_for_java(&path, found, seen);
+                }
+            }
+        }
+    }
 }
 
 fn probe_java(path: &std::path::Path) -> Option<JavaInstall> {

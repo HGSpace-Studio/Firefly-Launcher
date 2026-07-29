@@ -1,0 +1,158 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "版本号（留空则自动读取 CHANGELOG.md）"
+        type: string
+        required: false
+        default: ""
+      targets:
+        description: "构建目标（多选）"
+        type: choice
+        options:
+          - windows-x64
+          - windows-arm64
+          - macos-arm64
+          - macos-x64
+          - linux-deb-x64
+          - linux-rpm-x64
+          - linux-deb-arm64
+          - linux-rpm-arm64
+        multiselect: true
+        required: true
+      build_os:
+        description: "构建操作系统"
+        type: choice
+        options:
+          - windows
+          - macos
+          - linux
+        required: true
+
+env:
+  TAURI_DIR: src-tauri
+  NODE_VERSION: 20
+
+jobs:
+  parse-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        shell: bash
+        run: |
+          INPUT_VER="${{ github.event.inputs.version }}"
+          if [ -n "$INPUT_VER" ]; then
+            VER="$INPUT_VER"
+          else
+            VER=$(grep -m1 '^# ' CHANGELOG.md | sed 's/^# *//')
+            if [ -z "$VER" ]; then
+              VER="0.0.0"
+            fi
+          fi
+          echo "version=$VER" >> $GITHUB_OUTPUT
+          echo "Using version: $VER"
+
+  build:
+    needs: parse-version
+    if: contains(github.event.inputs.targets, matrix.target)
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: windows-x64
+            runner: windows-latest
+            tauri_target: x86_64-pc-windows-msvc
+            bundle_ext: msi
+            artifact_name: firefile-launcher-windows-x64
+          - target: windows-arm64
+            runner: windows-latest
+            tauri_target: aarch64-pc-windows-msvc
+            bundle_ext: msi
+            artifact_name: firefile-launcher-windows-arm64
+          - target: macos-arm64
+            runner: macos-latest
+            tauri_target: aarch64-apple-darwin
+            bundle_ext: dmg
+            artifact_name: firefile-launcher-macos-arm64
+          - target: macos-x64
+            runner: macos-latest
+            tauri_target: x86_64-apple-darwin
+            bundle_ext: dmg
+            artifact_name: firefile-launcher-macos-x64
+          - target: linux-deb-x64
+            runner: ubuntu-latest
+            tauri_target: x86_64-unknown-linux-gnu
+            bundle_ext: deb
+            artifact_name: firefile-launcher-linux-deb-x64
+          - target: linux-rpm-x64
+            runner: ubuntu-latest
+            tauri_target: x86_64-unknown-linux-gnu
+            bundle_ext: rpm
+            artifact_name: firefile-launcher-linux-rpm-x64
+          - target: linux-deb-arm64
+            runner: ubuntu-latest
+            tauri_target: aarch64-unknown-linux-gnu
+            bundle_ext: deb
+            artifact_name: firefile-launcher-linux-deb-arm64
+          - target: linux-rpm-arm64
+            runner: ubuntu-latest
+            tauri_target: aarch64-unknown-linux-gnu
+            bundle_ext: rpm
+            artifact_name: firefile-launcher-linux-rpm-arm64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install cross-compilation target
+        shell: bash
+        run: rustup target add ${{ matrix.tauri_target }}
+
+      - name: Install cross for Linux ARM64 cross-compilation
+        if: matrix.target == 'linux-deb-arm64' || matrix.target == 'linux-rpm-arm64'
+        shell: bash
+        run: cargo install cross --locked
+
+      - name: Install Tauri CLI
+        shell: bash
+        run: npm install --save-dev @tauri-apps/cli@latest
+
+      - name: Set bundle target and version in tauri.conf.json
+        shell: bash
+        run: |
+          node -e "
+const fs = require('fs');
+const path = '${{ env.TAURI_DIR }}/tauri.conf.json';
+const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
+cfg.version = '${{ needs.parse-version.outputs.version }}';
+cfg.bundle.targets = '${{ matrix.bundle_ext }}';
+fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
+console.log('Updated tauri.conf.json — version: ' + cfg.version + ', bundles: ' + cfg.bundle.targets);
+"
+
+      - name: Build frontend
+        shell: bash
+        run: npm run build
+
+      - name: Tauri build
+        shell: bash
+        run: npx tauri build --target ${{ matrix.tauri_target }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.artifact_name }}-${{ needs.parse-version.outputs.version }}
+          path: >-
+            ${{ env.TAURI_DIR }}/target/${{ matrix.tauri_target }}/release/bundle/${{ matrix.bundle_ext }}/*
+          if-no-files-found: warn

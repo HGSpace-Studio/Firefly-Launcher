@@ -1,18 +1,19 @@
-import { createI18n } from "vue-i18n";
-import zh_cn from "./lang/zh_cn.json";
-import en_us from "./lang/en_us.json";
-import ko_kr from "./lang/ko_kr.json";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import zhCn from "./lang/zh_cn.json";
+import enUs from "./lang/en_us.json";
+import koKr from "./lang/ko_kr.json";
 import fr from "./lang/fr.json";
 import ru from "./lang/ru.json";
 import vi from "./lang/vi.json";
 
-const messages = {
-  zh_cn,
-  en_us,
-  ko_kr,
-  fr,
-  ru,
-  vi,
+const resources = {
+  zh_cn: { translation: zhCn },
+  en_us: { translation: enUs },
+  ko_kr: { translation: koKr },
+  fr: { translation: fr },
+  ru: { translation: ru },
+  vi: { translation: vi },
 };
 
 export function getSystemLocale(): string {
@@ -29,8 +30,11 @@ export function getSystemLocale(): string {
   return "en_us";
 }
 
-export default createI18n({
-  locale: getSystemLocale(),
-  fallbackLocale: "en_us",
-  messages,
+i18n.use(initReactI18next).init({
+  resources,
+  lng: getSystemLocale(),
+  fallbackLng: "en_us",
+  interpolation: { escapeValue: false },
 });
+
+export default i18n;

@@ -1,0 +1,165 @@
+.lib-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0 80px;
+  overflow-y: auto;
+}
+
+.lib-page > * {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.lib-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.lib-header-sub {
+  font-size: 11px;
+  color: var(--title-color);
+  opacity: 0.45;
+  line-height: 1;
+}
+
+.lib-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lib-header-main {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--title-color);
+  line-height: 1.2;
+}
+
+.lib-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #0078d4;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.lib-create-btn:hover {
+  opacity: 0.85;
+}
+
+.lib-area {
+  flex: 1;
+  margin-top: 20px;
+  min-height: 0;
+}
+
+.lib-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  color: var(--title-color);
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.lib-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  color: var(--title-color);
+  opacity: 0.4;
+}
+
+.lib-empty-icon {
+  opacity: 0.5;
+}
+
+.lib-empty-text {
+  font-size: 14px;
+}
+
+.lib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.instance-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  text-align: center;
+}
+
+.instance-card:hover {
+  background: rgba(128, 128, 128, 0.12);
+  transform: translateY(-2px);
+}
+
+.card-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon {
+  opacity: 0.5;
+  color: var(--title-color);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.card-version {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--title-color);
+  line-height: 1.2;
+}
+
+.card-loader {
+  font-size: 11px;
+  color: var(--title-color);
+  opacity: 0.45;
+  line-height: 1;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
