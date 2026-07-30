@@ -1,20 +1,20 @@
 import { useState, useEffect, useMemo } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { listen } from "@tauri-apps/api/event";
-import { Home, Store, LayoutGrid, Plus, Settings, Zap, Square, ChevronRight, Play, RefreshCw, Search, Gamepad2, ArrowLeftRight } from "lucide-react";
-import steve from "./assets/imgs/skins/avator/steve.png";
-import alex from "./assets/imgs/skins/avator/alex.png";
 import default1Bg from "./assets/imgs/background/default1.png";
 import HomePage from "./components/view/HomePage";
 import ResourcesCenter from "./components/view/ResourcesCenter";
-import SettingsInterface from "./components/settings_interface";
+import SettingsScreen from "./components/view/screens/SettingsScreen";
+import AccountScreen from "./components/view/screens/AccountScreen";
 import InstanceSettingsInterface from "./components/InstanceSettingsInterface";
 import SpotlightSearch from "./components/SpotlightSearch";
 import OnboardingWindow from "./components/view/onboarding/OnboardingWindow";
 import CrashShell from "./components/view/window/crush_shell";
-import Accinterface from "./components/accinterface";
-import RootInterface from "./components/view/new_mci/root_interface";
+import NewRootInterface from "./components/view/new_mci/NewRootInterface";
+import { NavRail } from "./components/NavRail";
+import { RightCard } from "./components/RightCard";
+import { TitleBar } from "./components/TitleBar";
+import Watermark from "./components/watermap/Watermark";
 import { useTaskStore } from "./hooks/useTaskStore";
 import { useLaunchStore } from "./hooks/useLaunchStore";
 import { launchStore } from "./stores/instanceLaunch";
@@ -34,31 +34,14 @@ function App() {
   const isCrash = appLabel === "crash-shell";
 
   const [nav, setNav] = useState("home");
-  const [showSettings, setShowSettings] = useState(false);
   const [showSpotlight, setShowSpotlight] = useState(false);
   const [spotlightScope, setSpotlightScope] = useState<"global" | "instances" | "modrinth">("global");
   const [spotlightSelectMode, setSpotlightSelectMode] = useState(false);
   const [showInstanceSettings, setShowInstanceSettings] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
   const [showCreateInstance, setShowCreateInstance] = useState(false);
-  const [taskOpen, setTaskOpen] = useState(false);
-  const [taskTab, setTaskTab] = useState<"tasks" | "running">("tasks");
-  const [userName, setUserName] = useState("");
-  const [userType, setUserType] = useState("");
   const [instances, setInstances] = useState<any[]>([]);
-
   const currentInstanceName = useLaunchStore().currentInstanceName;
   const tasks = useTaskStore();
-
-  const avatar = userName ? (userName.charCodeAt(0) % 2 === 0 ? steve : alex) : steve;
-  const userLabel = userType === "offline" ? "离线账号" : userType === "microsoft" ? "微软账户" : "";
-
-  const navItems = [
-    { id: "home", icon: Home },
-    { id: "resourcescenter", icon: Store },
-    { id: "add-instance", icon: Plus },
-    { id: "settings", icon: Settings },
-  ];
 
   const currentInstEntry = useMemo(() => {
     if (!currentInstanceName) return null;
@@ -70,33 +53,20 @@ function App() {
     return tasks.find((t: any) => t.id === "launch:" + currentInstanceName) || null;
   }, [currentInstanceName, tasks]);
 
-  const loaderDisplayNames: Record<string, string> = {
-    fabric: "Fabric",
-    forge: "Forge",
-    neoforge: "NeoForge",
-    quilt: "Quilt",
-  };
-
-  const filteredTasks = useMemo(() => tasks.filter((t: any) => t.status !== "running" && t.status !== "exited"), [tasks]);
-  const runningTasks = useMemo(() => tasks.filter((t: any) => t.status === "running"), [tasks]);
-
   function onNav(id: string) {
-    if (id === "settings") { setShowSettings(true); return; }
-    if (id === "account") { setShowAccount(true); return; }
     if (id === "add-instance") { setShowCreateInstance(true); return; }
+    if (id === "library") {
+      setShowSpotlight(true);
+      setSpotlightScope("instances");
+      setSpotlightSelectMode(false);
+      return;
+    }
     setNav(id);
-  }
-
-  function goInst(inst: any) {
-    setTaskOpen(false);
-    launchStore.setCurrentInstanceName(inst.name);
   }
 
   async function loadAccount() {
     try {
-      const a = await invoke<{ name: string; account_type: string; uuid: string }>("get_current_account");
-      setUserName(a.name);
-      setUserType(a.account_type);
+      await invoke<{ name: string }>("get_current_account");
     } catch { /* ignore */ }
   }
 
@@ -177,11 +147,9 @@ function App() {
     const savedBlur = Number(localStorage.getItem("firefile-bg-blur")) || 5;
     document.documentElement.style.setProperty("--bg-blur", savedBlur + "px");
 
-    loadAccount();
     loadInstances();
+    loadAccount();
     const timer = window.setInterval(() => {}, 1000);
-    listen("account-refresh", loadAccount);
-    window.addEventListener("account-changed", loadAccount);
     window.addEventListener("instance-installed", loadInstances);
     window.addEventListener("spotlight-new-instance", () => {});
     window.addEventListener("spotlight-select-inst", (e: Event) => {
@@ -195,15 +163,8 @@ function App() {
       setShowInstanceSettings(true);
     });
 
-    const docClick = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest(".task-wrap")) setTaskOpen(false);
-    };
-    document.addEventListener("click", docClick);
-
     return () => {
       clearInterval(timer);
-      document.removeEventListener("click", docClick);
     };
   }, []);
 
@@ -212,144 +173,63 @@ function App() {
 
   return (
     <div className="root">
-      <div className="spotlight-wrap">
-        <div
-          className="spotlight-bar"
-          onClick={() => {
-            setShowSpotlight(true);
-            setSpotlightScope("global");
-            setSpotlightSelectMode(false);
-          }}
-        >
-          <Search size={15} className="spotlight-icon" />
-          <span className="spotlight-input">在此处搜索一切</span>
-        </div>
-      </div>
+      <TitleBar
+        onOpenSpotlight={() => { setShowSpotlight(true); setSpotlightScope("global"); setSpotlightSelectMode(false); }}
+        showBack={nav !== "home"}
+        onBack={() => setNav("home")}
+      />
 
-      <div className="body-area">
-        <main className="main">
-          {nav === "home" && <HomePage />}
-          {nav === "resourcescenter" && <ResourcesCenter />}
-        </main>
-      </div>
-
-      <div className="dock-wrap">
-        <nav className="dock">
-          <button className="daccount" onClick={() => onNav("account")}>
-            <img src={avatar} className="davatar" />
-            <div className="daccinfo">
-              <span className="daccname">{userName || "未设置"}</span>
-              <span className="dacctype">{userLabel}</span>
+      <div className="flex flex-1 overflow-hidden">
+        {nav !== "settings" && nav !== "account" ? (
+          <>
+            <NavRail
+              topItems={[
+                { id: "home", label: "首页", icon: "home" },
+                { id: "resourcescenter", label: "资源", icon: "store" },
+                { id: "library", label: "库", icon: "grid_view" },
+              ]}
+              bottomItems={[
+                { id: "add-instance", label: "新建", icon: "add_box" },
+                { id: "settings", label: "设置", icon: "settings" },
+                { id: "account", label: "账户", icon: "person" },
+              ]}
+              activeId={nav}
+              onNavigate={onNav}
+            />
+            <div className="body-area flex-1">
+              <main className="main">
+                {nav === "home" && <HomePage />}
+                {nav === "resourcescenter" && <ResourcesCenter />}
+              </main>
             </div>
-            <span className="dtooltip">账户</span>
-          </button>
-          <div className="dsep"></div>
-          {navItems.slice(0, 2).map(item => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                className={"ditem" + (nav === item.id ? " on" : "")}
-                onClick={() => onNav(item.id)}
-              >
-                <Icon size={21} />
-                <span className="dtooltip">{item.id === "home" ? "首页" : "资源中心"}</span>
-              </button>
-            );
-          })}
-          <button
-            className="ditem"
-            onClick={() => {
-              setShowSpotlight(true);
-              setSpotlightScope("instances");
-              setSpotlightSelectMode(false);
-            }}
-          >
-            <LayoutGrid size={21} />
-            <span className="dtooltip">库</span>
-          </button>
-          {navItems.slice(2).map(item => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                className={"ditem" + (nav === item.id ? " on" : "")}
-                onClick={() => onNav(item.id)}
-              >
-                <Icon size={21} />
-                <span className="dtooltip">{item.id === "add-instance" ? "创建实例" : "设置"}</span>
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="inst-info-card">
-          <div className="inst-info-icon-wrap">
-            <Gamepad2 size={22} />
-          </div>
-          {currentInstEntry ? (
-            <>
-              <span className="inst-info-name">{currentInstEntry.name}</span>
-              <div className="inst-info-sep"></div>
-              <div className="inst-info-col">
-                <span className="inst-info-label">游戏本体版本</span>
-                <span className="inst-info-value">{currentInstEntry.version}</span>
-              </div>
-              {currentInstEntry.loader && (
-                <>
-                  <div className="inst-info-sep"></div>
-                  <div className="inst-info-col">
-                    <span className="inst-info-label">{loaderDisplayNames[currentInstEntry.loader.type] || currentInstEntry.loader.type}版本</span>
-                    <span className="inst-info-value">{currentInstEntry.loader.version}</span>
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <span className="inst-info-name inst-info-empty">未选择实例</span>
-          )}
-          <button
-            className="inst-info-switch"
-            onClick={() => {
+          </>
+        ) : nav === "settings" ? (
+          <SettingsScreen />
+        ) : (
+          <AccountScreen />
+        )}
+        {nav !== "settings" && nav !== "account" && (
+          <RightCard
+            currentInstEntry={currentInstEntry}
+            dockTask={dockTask}
+            onDockLaunch={onDockLaunch}
+            onSwitchInstance={() => {
               setShowSpotlight(true);
               setSpotlightScope("instances");
               setSpotlightSelectMode(true);
             }}
-          >
-            <ArrowLeftRight size={15} />
-            <span className="dtooltip">切换实例</span>
-          </button>
-        </div>
-
-        <button
-          className={"dlaunch" + (dockTask?.status === "running" ? " running" : "")}
-          onClick={onDockLaunch}
-        >
-          {dockTask?.status === "launching" ? (
-            <RefreshCw size={18} className="spin" />
-          ) : dockTask?.status === "running" ? (
-            <Square size={18} />
-          ) : (
-            <Play size={18} />
-          )}
-          <span>
-            {dockTask?.status === "running"
-              ? "运行中"
-              : dockTask?.status === "launching"
-              ? "启动中..."
-              : "启动该实例"}
-          </span>
-        </button>
+          />
+        )}
       </div>
 
-      {showAccount && <Accinterface onClose={() => setShowAccount(false)} />}
+      <Watermark />
+
       {showCreateInstance && (
-        <RootInterface
+        <NewRootInterface
           onClose={() => setShowCreateInstance(false)}
           onNavigate={(nav: string) => { setShowCreateInstance(false); setNav(nav); }}
         />
       )}
-      {showSettings && <SettingsInterface onClose={() => setShowSettings(false)} />}
       {showInstanceSettings && currentInstEntry && (
         <InstanceSettingsInterface
           instance={currentInstEntry}
@@ -364,53 +244,6 @@ function App() {
         />
       )}
 
-      <div className={"task-float" + (taskOpen ? " open" : "")}>
-        <div className="task-wrap">
-          <button className="taskbtn" onClick={() => setTaskOpen(!taskOpen)}>
-            <Zap size={16} />
-            <span className="tasklbl">{tasks.length > 0 ? tasks.length + " 个任务进行中" : "还没有任务啊"}</span>
-          </button>
-          {taskOpen && (
-            <div className="taskdrop">
-              <div className="tasktabs">
-                <button className={"tasktab" + (taskTab === "tasks" ? " on" : "")} onClick={() => setTaskTab("tasks")}>下载任务</button>
-                <button className={"tasktab" + (taskTab === "running" ? " on" : "")} onClick={() => setTaskTab("running")}>运行中</button>
-              </div>
-              {taskTab === "tasks" && (
-                <>
-                  {!filteredTasks.length && <div className="taskempty">暂无任务</div>}
-                  {filteredTasks.map((t: any) => (
-                    <div key={t.id} className="titem">
-                      <div className="tih">
-                        <span className="titl">{t.title}</span>
-                        <span className="titype">{t.type === "launch" ? "启动" : "安装"}</span>
-                      </div>
-                      <span className="tlabel">{t.label}</span>
-                      <div className="tibar"><div className="tifill" style={{ width: (t.progress * 100) + "%" }}></div></div>
-                    </div>
-                  ))}
-                </>
-              )}
-              {taskTab === "running" && (
-                <>
-                  {!runningTasks.length && <div className="taskempty">没有运行中的游戏</div>}
-                  {runningTasks.map((t: any) => (
-                    <div key={t.id} className="titem ritem">
-                      <div className="tih">
-                        <span className="titl">{t.title}</span>
-                        <div className="tiactions">
-                          <button className="tiaction stop" onClick={() => invoke("stop_game")}><Square size={14} /></button>
-                          <button className="tiaction" onClick={() => goInst({ name: t.title, version: "", version_type: "" })}><ChevronRight size={14} /></button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

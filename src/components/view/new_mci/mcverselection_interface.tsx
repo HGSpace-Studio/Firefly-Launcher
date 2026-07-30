@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Sparkles, RefreshCw } from "lucide-react";
+import { Box, Sparkles } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { getCache, setCache } from "../../../utils/cache";
 import "./mcverselection_interface.css";
@@ -149,7 +149,7 @@ export default function McVersionSelection({
       <div className="version-content">
         {loading ? (
           <div className="version-loading">
-            <RefreshCw size={20} className="spinner" />
+            <md-circular-progress indeterminate />
             <span>{t("app.mainwindow.versionnav.loading")}</span>
           </div>
         ) : (

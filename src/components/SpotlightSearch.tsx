@@ -1,10 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import {
-  Search, Package, Puzzle, Palette, ArrowRight, Loader2,
-  Gamepad2, Settings, FolderOpen, Play, Trash2,
-  ChevronDown, Globe, Server, Layers, Plus, Check,
-} from "lucide-react";
 import "./SpotlightSearch.css";
 
 type SearchScope = "global" | "instances" | "modrinth";
@@ -37,17 +32,17 @@ interface SpotlightSearchProps {
   onClose: () => void;
 }
 
-const scopeOptions: { value: SearchScope; label: string; icon: any }[] = [
-  { value: "global", label: "全局", icon: Globe },
-  { value: "instances", label: "我的实例", icon: Server },
-  { value: "modrinth", label: "在线资源", icon: Layers },
+const scopeOptions: { value: SearchScope; label: string; icon: string }[] = [
+  { value: "global", label: "全局", icon: "language" },
+  { value: "instances", label: "我的实例", icon: "dns" },
+  { value: "modrinth", label: "在线资源", icon: "layers" },
 ];
 
-const projectTypeIcons: Record<string, any> = {
-  mod: Puzzle,
-  modpack: Package,
-  shader: Palette,
-  resourcepack: Palette,
+const projectTypeIcons: Record<string, string> = {
+  mod: "extension",
+  modpack: "inventory_2",
+  shader: "palette",
+  resourcepack: "palette",
 };
 
 const projectTypeLabels: Record<string, string> = {
@@ -239,22 +234,29 @@ export default function SpotlightSearch({ defaultScope, selectMode, onClose }: S
 
   return (
     <div className="spotlight-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="spotlight-modal">
+      <div className="spotlight-card">
         <div className="spotlight-search-row">
-          <Search size={18} className="spotlight-search-icon" />
-          <div className="spotlight-scope" onClick={(e) => { e.stopPropagation(); setScopeOpen(!scopeOpen); }}>
-            {currentScopeOption.icon && <currentScopeOption.icon size={13} />}
-            <span className="spotlight-scope-label">{currentScopeOption.label}</span>
-            <ChevronDown size={12} className={`spotlight-scope-arrow${scopeOpen ? " open" : ""}`} />
+          <span className="material-symbols-outlined spotlight-search-icon">search</span>
+          <div className="scope-selector">
+            <button
+              className="scope-btn"
+              onClick={(e) => { e.stopPropagation(); setScopeOpen(!scopeOpen); }}
+            >
+              <md-ripple />
+              <span className="material-symbols-outlined">{currentScopeOption.icon}</span>
+              <span className="scope-btn-label">{currentScopeOption.label}</span>
+              <span className={`material-symbols-outlined scope-arrow${scopeOpen ? " open" : ""}`}>expand_more</span>
+            </button>
             {scopeOpen && (
-              <div className="spotlight-scope-dropdown">
+              <div className="scope-dropdown">
                 {scopeOptions.map((opt) => (
                   <button
                     key={opt.value}
-                    className={`spotlight-scope-option${scope === opt.value ? " active" : ""}`}
+                    className={`scope-item${scope === opt.value ? " active" : ""}`}
                     onClick={(e) => { e.stopPropagation(); setScope(opt.value); setScopeOpen(false); }}
                   >
-                    {opt.icon && <opt.icon size={13} />}
+                    <md-ripple />
+                    <span className="material-symbols-outlined">{opt.icon}</span>
                     <span>{opt.label}</span>
                   </button>
                 ))}
@@ -265,7 +267,7 @@ export default function SpotlightSearch({ defaultScope, selectMode, onClose }: S
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="spotlight-modal-input"
+            className="spotlight-input"
             type="text"
             placeholder={
               scope === "instances" ? "搜索实例名称..." :
@@ -275,140 +277,165 @@ export default function SpotlightSearch({ defaultScope, selectMode, onClose }: S
             spellCheck={false}
             autoComplete="off"
           />
-          {modrinthLoading && <Loader2 size={16} className="spotlight-spinner" />}
+          {modrinthLoading && <span className="material-symbols-outlined spotlight-spinner">sync</span>}
         </div>
-        <div className="spotlight-divider"></div>
+
+        <div className="spotlight-divider" />
+
         <div className="spotlight-results">
           {query ? (
             <>
               {scope !== "modrinth" && filteredMcVersions.length > 0 && (
                 <>
-                  <div className="spotlight-section-label">Minecraft 版本</div>
+                  <div className="spotlight-section-header">Minecraft 版本</div>
                   {filteredMcVersions.map((v) => (
-                    <button key={v.id} className="spotlight-result-item" onClick={() => selectVersion(v.id)}>
-                      <div className="spotlight-result-icon-wrap mc-icon"><Gamepad2 size={16} /></div>
-                      <div className="spotlight-result-info">
-                        <span className="spotlight-result-title">Minecraft {v.id}</span>
-                        <span className="spotlight-result-desc">{v.type === "release" ? "正式版" : v.type === "snapshot" ? "快照版" : v.type}</span>
+                    <button key={v.id} className="spotlight-item" onClick={() => selectVersion(v.id)}>
+                      <md-ripple />
+                      <div className="spotlight-item-icon mc">
+                        <span className="material-symbols-outlined">videogame_asset</span>
                       </div>
-                      <ArrowRight size={14} className="spotlight-result-arrow" />
+                      <div className="spotlight-item-text">
+                        <span className="spotlight-item-title">Minecraft {v.id}</span>
+                        <span className="spotlight-item-subtitle">{v.type === "release" ? "正式版" : v.type === "snapshot" ? "快照版" : v.type}</span>
+                      </div>
+                      <span className="material-symbols-outlined spotlight-item-action">chevron_right</span>
                     </button>
                   ))}
                 </>
               )}
               {scope !== "instances" && modrinthResults.length > 0 && (
                 <>
-                  <div className="spotlight-section-label">Modrinth 资源</div>
+                  <div className="spotlight-section-header">Modrinth 资源</div>
                   {modrinthResults.map((h) => (
-                    <button key={h.slug} className="spotlight-result-item" onClick={() => openModrinth(h.slug, h.project_type)}>
-                      <div className="spotlight-result-icon-wrap">
-                        {h.icon_url ? <img src={h.icon_url} className="spotlight-result-icon-img" /> : (() => { const Icon = projectTypeIcons[h.project_type] || Package; return <Icon size={16} />; })()}
+                    <button key={h.slug} className="spotlight-item" onClick={() => openModrinth(h.slug, h.project_type)}>
+                      <md-ripple />
+                      <div className="spotlight-item-icon">
+                        {h.icon_url ? <img src={h.icon_url} alt="" /> : <span className="material-symbols-outlined">{projectTypeIcons[h.project_type] || "inventory_2"}</span>}
                       </div>
-                      <div className="spotlight-result-info">
-                        <span className="spotlight-result-title">{h.title}</span>
-                        <span className="spotlight-result-desc">
-                          {(projectTypeLabels[h.project_type] || h.project_type)} · {formatDownloads(h.downloads)} 下载
-                        </span>
+                      <div className="spotlight-item-text">
+                        <span className="spotlight-item-title">{h.title}</span>
+                        <span className="spotlight-item-subtitle">{projectTypeLabels[h.project_type] || h.project_type} · {formatDownloads(h.downloads)} 下载</span>
                       </div>
-                      <ArrowRight size={14} className="spotlight-result-arrow" />
+                      <span className="material-symbols-outlined spotlight-item-action">chevron_right</span>
                     </button>
                   ))}
                 </>
               )}
               {scope !== "modrinth" && filteredInstances.length > 0 && (
                 <>
-                  <div className="spotlight-section-label">实例</div>
+                  <div className="spotlight-section-header">实例</div>
                   {filteredInstances.map((inst) => (
-                    <div key={inst.name} className="spotlight-result-item spotlight-inst-row">
+                    <div key={inst.name} className="spotlight-item-row">
                       {selectMode && (
-                        <button className="spotlight-inst-select-btn spotlight-inst-select-highlight" title="选择此实例" onClick={() => selectInstance(inst.name)}>
-                          <Check size={14} />
+                        <button className="spotlight-select-btn" onClick={() => selectInstance(inst.name)}>
+                          <span className="material-symbols-outlined">check</span>
                         </button>
                       )}
-                      <div className="spotlight-inst-row-left" onClick={() => launchInstance(inst.name)}>
-                        <div className="spotlight-result-icon-wrap mc-icon"><Gamepad2 size={16} /></div>
-                        <div className="spotlight-result-info">
-                          <span className="spotlight-result-title">{inst.name}</span>
-                          <span className="spotlight-result-desc">Minecraft {inst.version} · {getLoaderLabel(inst)}</span>
+                      <button className="spotlight-item" onClick={() => launchInstance(inst.name)}>
+                        <md-ripple />
+                        <div className="spotlight-item-icon mc">
+                          <span className="material-symbols-outlined">videogame_asset</span>
                         </div>
-                        <ArrowRight size={14} className="spotlight-result-arrow" />
-                      </div>
+                        <div className="spotlight-item-text">
+                          <span className="spotlight-item-title">{inst.name}</span>
+                          <span className="spotlight-item-subtitle">Minecraft {inst.version} · {getLoaderLabel(inst)}</span>
+                        </div>
+                        <span className="material-symbols-outlined spotlight-item-action">chevron_right</span>
+                      </button>
                     </div>
                   ))}
                 </>
               )}
-              {showEmpty && <div className="spotlight-empty"><span>没有找到 "{query}" 相关的结果</span></div>}
+              {showEmpty && (
+                <div className="spotlight-empty">
+                  <span>没有找到 &quot;{query}&quot; 相关的结果</span>
+                </div>
+              )}
             </>
           ) : (
             <>
               {(scope === "instances" || scope === "global") && (
                 <>
-                  <div className="spotlight-section-label">已安装实例</div>
-                  {instances.length === 0 && <div className="spotlight-empty"><span>暂无已安装实例</span></div>}
+                  <div className="spotlight-section-header">已安装实例</div>
+                  {instances.length === 0 && (
+                    <div className="spotlight-empty">
+                      <span>暂无已安装实例</span>
+                    </div>
+                  )}
                   {filteredInstances.map((inst) => (
-                    <div key={inst.name} className="spotlight-inst-card">
+                    <div key={inst.name} className="spotlight-item-row with-actions">
                       {selectMode && (
-                        <button className="spotlight-inst-select-btn spotlight-inst-select-highlight" title="选择此实例" onClick={() => selectInstance(inst.name)}>
-                          <Check size={15} />
+                        <button className="spotlight-select-btn" onClick={() => selectInstance(inst.name)}>
+                          <span className="material-symbols-outlined">check</span>
                         </button>
                       )}
-                      <div className="spotlight-inst-left">
-                        <div className="spotlight-inst-icon"><Gamepad2 size={20} /></div>
-                        <div className="spotlight-inst-info">
-                          <span className="spotlight-inst-name">{inst.name}</span>
-                          <span className="spotlight-inst-meta">Minecraft {inst.version} · {getLoaderLabel(inst)}</span>
+                      <div className="spotlight-item-info">
+                        <div className="spotlight-item-icon mc">
+                          <span className="material-symbols-outlined">videogame_asset</span>
+                        </div>
+                        <div className="spotlight-item-text">
+                          <span className="spotlight-item-title">{inst.name}</span>
+                          <span className="spotlight-item-subtitle">Minecraft {inst.version} · {getLoaderLabel(inst)}</span>
                         </div>
                       </div>
-                      <div className="spotlight-inst-actions">
-                        <button className="spotlight-inst-btn" title="版本设置" onClick={() => goSettings(inst.name)}><Settings size={14} /></button>
-                        <button className="spotlight-inst-btn" title="资源管理" onClick={() => goResources(inst.name)}><FolderOpen size={14} /></button>
-                        <button className="spotlight-inst-btn spotlight-inst-btn-launch" title="启动" onClick={() => launchInstance(inst.name)}><Play size={14} /></button>
-                        <button className="spotlight-inst-btn spotlight-inst-btn-delete" title="删除" onClick={() => deleteInstance(inst.name)}><Trash2 size={14} /></button>
+                      <div className="spotlight-item-actions">
+                        <button className="spotlight-action-btn" onClick={() => goSettings(inst.name)}>
+                          <span className="material-symbols-outlined">settings</span>
+                        </button>
+                        <button className="spotlight-action-btn" onClick={() => goResources(inst.name)}>
+                          <span className="material-symbols-outlined">folder_open</span>
+                        </button>
+                        <button className="spotlight-action-btn launch" onClick={() => launchInstance(inst.name)}>
+                          <span className="material-symbols-outlined">play_arrow</span>
+                        </button>
+                        <button className="spotlight-action-btn danger" onClick={() => deleteInstance(inst.name)}>
+                          <span className="material-symbols-outlined">delete</span>
+                        </button>
                       </div>
                     </div>
                   ))}
                   {scope === "instances" && (
-                    <button className="spotlight-new-inst-btn" onClick={createNewInstance}>
-                      <Plus size={15} /><span>新建实例</span>
+                    <button className="spotlight-new-btn" onClick={createNewInstance}>
+                      <md-ripple />
+                      <span className="material-symbols-outlined">add</span>
+                      <span>新建实例</span>
                     </button>
                   )}
                 </>
               )}
               {scope === "global" && popularProjects.length > 0 && (
                 <>
-                  <div className="spotlight-divider" style={{ margin: "4px 10px" }}></div>
-                  <div className="spotlight-section-label">推荐资源</div>
+                  <div className="spotlight-divider" />
+                  <div className="spotlight-section-header">推荐资源</div>
                   {popularProjects.map((h) => (
-                    <button key={h.slug} className="spotlight-result-item" onClick={() => openModrinth(h.slug, h.project_type)}>
-                      <div className="spotlight-result-icon-wrap">
-                        {h.icon_url ? <img src={h.icon_url} className="spotlight-result-icon-img" /> : (() => { const Icon = projectTypeIcons[h.project_type] || Package; return <Icon size={16} />; })()}
+                    <button key={h.slug} className="spotlight-item" onClick={() => openModrinth(h.slug, h.project_type)}>
+                      <md-ripple />
+                      <div className="spotlight-item-icon">
+                        {h.icon_url ? <img src={h.icon_url} alt="" /> : <span className="material-symbols-outlined">{projectTypeIcons[h.project_type] || "inventory_2"}</span>}
                       </div>
-                      <div className="spotlight-result-info">
-                        <span className="spotlight-result-title">{h.title}</span>
-                        <span className="spotlight-result-desc">
-                          {(projectTypeLabels[h.project_type] || h.project_type)} · {formatDownloads(h.downloads)} 下载
-                        </span>
+                      <div className="spotlight-item-text">
+                        <span className="spotlight-item-title">{h.title}</span>
+                        <span className="spotlight-item-subtitle">{projectTypeLabels[h.project_type] || h.project_type} · {formatDownloads(h.downloads)} 下载</span>
                       </div>
-                      <ArrowRight size={14} className="spotlight-result-arrow" />
+                      <span className="material-symbols-outlined spotlight-item-action">chevron_right</span>
                     </button>
                   ))}
                 </>
               )}
               {scope === "modrinth" && popularProjects.length > 0 && (
                 <>
-                  <div className="spotlight-section-label">热门资源</div>
+                  <div className="spotlight-section-header">热门资源</div>
                   {popularProjects.map((h) => (
-                    <button key={h.slug} className="spotlight-result-item" onClick={() => openModrinth(h.slug, h.project_type)}>
-                      <div className="spotlight-result-icon-wrap">
-                        {h.icon_url ? <img src={h.icon_url} className="spotlight-result-icon-img" /> : (() => { const Icon = projectTypeIcons[h.project_type] || Package; return <Icon size={16} />; })()}
+                    <button key={h.slug} className="spotlight-item" onClick={() => openModrinth(h.slug, h.project_type)}>
+                      <md-ripple />
+                      <div className="spotlight-item-icon">
+                        {h.icon_url ? <img src={h.icon_url} alt="" /> : <span className="material-symbols-outlined">{projectTypeIcons[h.project_type] || "inventory_2"}</span>}
                       </div>
-                      <div className="spotlight-result-info">
-                        <span className="spotlight-result-title">{h.title}</span>
-                        <span className="spotlight-result-desc">
-                          {(projectTypeLabels[h.project_type] || h.project_type)} · {formatDownloads(h.downloads)} 下载
-                        </span>
+                      <div className="spotlight-item-text">
+                        <span className="spotlight-item-title">{h.title}</span>
+                        <span className="spotlight-item-subtitle">{projectTypeLabels[h.project_type] || h.project_type} · {formatDownloads(h.downloads)} 下载</span>
                       </div>
-                      <ArrowRight size={14} className="spotlight-result-arrow" />
+                      <span className="material-symbols-outlined spotlight-item-action">chevron_right</span>
                     </button>
                   ))}
                 </>

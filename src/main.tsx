@@ -3,6 +3,19 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./i18n";
 import "./index.css";
+import "@material/web/all.js";
+import "@material/web/labs/navigationbar/navigation-bar.js";
+import "@material/web/labs/navigationtab/navigation-tab.js";
+import "@material/web/tabs/tabs.js";
+import "@material/web/tabs/primary-tab.js";
+
+// dark mode for shadcn
+(function () {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const update = () => document.documentElement.classList.toggle("dark", mq.matches);
+  update();
+  mq.addEventListener("change", update);
+})();
 
 window.addEventListener("contextmenu", (e) => e.preventDefault());
 

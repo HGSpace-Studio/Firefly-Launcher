@@ -18,12 +18,8 @@
         "minWidth": 800,
         "minHeight": 600,
         "decorations": true,
-        "visible": false,
-        "trafficLightPosition": {
-          "x": 14,
-          "y": 23
-        },
-        "hiddenTitle": true
+        "hiddenTitle": true,
+        "visible": false
       }
     ],
     "security": {

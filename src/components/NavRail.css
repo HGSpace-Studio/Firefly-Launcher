@@ -1,0 +1,31 @@
+.navrail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  flex-shrink: 0;
+  padding: 8px 0 16px;
+  background: var(--panel-bg);
+  border-right: 1px solid var(--window-border);
+}
+
+.navrail-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.navrail md-navigation-tab {
+  --md-navigation-tab-container-shape: 16px;
+  --md-navigation-tab-active-indicator-width: 40px;
+  --md-navigation-tab-active-indicator-height: 32px;
+  --md-sys-typescale-label-medium-font: var(--app-font, "MiSans");
+  width: 56px;
+  height: 56px;
+}
+
+.navrail-spacer {
+  flex: 1;
+  min-height: 8px;
+}

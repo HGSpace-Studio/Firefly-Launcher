@@ -1,14 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Puzzle,
-  Box,
-  Sun,
-  Grip,
-  RefreshCw,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
 import { getCache, setCache } from "../../utils/cache";
 import "./ResourcesCenter.css";
 
@@ -55,10 +46,10 @@ const projectTypeMap: Record<string, string> = {
 };
 
 const tabs = [
-  { id: "mods", label: "模组", icon: Puzzle },
-  { id: "modpack", label: "整合包", icon: Box },
-  { id: "shader", label: "光影包", icon: Sun },
-  { id: "resourcepack", label: "资源包", icon: Grip },
+  { id: "mods", label: "模组", icon: "extension" },
+  { id: "modpack", label: "整合包", icon: "inventory_2" },
+  { id: "shader", label: "光影包", icon: "light_mode" },
+  { id: "resourcepack", label: "资源包", icon: "grid_view" },
 ];
 
 export default function ResourcesCenter() {
@@ -69,7 +60,7 @@ export default function ResourcesCenter() {
   const [projects, setProjects] = useState<ModrinthProject[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalHits, setTotalHits] = useState(0);
-  const pageSize = 16;
+  const pageSize = 18;
 
   const totalPages = useMemo(
     () => Math.max(1, Math.ceil(totalHits / pageSize)),
@@ -155,19 +146,16 @@ export default function ResourcesCenter() {
             {t("app.mainwindow.resourcescenter.mainTitle")}
           </span>
           <div className="resources-tabs">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  className={`resources-tab${activeTab === tab.id ? " active" : ""}`}
-                  onClick={() => setActiveTab(tab.id)}
-                >
-                  {Icon && <Icon size={16} />}
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`resources-tab${activeTab === tab.id ? " active" : ""}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <span className="material-symbols-outlined">{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            ))}
           </div>
           {totalPages > 1 && (
             <div className="pagination">
@@ -179,7 +167,7 @@ export default function ResourcesCenter() {
                   fetchProjects();
                 }}
               >
-                <ChevronLeft size={16} />
+                <span className="material-symbols-outlined">chevron_left</span>
               </button>
               <span className="page-info">
                 {currentPage} / {totalPages}
@@ -192,7 +180,7 @@ export default function ResourcesCenter() {
                   fetchProjects();
                 }}
               >
-                <ChevronRight size={16} />
+                <span className="material-symbols-outlined">chevron_right</span>
               </button>
             </div>
           )}
@@ -201,7 +189,7 @@ export default function ResourcesCenter() {
       <div className="resources-area">
         {loading ? (
           <div className="resources-loading">
-            <RefreshCw size={20} className="spinner" />
+            <md-circular-progress indeterminate />
             <span>正在获取资源列表...</span>
           </div>
         ) : projects.length === 0 ? (

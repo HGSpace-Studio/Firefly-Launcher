@@ -11,21 +11,28 @@
     "fil-reset": "node -e \"const fs=require('fs'),p=require('path').join(require('os').homedir(),'.minecraft');fs.rmSync(p,{recursive:true,force:true});console.log('Cleared',p);\" && npx tauri dev"
   },
   "dependencies": {
+    "@lit/react": "^1.0.8",
+    "@material/web": "^2.5.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "^2.7.1",
     "@tauri-apps/plugin-opener": "^2",
+    "clsx": "^2.1.1",
     "i18next": "^23.0.0",
     "lucide-react": "^0.400.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "react-i18next": "^14.0.0",
-    "skinview3d": "^3.4.2"
+    "skinview3d": "^3.4.2",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
-    "@types/react": "^18.3.0",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.24",
+    "tailwindcss": "^3.4.19",
     "typescript": "~5.6.2",
     "vite": "^6.0.3"
   }
