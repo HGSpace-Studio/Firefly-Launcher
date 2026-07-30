@@ -1,158 +1,302 @@
-name: Build
+name: Build and Release
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "版本号（留空则自动读取 CHANGELOG.md）"
-        type: string
+      release_tag:
+        description: '发布版本号 (例如: v1.0.0。留空则仅构建打包，不创建 Release)'
         required: false
-        default: ""
-      targets:
-        description: "构建目标（多选）"
-        type: choice
-        options:
-          - windows-x64
-          - windows-arm64
-          - macos-arm64
-          - macos-x64
-          - linux-deb-x64
-          - linux-rpm-x64
-          - linux-deb-arm64
-          - linux-rpm-arm64
-        multiselect: true
-        required: true
-      build_os:
-        description: "构建操作系统"
-        type: choice
-        options:
-          - windows
-          - macos
-          - linux
-        required: true
+        type: string
+      publish_windows:
+        description: '发布 Windows 产物到 Releases (x86/x64/arm64 msi)'
+        type: boolean
+        default: false
+      publish_macos:
+        description: '发布 macOS 产物到 Releases (arm64/x86 dmg)'
+        type: boolean
+        default: false
+      publish_linux:
+        description: '发布 Linux 产物到 Releases (x86/arm64 deb/rpm)'
+        type: boolean
+        default: false
 
 env:
-  TAURI_DIR: src-tauri
-  NODE_VERSION: 20
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: short
 
 jobs:
-  parse-version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: version
-        shell: bash
-        run: |
-          INPUT_VER="${{ github.event.inputs.version }}"
-          if [ -n "$INPUT_VER" ]; then
-            VER="$INPUT_VER"
-          else
-            VER=$(grep -m1 '^# ' CHANGELOG.md | sed 's/^# *//')
-            if [ -z "$VER" ]; then
-              VER="0.0.0"
-            fi
-          fi
-          echo "version=$VER" >> $GITHUB_OUTPUT
-          echo "Using version: $VER"
-
-  build:
-    needs: parse-version
-    if: contains(github.event.inputs.targets, matrix.target)
-    runs-on: ${{ matrix.runner }}
+  build-windows:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: windows-x64
-            runner: windows-latest
-            tauri_target: x86_64-pc-windows-msvc
-            bundle_ext: msi
-            artifact_name: firefile-launcher-windows-x64
-          - target: windows-arm64
-            runner: windows-latest
-            tauri_target: aarch64-pc-windows-msvc
-            bundle_ext: msi
-            artifact_name: firefile-launcher-windows-arm64
-          - target: macos-arm64
-            runner: macos-latest
-            tauri_target: aarch64-apple-darwin
-            bundle_ext: dmg
-            artifact_name: firefile-launcher-macos-arm64
-          - target: macos-x64
-            runner: macos-latest
-            tauri_target: x86_64-apple-darwin
-            bundle_ext: dmg
-            artifact_name: firefile-launcher-macos-x64
-          - target: linux-deb-x64
-            runner: ubuntu-latest
-            tauri_target: x86_64-unknown-linux-gnu
-            bundle_ext: deb
-            artifact_name: firefile-launcher-linux-deb-x64
-          - target: linux-rpm-x64
-            runner: ubuntu-latest
-            tauri_target: x86_64-unknown-linux-gnu
-            bundle_ext: rpm
-            artifact_name: firefile-launcher-linux-rpm-x64
-          - target: linux-deb-arm64
-            runner: ubuntu-latest
-            tauri_target: aarch64-unknown-linux-gnu
-            bundle_ext: deb
-            artifact_name: firefile-launcher-linux-deb-arm64
-          - target: linux-rpm-arm64
-            runner: ubuntu-latest
-            tauri_target: aarch64-unknown-linux-gnu
-            bundle_ext: rpm
-            artifact_name: firefile-launcher-linux-rpm-arm64
+          - target: x86_64-pc-windows-msvc
+            arch: x64
+          - target: i686-pc-windows-msvc
+            arch: x86
+          - target: aarch64-pc-windows-msvc
+            arch: arm64
 
+    runs-on: windows-latest
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          targets: ${{ matrix.target }}
 
-      - name: Install cross-compilation target
-        shell: bash
-        run: rustup target add ${{ matrix.tauri_target }}
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
 
-      - name: Install cross for Linux ARM64 cross-compilation
-        if: matrix.target == 'linux-deb-arm64' || matrix.target == 'linux-rpm-arm64'
-        shell: bash
-        run: cargo install cross --locked
-
-      - name: Install Tauri CLI
-        shell: bash
-        run: npm install --save-dev @tauri-apps/cli@latest
-
-      - name: Set bundle target and version in tauri.conf.json
-        shell: bash
+      - name: Install dependencies (x86)
+        if: matrix.arch == 'x86'
         run: |
-          node -e "
-const fs = require('fs');
-const path = '${{ env.TAURI_DIR }}/tauri.conf.json';
-const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
-cfg.version = '${{ needs.parse-version.outputs.version }}';
-cfg.bundle.targets = '${{ matrix.bundle_ext }}';
-fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
-console.log('Updated tauri.conf.json — version: ' + cfg.version + ', bundles: ' + cfg.bundle.targets);
-"
+          choco install -y llvm
+          echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install frontend dependencies
+        run: npm ci
 
       - name: Build frontend
-        shell: bash
         run: npm run build
 
-      - name: Tauri build
-        shell: bash
-        run: npx tauri build --target ${{ matrix.tauri_target }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        if: always()
+      - name: Build Tauri app (MSI)
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          name: ${{ matrix.artifact_name }}-${{ needs.parse-version.outputs.version }}
-          path: >-
-            ${{ env.TAURI_DIR }}/target/${{ matrix.tauri_target }}/release/bundle/${{ matrix.bundle_ext }}/*
+          args: --target ${{ matrix.target }} --bundles msi
+
+      - name: Rename artifacts for clarity
+        run: |
+          $msi = Get-ChildItem -Path "src-tauri\target\${{ matrix.target }}\release\bundle\msi\" -Filter "*.msi"
+          if ($msi) {
+            Move-Item -Path $msi.FullName -Destination "src-tauri\target\${{ matrix.target }}\release\bundle\msi\Firefly-Launcher_${{ matrix.arch }}.msi" -Force
+          }
+
+      - name: Upload Windows MSI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-msi-${{ matrix.arch }}
+          path: src-tauri\target\${{ matrix.target }}\release\bundle\msi\*.msi
+          if-no-files-found: error
+
+  build-macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            arch: arm64
+          - target: x86_64-apple-darwin
+            arch: x86
+
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        with:
+          args: --target ${{ matrix.target }}
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.arch }}
+          path: |
+            src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
           if-no-files-found: warn
+
+  build-linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            arch: x64
+            pkg: deb
+          - target: x86_64-unknown-linux-gnu
+            arch: x64
+            pkg: rpm
+          - target: aarch64-unknown-linux-gnu
+            arch: arm64
+            pkg: deb
+          - target: aarch64-unknown-linux-gnu
+            arch: arm64
+            pkg: rpm
+
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Install cross-compilation dependencies (ARM64)
+        if: matrix.arch == 'arm64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu linker-wrapper
+
+      - name: Configure Cargo for ARM64
+        if: matrix.arch == 'arm64'
+        run: |
+          mkdir -p ~/.cargo
+          cat >> ~/.cargo/config.toml << EOF
+          [target.aarch64-unknown-linux-gnu]
+          linker = "aarch64-linux-gnu-gcc"
+          EOF
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Build Tauri app (${{ matrix.pkg }})
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          args: --target ${{ matrix.target }} --bundles ${{ matrix.pkg }}
+
+      - name: Upload Linux ${{ matrix.pkg }} ${{ matrix.arch }} artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-${{ matrix.pkg }}-${{ matrix.arch }}
+          path: src-tauri/target/${{ matrix.target }}/release/bundle/${{ matrix.pkg }}/*
+          if-no-files-found: error
+
+  merge-and-release:
+    # 只有当填写了版本号，并且至少勾选了一个平台时，才执行发布合并
+    if: inputs.release_tag != '' && (inputs.publish_windows || inputs.publish_macos || inputs.publish_linux)
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read CHANGELOG.md
+        run: |
+          # 将 CHANGELOG.md 的内容安全地写入环境变量，供后续 Release 使用
+          {
+            echo "RELEASE_BODY<<EOF"
+            cat CHANGELOG.md
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+
+      - name: Filter and merge artifacts based on selection
+        run: |
+          mkdir -p final-artifacts
+          
+          # 如果勾选了 Windows，提取 msi 且排除 dev
+          if [ "${{ inputs.publish_windows }}" == "true" ]; then
+            echo "Including Windows artifacts..."
+            find all-artifacts/windows-* -type f -iname "*.msi" ! -iname "*dev*" -exec cp {} final-artifacts/ \;
+          fi
+          
+          # 如果勾选了 macOS，提取 dmg 和 tar.gz 且排除 dev
+          if [ "${{ inputs.publish_macos }}" == "true" ]; then
+            echo "Including macOS artifacts..."
+            find all-artifacts/macos-* -type f \( -iname "*.dmg" -o -iname "*.tar.gz" \) ! -iname "*dev*" -exec cp {} final-artifacts/ \;
+          fi
+          
+          # 如果勾选了 Linux，提取 deb 和 rpm 且排除 dev
+          if [ "${{ inputs.publish_linux }}" == "true" ]; then
+            echo "Including Linux artifacts..."
+            find all-artifacts/linux-* -type f \( -iname "*.deb" -o -iname "*.rpm" \) ! -iname "*dev*" -exec cp {} final-artifacts/ \;
+          fi
+          
+          # 列出最终要发布的文件
+          echo "================ Final Artifacts to Release ================"
+          ls -lh final-artifacts
+          echo "============================================================"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.release_tag }}
+          name: "Firefly Launcher ${{ inputs.release_tag }}"
+          body: ${{ env.RELEASE_BODY }}
+          files: final-artifacts/*
+          draft: true
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
